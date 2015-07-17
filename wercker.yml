@@ -1,0 +1,30 @@
+box: debian
+build:
+  steps:
+    - arjen/hugo-build@1.1.0:
+        version: "0.14"
+        theme: casper
+        flags: --buildDrafts=false
+
+deploy:
+  steps:
+    - add-to-know_hosts:
+      hostname: $HOSTNAME
+    - mktemp:
+      envvar: PRIVATEKEY_PATH
+    - create-file:
+      name: write ket
+      filename: $PRIVATEKEY_PATH
+      content: $WERCKER_PRIVATE
+      overwrite: true
+    - script:
+      name: remove old files
+      code: ssh -i $PRIVATEKEY_PATH -l root -o UserKnownHostFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME rm -rf /var/www/blog/*
+    - script:
+      name: transfer blog
+      code: |
+          scp -r -i $PRIVATEKEY_PATH public/* root@$HOSTNAME:/var/www/blog
+          ssh -i $PRIVATEKEY_PATH -l root -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME chown -R www-data:www-data /var/www/
+    - script:
+      name: restart nginx
+      code: ssh -i $PRIVATEKEY_PATH -l root -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME service nginx reload
