@@ -14,6 +14,8 @@ This website is meant primarily as a way to get my name out and distrubute my
 resume, but it also will service as a platform for me to write about my
 experiences at work and in my personal life. 
 
+I'm Available for hire.
+
 --------
 ## Other Links
 [Github](https://github.com/moos3) 
