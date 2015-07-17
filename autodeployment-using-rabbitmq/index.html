@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" Auto Deployment using PHP and rabbitmq &middot;  Moos3" />
+  	<meta property="og:site_name" content="Moos3" />
+  	<meta property="og:url" content="http://guthnur.net/autodeployment-using-rabbitmq/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-07-13T17:06:44-04:00" />
+
+    
+    <meta property="og:article:tag" content="rabbitmq" />
+    
+    <meta property="og:article:tag" content="ci" />
+    
+    <meta property="og:article:tag" content="deployment" />
+    
+    
+
+  <title>
+     Auto Deployment using PHP and rabbitmq &middot;  Moos3
+  </title>
+
+    <meta name="description" content="Knowledge is power but Openly Shared knowledge is real power!" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://guthnur.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://guthnur.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="http://guthnur.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://guthnur.net/index.xml" rel="alternate" type="application/rss+xml" title="Moos3" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.14" />
+
+    <link rel="canonical" href="http://guthnur.net/autodeployment-using-rabbitmq/" />
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://guthnur.net/">Blog</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://guthnur.net/about">About Me &amp; Contact Info</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/moos3">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/moos3">Twitter timeline</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://guthnur.net/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="http://guthnur.net/"><img src="http://guthnur.net/images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Auto Deployment using PHP and rabbitmq</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-07-13T17:06:44-04:00">
+            Jul 13, 2015
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://guthnur.net/tags/rabbitmq/">#rabbitmq</a></span>
+         
+          <span class="post-tag small"><a href="http://guthnur.net/tags/ci/">#ci</a></span>
+         
+          <span class="post-tag small"><a href="http://guthnur.net/tags/deployment/">#deployment</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      <p>So for work for the past 3 weeks we took part of the 18F BPA contest for the US Government. I was tasked with building a docker setup that when <a href="http://codeship.com">codeship</a> completed testing and building that it would automatically updated containers local code.
+So I did this with a rabbitmq server using exchange queues. So the way this worked is this codeship would build the code, run all the test, push the update to a production branch. The way codeships webhook system works is this, it hits the end point every step. So this means we have
+to listen for a status of success in order to make our nodes update. The webhook end in codeship points to a url for the site. Which checks the API key for the arbeider end point, codeship project id and for the message. This was a quick and dirty way to do it with out getting super complex.
+Once the security stuff passes then we pop a json object in the rabbitmq exchange. The object looks like this</p>
+
+<pre><code>{
+  &quot;worker-api&quot;:&quot;lknas0d9ni1ipnd0icqnd1&quot;,
+  &quot;git-command&quot;:&quot;update&quot;
+}
+</code></pre>
+
+<p>As you can see in this object we pass along the worker api key. Every node will check this key, if it matches whats on their end then they will execute the git-command. In the case of our project we just run a update.sh script on the docker container, that checks the code out and makes sure the branch is correct.
+I know your saying well your sending that in plain text. Yes I&rsquo;m aware, if I was actually doing this in a production environment, that object would have been SHA-256 encrypted and the rabbitmq exchange would have encrypted also. Since this was just a proof of concept we choose to do it quickly. As we originally only had
+one week to do this in.</p>
+
+<p>The flow of the application is this:
+<img src="http://guthnur.net/images/workers-diagram.png" alt="Image of the Workflow" />
+</p>
+
+<p>As you can see its extremely simple. It can be extended to do a lot more, such as sending singals to services to all nodes, or individal nodes. I&rsquo;m hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://guthnur.net/" style="background-image: url(http://guthnur.net/images/logo.png)"><span class="hidden">Richard Genthner's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://guthnur.net/">Richard Genthner</a></h4>
+  
+  <p>System Engineer, Open source enthusiast.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Maine, USA</span>
+    <span class="author-link icon-link"><a href="http://guthnur.net">http://guthnur.net</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Auto%20Deployment%20using%20PHP%20and%20rabbitmq&amp;url=http%3a%2f%2fguthnur.net%2fautodeployment-using-rabbitmq%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fguthnur.net%2fautodeployment-using-rabbitmq%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fguthnur.net%2fautodeployment-using-rabbitmq%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'moos3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Moos3</a> All rights reserved - 2015</section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://guthnur.net/js/jquery.js"></script>
+    <script type="text/javascript" src="http://guthnur.net/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://guthnur.net/js/index.js"></script>
+
+</body>
+</html>
+
