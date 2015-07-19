@@ -29,6 +29,12 @@ canonifyurls = true
   url = "/"
 
 [[menu.main]]
+  name = "About Me"
+  weight = -120
+  indentifier = "about"
+  url = "/about"
+
+[[menu.main]]
   name = "Github repos"
   weight = 100
   pre = "<h3>Follow me</h3>"
