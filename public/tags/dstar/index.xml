@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Moos3</title>
-    <link>http://blog.guthnur.net/post/</link>
-    <description>Recent content in Posts on Moos3</description>
+    <title>Dstar on Moos3</title>
+    <link>http://blog.guthnur.net/tags/dstar/</link>
+    <description>Recent content in Dstar on Moos3</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
     <lastBuildDate>Mon, 21 Sep 2015 12:29:04 -0700</lastBuildDate>
-    <atom:link href="http://blog.guthnur.net/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.guthnur.net/tags/dstar/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>dStar a Great Time!</title>
@@ -132,173 +132,6 @@ Exec=sudo dstarrepeater -gui
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now the Hotspot/Repeater will start automatically.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>With Change Comes Adventure</title>
-      <link>http://blog.guthnur.net/with-change-comes-adventure/</link>
-      <pubDate>Fri, 18 Sep 2015 12:26:38 -0400</pubDate>
-      
-      <guid>http://blog.guthnur.net/with-change-comes-adventure/</guid>
-      <description>
-
-&lt;p&gt;The title says it all. There is has been a great change in my life. I have left the company I have been at for the past approx 7 years.
-I have worked with some great people, learned a lot. I have also learned what it means to make something scalable. I have learned a lot of
-what not to do. I&amp;rsquo;m looking forward to moving into more of a System Engineering role where I can focus on scaling application and cloud designed.&lt;/p&gt;
-
-&lt;p&gt;I have left Symplicity Corporation. I have made a lateral move to CenturyLink Cloud as a Senior System Engineer. In my new position I will still be working
-with clients and infrastructures. I will get the ability to get behind a application platform that scales to 57 datacenter and 10,000 of thousands of clients.
-I will be able to move into DevOps or Automation in the future.&lt;/p&gt;
-
-&lt;h3 id=&#34;reasons:1bcd761b05b9be29a4bbab0d39dbbfe0&#34;&gt;Reasons&lt;/h3&gt;
-
-&lt;p&gt;I could list a million reasons why I have left Symplicity. It all comes down to the events for the past couple of years. Starting with the CEO and CTO getting charged with computer crimes. Human Resources promising career paths over and over and never delivering. No support for Professional development. Massive Turn over rates across the board. Lack of quality hires and hoping that craigslist is going to give rockstar devops and system engineers. Fear of growth and change. People being leaders that try their best only to fall short of being great leaders. Lack of a CTO and CIO to drive developers and sysadmins to greatness is really hurting the company.&lt;/p&gt;
-
-&lt;h3 id=&#34;why-centurylink:1bcd761b05b9be29a4bbab0d39dbbfe0&#34;&gt;Why CenturyLink&lt;/h3&gt;
-
-&lt;p&gt;Well they seeked me out and their processes I have been greatly impressed with. They have a deinfinitive goal and markets they want to get to. Their perks are great.
-Proffessional Development, Health Insurance and Pay is amazing. There interview process is designed to filtered out a lot of crap applicatins. It starts off by two phone technical interviews and then Team Manager phones you. Then you get flown to Seattle for a interview Loop that is 5 people, one person from the team, 2 other employees that you might interact with. Then the VP of the division talks with you and then Team Manager talks with you again. You only move on in the loop if the last person to interview likes you and feels that you fit in. There Customers are number 1 in thier book and there employees are number 1 also. They are building a culture that they are very very picky about who can join it and help build it.&lt;/p&gt;
-
-&lt;p&gt;I&amp;rsquo;m looking forward to where this career path is going to take me. Right now its very very promising from Century Link Cloud.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Containers are not VMs</title>
-      <link>http://blog.guthnur.net/containers-are-not-vms/</link>
-      <pubDate>Sat, 18 Jul 2015 23:53:49 -0400</pubDate>
-      
-      <guid>http://blog.guthnur.net/containers-are-not-vms/</guid>
-      <description>
-
-&lt;p&gt;So lately I have been digging deeper and deeper into containers and there
-usefulness. It seems that a lot of people blur the line between VM&amp;rsquo;s and
-Containers. I think its important that we define the two here before we get to
-invested in this article.&lt;/p&gt;
-
-&lt;h5 id=&#34;vm-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;VM Concepts&lt;/h5&gt;
-
-&lt;p&gt;A VM per its name is a Virtual Machine, so this by default is Read/Write
-enabled. Where your changes aren&amp;rsquo;t lost in reboots or host shutdowns. This is
-great for things where your not using source control. And your machine isn&amp;rsquo;t
-defined as Code!.&lt;/p&gt;
-
-&lt;h5 id=&#34;lxc-containers:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;LXC Containers&lt;/h5&gt;
-
-&lt;p&gt;Now lxc containers are read/write or even read only containers. This have the
-same issue as VM&amp;rsquo;s and that is they arent defined by code. They have act like
-VM&amp;rsquo;s or act in the ideaism&amp;rsquo;s of Docker containers if you wish. This dont have
-a hypervisor, cgroups can be a nightmare to get working depending on our OS
-they my or not work.&lt;/p&gt;
-
-&lt;h5 id=&#34;docker-containers:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;Docker Containers&lt;/h5&gt;
-
-&lt;p&gt;Now Docker containers are defined as Code, but they are read only. So you can&amp;rsquo;t
-use them as a vm and except your changes to stick unless you define it in the
-code that makes the container. These typically only host one service, or one
-task. Such as a Web Server or a Database server. Their cgroups work out of the
-box.&lt;/p&gt;
-
-&lt;h5 id=&#34;container-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;Container Concepts&lt;/h5&gt;
-
-&lt;p&gt;So the ideaism behind containers is this you have a service say nginx and your
-going to host your website. 99% of the time your not going to need to increase
-the number of nginx servers but the services that run php, ruby,etc. So you
-would a nginx docker container, a php-fpm container set and haproxy. Your nginx
-container would point to the HAProxy container which in turn points to the
-php-fpm containers that you would scale based on demand. This is called one
-service or one task containerism.&lt;/p&gt;
-
-&lt;p&gt;So now that we have that cleared up. At work we are making the move to
-containers and really considering docker over lxc. We have a lot of old school
-thought of we need to make a quick fix just ssh to the containers and make the
-fix. This is all good as long as you make sure the change is done at the
-container code level before its forgotten. So that the next build of the
-container has those changes. Moving to Infrastructure as Code from
-a Infrastructure with 500 physical machines is a hard concept for a lot of
-people to get behind. It requires a whole different train of thought. You have
-to forget the idea of oh I can just ssh to there and do what I need. This is
-called system drift. Your system configuration management tool should be the
-only thing making changes. This is what I call Infrastructure as Pseudo Code.&lt;/p&gt;
-
-&lt;p&gt;So how do we avoid drift in machines, or never having a machine at its
-originally state ? Well this is where containers come in to play. You have the
-host machine that is completely bare nothing more than what it needs to do its
-job configured. Only services that should be installed are sshd, iscsi for
-storage and nfs also for storage. Along with your container service of choice.
-You only connect to the host when you want to get a container setup and
-running.&lt;/p&gt;
-
-&lt;p&gt;So you probably wondering what about a development environment. Local
-development is how it should be done. Your developers should be able to have
-access to resources to stand up a small production environment on their
-machines. This eliminates the need to have a VM in production for developers to
-work from. Since our Infrastructure is code now, the developer can just do
-something simple like using a docker compose file to stand up a web, cache,
-search and db all in a few minutes.&lt;/p&gt;
-
-&lt;p&gt;This is a new way of thinking and it takes a lot of time to get people to see
-that this style is how the industry is moving and to understand it. This is
-a change that will not happen over night. If you grab some of your senior
-developers and show them the process and how they can finally have a replica
-environment that our clients have, this is priceless to them. Now they can
-truly debug and aren&amp;rsquo;t tied to a vpn connection or a local network connection.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Auto Deployment using PHP and rabbitmq</title>
-      <link>http://blog.guthnur.net/autodeployment-using-rabbitmq/</link>
-      <pubDate>Mon, 13 Jul 2015 17:06:44 -0400</pubDate>
-      
-      <guid>http://blog.guthnur.net/autodeployment-using-rabbitmq/</guid>
-      <description>&lt;p&gt;So for work for the past 3 weeks we took part of the 18F BPA contest for the US Government. I was tasked with building a docker setup that when &lt;a href=&#34;http://codeship.com&#34;&gt;codeship&lt;/a&gt; completed testing and building that it would automatically updated containers local code.
-So I did this with a rabbitmq server using exchange queues. So the way this worked is this codeship would build the code, run all the test, push the update to a production branch. The way codeships webhook system works is this, it hits the end point every step. So this means we have
-to listen for a status of success in order to make our nodes update. The webhook end in codeship points to a url for the site. Which checks the API key for the arbeider end point, codeship project id and for the message. This was a quick and dirty way to do it with out getting super complex.
-Once the security stuff passes then we pop a json object in the rabbitmq exchange. The object looks like this&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;{
-  &amp;quot;worker-api&amp;quot;:&amp;quot;lknas0d9ni1ipnd0icqnd1&amp;quot;,
-  &amp;quot;git-command&amp;quot;:&amp;quot;update&amp;quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;As you can see in this object we pass along the worker api key. Every node will check this key, if it matches whats on their end then they will execute the git-command. In the case of our project we just run a update.sh script on the docker container, that checks the code out and makes sure the branch is correct.
-I know your saying well your sending that in plain text. Yes I&amp;rsquo;m aware, if I was actually doing this in a production environment, that object would have been SHA-256 encrypted and the rabbitmq exchange would have encrypted also. Since this was just a proof of concept we choose to do it quickly. As we originally only had
-one week to do this in.&lt;/p&gt;
-
-&lt;p&gt;The flow of the application is this:
-&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;As you can see its extremely simple. It can be extended to do a lot more, such as sending singals to services to all nodes, or individal nodes. I&amp;rsquo;m hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>new blog</title>
-      <link>http://blog.guthnur.net/new-site/</link>
-      <pubDate>Mon, 13 Jul 2015 15:11:04 -0400</pubDate>
-      
-      <guid>http://blog.guthnur.net/new-site/</guid>
-      <description>
-
-&lt;h3 id=&#34;finally-backup:874d006584b53f2a1070783574da19bd&#34;&gt;Finally Backup&lt;/h3&gt;
-
-&lt;p&gt;So I have decided its time for a new site and blog. I have been playing with
-this idea for a while. I have been really busy at work and in my personal life.
-I originally started a blog back in 2004 and now here we are in 2015. With more
-blog options then ever before.&lt;/p&gt;
-
-&lt;h4 id=&#34;engine-choice:874d006584b53f2a1070783574da19bd&#34;&gt;Engine Choice&lt;/h4&gt;
-
-&lt;p&gt;So when I picked my blog engine I knew I never wanted to have a database
-server. I wanted the ability to throw this up on any thing that can serve html
-statically. Theres a TON of static site generators all over the place. There
-are written in various languages. I choose hugo written in GOLANG because one
-I wanted to learn GOLANG and two its extremely well used based off my research
-on github.&lt;/p&gt;
 </description>
     </item>
     

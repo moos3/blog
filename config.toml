@@ -8,7 +8,7 @@ canonifyurls = true
 
 [params]
   description = "Knowledge is power but Openly Shared knowledge is real power!"
-  cover = "images/cover_polenord.jpg"
+  cover = "images/bg2.jpg"
   author = "Richard Genthner"
   authorlocation = "Maine, USA"
   authorwebsite = "http://guthnur.net"
