@@ -1,13 +1,13 @@
-box: debian
+box: wercker/default
 build:
   steps:
-    - arjen/hugo-build:
-        version: 0.14
-        theme: herring-cove
-        flags: --buildDrafts=true
-deploy:
-  steps:
-    - moos3/gh-pages@0.2.1:
-        token: $GIT_TOKEN
-        domain: hugo-wercker.ig.nore.me
-        basedir: public
+    - arjen/hugo-build@1.6.1:
+        version: "0.14"
+        theme: huge-creative-theme
+deploy:    
+  steps:        
+    - leipert/git-push:
+     gh_oauth: $GIT_TOKEN
+     repo: moos3/moos3.github.io
+     branch: master
+     basedir: public
