@@ -6,10 +6,8 @@ build:
         theme: huge-creative-theme
 deploy:    
   steps:        
-    - leipert/step-git-push:
-     gh_oauth: $GIT_TOKEN
-     repo: moos3/blog
-     branch: master
-     basedir: public
-     gh_pages: True
-     gh_pages_domain: blog.guthnur.net
+    - step-git-push:
+        gh_oauth: $GIT_TOKEN
+        gh_pages: True
+        gh_pages_domain: blog.guthnur.net
+        basedir: build
