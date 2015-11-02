@@ -6,8 +6,7 @@ build:
         theme: huge-creative-theme
 deploy:    
   steps:        
-    - leipert/git-push:
-     gh_oauth: $GIT_TOKEN
-     repo: moos3/moos3.github.io
-     branch: master
-     basedir: public
+    - lukevivier/gh-pages@0.2.1:
+        token: $GIT_TOKEN
+        domain: www.golifeandsoul.com
+        basedir: public
