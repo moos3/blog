@@ -8,6 +8,8 @@ deploy:
   steps:        
     - leipert/step-git-push:
      gh_oauth: $GIT_TOKEN
-     repo: blog/moos3.github.io
+     repo: moos3/blog
      branch: master
      basedir: public
+     gh_pages: True
+     gh_pages_domain: blog.guthnur.net
