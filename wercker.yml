@@ -6,7 +6,8 @@ build:
         theme: huge-creative-theme
 deploy:    
   steps:        
-    - lukevivier/gh-pages@0.2.1:
-        token: $GIT_TOKEN
-        domain: blog.guthnur.net
-        basedir: public
+    - leipert/git-push:
+     gh_oauth: $GIT_TOKEN
+     repo: blog/moos3.github.io
+     branch: master
+     basedir: public
