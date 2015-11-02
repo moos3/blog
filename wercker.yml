@@ -6,7 +6,7 @@ build:
         theme: huge-creative-theme
 deploy:    
   steps:        
-    - leipert/git-push:
+    - leipert/step-git-push:
      gh_oauth: $GIT_TOKEN
      repo: blog/moos3.github.io
      branch: master
