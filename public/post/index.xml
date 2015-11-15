@@ -7,8 +7,127 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Mon, 21 Sep 2015 12:29:04 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2015 17:22:57 -0800</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>a start up story</title>
+      <link>http://blog.guthnur.net/start-up-story/</link>
+      <pubDate>Sun, 15 Nov 2015 17:22:57 -0800</pubDate>
+      
+      <guid>http://blog.guthnur.net/start-up-story/</guid>
+      <description>
+
+&lt;h3 id=&#34;creating-a-startup:c9c85e47c1600296732c38a16bbab580&#34;&gt;Creating a startup&lt;/h3&gt;
+
+&lt;p&gt;So I have taken it upon myself to create a startup and see if I can&amp;rsquo;t get it actually used. So first thing you need is a great Idea that you believe in.
+Then you need a great pitch no more then 30 seconds to get people excited. You need people you can get excited and keep them excited. These people will
+become your Team and investors. Everyone you bring on or part of the startup needs to be as excited as you or more excited about the idea.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-number-two:c9c85e47c1600296732c38a16bbab580&#34;&gt;Step Number Two&lt;/h3&gt;
+
+&lt;p&gt;The technology your going to use. This is the next important bit. You should really evaluate your past experiences. For example I use to work for a company
+thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more machines with out justification. At this step METRICS are going to be your life. You will
+ want to make you everything measurable. Everything and I mean everything. You want metrics on how long it takes to install your base system, how long it
+ takes to build docker containers. How much resources every single action takes. This allows you to scale effectively and to plan on how much time it will
+ take you recover from a reddit front page. You will want to see how long for example it takes a payment to process in the foreground versus kicking it off
+ in the back ground.&lt;/p&gt;
+
+&lt;p&gt;Metrics should become your ZEN and you shouldn&amp;rsquo;t make a single business choice without metrics proving or disproving any trends or ideas. Then tie that to a
+ dollar amount. Everything costs you money and If its going to take you 30 minutes to recover or spin up enough servers to handle the load from reddit or
+ tech crunch and that is costing you $30.00/second then that 30 minutes really costs you $54,000 not to mention a bad user experience.&lt;/p&gt;
+
+&lt;p&gt;### User experience
+ This is the most important thing period. You could have the greatest full stack and deployment powers. If you don&amp;rsquo;t have the best user experience you will
+ not have customers of user your product. If you don&amp;rsquo;t have customers or people wanting to use your product guess what you don&amp;rsquo;t have any money. You can also
+ have the greatest customer experience and not have the functionality on the backend for the experience. People would rather have a great experience then a
+ functional one. Make sure you design your product in mind for the market that your trying to hit. Example you would design something for the 18 to 35 crowd
+ differently than for the 35 to 65 crowd. The old the customer the more they just want things to work versus the younger crowd that understands things break.&lt;/p&gt;
+
+&lt;p&gt;Stay Tuned for more Startup Tips.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>letsencrypt yay</title>
+      <link>http://blog.guthnur.net/letsencrypt-yay/</link>
+      <pubDate>Sun, 15 Nov 2015 13:10:41 -0800</pubDate>
+      
+      <guid>http://blog.guthnur.net/letsencrypt-yay/</guid>
+      <description>
+
+&lt;h3 id=&#34;letsencrypt:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;letsencrypt&lt;/h3&gt;
+
+&lt;p&gt;This is a amazing product that is opensource. I recently decided that this was going to be the way I get my ssl certificates for everything I do. I was
+lucky to get into the beta invitation only. It works great. Every 90 days you have regen your certificates but thats not a big deal because they give you
+tools to do it.&lt;/p&gt;
+
+&lt;h4 id=&#34;setup:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;Setup&lt;/h4&gt;
+
+&lt;p&gt;So you get this going to your going to need to check out their repo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/letsencrypt/letsencrypt
+  cd letsencrypt
+  ./letsencrypt-auto --server \
+      https://acme-v01.api.letsencrypt.org/directory --help
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next after you get your domains submitted for the beta and registered you will want to do the following commands. Heres how for apache:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./letsencrypt-auto --apache --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For standalone Apache you would do the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./letsencrypt-auto certonly -a standalone \
+  -d example.com -d www.example.com \
+  --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If your like me and use nginx for your server you will need to do the following to get it working:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./letsencrypt-auto certonly -a manual -d www.stbtx.com -d example.com -d blog.example.com --webroot-path /var/www/html --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then you will need to do the following openssl command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;openssl dhparam -out dhparam.pem 4096
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then in the Nginx server block add the following SSL configuration:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# SSL configuration
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+	ssl_certificate /etc/letsencrypt/live/{domain}/fullchain.pem;
+    	ssl_certificate_key /etc/letsencrypt/live/{domain}/privkey.pem;
+    	ssl_session_timeout 1d;
+    	ssl_session_cache shared:SSL:10m;
+    	ssl_session_tickets off;
+	    # openssl dhparam -out dhparam.pem 2048
+    	ssl_dhparam /etc/nginx/dhparam.pem;
+
+    	ssl_protocols TLSv1.1 TLSv1.2;
+    	ssl_ciphers &#39;ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK&#39;;
+    	ssl_prefer_server_ciphers on;
+
+    	add_header Strict-Transport-Security max-age=15768000;
+
+    	ssl_stapling on;
+    	ssl_stapling_verify on;
+
+    	## verify chain of trust of OCSP response using Root CA and Intermediate certs
+    	#ssl_trusted_certificate /path/to/root_CA_cert_plus_intermediates; ## Addition CA certs
+    	ssl_trusted_certificate /etc/letsencrypt/live/{domain}/chain.pem;
+    	resolver 8.8.8.8 8.8.4.4 valid=86400;
+	resolver_timeout 10;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Restart your nginx server and you will be golden. This will support HSTS, SPDY and SSL.&lt;/p&gt;
+
+&lt;p&gt;There you have deployed letencrypt certificates to your server woot! :) Great job!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>dStar a Great Time!</title>
@@ -269,8 +388,7 @@ I know your saying well your sending that in plain text. Yes I&amp;rsquo;m aware
 one week to do this in.&lt;/p&gt;
 
 &lt;p&gt;The flow of the application is this:
-&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;
-&lt;/p&gt;
+&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As you can see its extremely simple. It can be extended to do a lot more, such as sending singals to services to all nodes, or individal nodes. I&amp;rsquo;m hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment.&lt;/p&gt;
 </description>
