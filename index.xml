@@ -7,13 +7,13 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Sun, 15 Nov 2015 17:22:57 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2015 14:22:57 -0800</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>a start up story</title>
       <link>http://blog.guthnur.net/start-up-story/</link>
-      <pubDate>Sun, 15 Nov 2015 17:22:57 -0800</pubDate>
+      <pubDate>Sun, 15 Nov 2015 14:22:57 -0800</pubDate>
       
       <guid>http://blog.guthnur.net/start-up-story/</guid>
       <description>
@@ -37,8 +37,9 @@ thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more mach
  dollar amount. Everything costs you money and If its going to take you 30 minutes to recover or spin up enough servers to handle the load from reddit or
  tech crunch and that is costing you $30.00/second then that 30 minutes really costs you $54,000 not to mention a bad user experience.&lt;/p&gt;
 
-&lt;p&gt;### User experience
- This is the most important thing period. You could have the greatest full stack and deployment powers. If you don&amp;rsquo;t have the best user experience you will
+&lt;h3 id=&#34;user-experience:c9c85e47c1600296732c38a16bbab580&#34;&gt;User experience&lt;/h3&gt;
+
+&lt;p&gt;This is the most important thing period. You could have the greatest full stack and deployment powers. If you don&amp;rsquo;t have the best user experience you will
  not have customers of user your product. If you don&amp;rsquo;t have customers or people wanting to use your product guess what you don&amp;rsquo;t have any money. You can also
  have the greatest customer experience and not have the functionality on the backend for the experience. People would rather have a great experience then a
  functional one. Make sure you design your product in mind for the market that your trying to hit. Example you would design something for the 18 to 35 crowd
