@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Companies on Moos3</title>
+    <link>http://blog.guthnur.net/tags/companies/</link>
+    <description>Recent content in Companies on Moos3</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>All rights reserved - 2015</copyright>
+    <lastBuildDate>Sun, 15 Nov 2015 17:22:57 -0800</lastBuildDate>
+    <atom:link href="http://blog.guthnur.net/tags/companies/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>a start up story</title>
+      <link>http://blog.guthnur.net/start-up-story/</link>
+      <pubDate>Sun, 15 Nov 2015 17:22:57 -0800</pubDate>
+      
+      <guid>http://blog.guthnur.net/start-up-story/</guid>
+      <description>
+
+&lt;h3 id=&#34;creating-a-startup:c9c85e47c1600296732c38a16bbab580&#34;&gt;Creating a startup&lt;/h3&gt;
+
+&lt;p&gt;So I have taken it upon myself to create a startup and see if I can&amp;rsquo;t get it actually used. So first thing you need is a great Idea that you believe in.
+Then you need a great pitch no more then 30 seconds to get people excited. You need people you can get excited and keep them excited. These people will
+become your Team and investors. Everyone you bring on or part of the startup needs to be as excited as you or more excited about the idea.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-number-two:c9c85e47c1600296732c38a16bbab580&#34;&gt;Step Number Two&lt;/h3&gt;
+
+&lt;p&gt;The technology your going to use. This is the next important bit. You should really evaluate your past experiences. For example I use to work for a company
+thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more machines with out justification. At this step METRICS are going to be your life. You will
+ want to make you everything measurable. Everything and I mean everything. You want metrics on how long it takes to install your base system, how long it
+ takes to build docker containers. How much resources every single action takes. This allows you to scale effectively and to plan on how much time it will
+ take you recover from a reddit front page. You will want to see how long for example it takes a payment to process in the foreground versus kicking it off
+ in the back ground.&lt;/p&gt;
+
+&lt;p&gt;Metrics should become your ZEN and you shouldn&amp;rsquo;t make a single business choice without metrics proving or disproving any trends or ideas. Then tie that to a
+ dollar amount. Everything costs you money and If its going to take you 30 minutes to recover or spin up enough servers to handle the load from reddit or
+ tech crunch and that is costing you $30.00/second then that 30 minutes really costs you $54,000 not to mention a bad user experience.&lt;/p&gt;
+
+&lt;p&gt;### User experience
+ This is the most important thing period. You could have the greatest full stack and deployment powers. If you don&amp;rsquo;t have the best user experience you will
+ not have customers of user your product. If you don&amp;rsquo;t have customers or people wanting to use your product guess what you don&amp;rsquo;t have any money. You can also
+ have the greatest customer experience and not have the functionality on the backend for the experience. People would rather have a great experience then a
+ functional one. Make sure you design your product in mind for the market that your trying to hit. Example you would design something for the 18 to 35 crowd
+ differently than for the 35 to 65 crowd. The old the customer the more they just want things to work versus the younger crowd that understands things break.&lt;/p&gt;
+
+&lt;p&gt;Stay Tuned for more Startup Tips.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
