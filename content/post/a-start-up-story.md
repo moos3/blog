@@ -1,5 +1,5 @@
 +++
-date = "2015-11-15T17:22:57-08:00"
+date = "2015-11-15T14:22:57-08:00"
 draft = false
 title = "a start up story"
 author = "Richard Genthner"
@@ -29,7 +29,7 @@ thats Ideas of scaling wasn't true scaling, but just turn up more machines with 
  dollar amount. Everything costs you money and If its going to take you 30 minutes to recover or spin up enough servers to handle the load from reddit or
  tech crunch and that is costing you $30.00/second then that 30 minutes really costs you $54,000 not to mention a bad user experience.
 
- ### User experience
+### User experience
  This is the most important thing period. You could have the greatest full stack and deployment powers. If you don't have the best user experience you will
  not have customers of user your product. If you don't have customers or people wanting to use your product guess what you don't have any money. You can also
  have the greatest customer experience and not have the functionality on the backend for the experience. People would rather have a great experience then a
