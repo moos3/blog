@@ -3,8 +3,13 @@
   
   <url>
     <loc>http://blog.guthnur.net/</loc>
-    <lastmod>2015-11-15T14:22:57-08:00</lastmod>
+    <lastmod>2015-11-22T19:03:28-08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.guthnur.net/django-and-docker/</loc>
+    <lastmod>2015-11-22T19:03:28-08:00</lastmod>
   </url>
   
   <url>
