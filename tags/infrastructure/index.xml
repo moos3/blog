@@ -7,8 +7,217 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Sat, 18 Jul 2015 23:53:49 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2015 19:03:28 -0800</lastBuildDate>
     <atom:link href="https://blog.guthnur.net/tags/infrastructure/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>django and docker</title>
+      <link>https://blog.guthnur.net/django-and-docker/</link>
+      <pubDate>Sun, 22 Nov 2015 19:03:28 -0800</pubDate>
+      
+      <guid>https://blog.guthnur.net/django-and-docker/</guid>
+      <description>
+
+&lt;p&gt;This guide shows you how to setup a Django Application and development environment using Docker and Postgres.&lt;/p&gt;
+
+&lt;h4 id=&#34;1-install-the-docker-toolbox:872107b178d0c51c73a0d80068754fa1&#34;&gt;1. Install the Docker Toolbox&lt;/h4&gt;
+
+&lt;p&gt;The first step is to install the &lt;a href=&#34;https://docs.docker.com/installation/&#34;&gt;docker toolbox&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;On this page, find your platform and run the installation. On a Mac, you&amp;rsquo;ll be installing Docker, Docker Compose, and Docker Machine. Docker Machine will use a Linux Virtual Machine to actually run Docker.&lt;/p&gt;
+
+&lt;h4 id=&#34;2-docker-quickstart-terminal-mac:872107b178d0c51c73a0d80068754fa1&#34;&gt;2. Docker Quickstart Terminal (Mac)&lt;/h4&gt;
+
+&lt;p&gt;If you&amp;rsquo;re using a Mac, you will want to start working with Docker by opening the Docker Quickstart Terminal. This will ensure that your environment is setup properly. Since Docker is actually running in a VM.&lt;/p&gt;
+
+&lt;h4 id=&#34;3-get-familiar-with-docker:872107b178d0c51c73a0d80068754fa1&#34;&gt;3. Get familiar with Docker&lt;/h4&gt;
+
+&lt;p&gt;For our Django app we are goign to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.&lt;/p&gt;
+
+&lt;p&gt;For this demo, you will want to create a directory to store all your files. I&amp;rsquo;ve created a directory called ~/build/django-docker. You can do this with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir -p ~/build/django-docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and go to this directory&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~/build/django-docker
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now create a file in this directory called Dockerfile&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vim Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the following to the Dockerfile:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM python:2.7
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /code
+WORKDIR /code
+ADD requirements.txt /code/
+RUN pip install -r requirements.txt
+ADD . /code/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;4-create-your-requirements-txt-file:872107b178d0c51c73a0d80068754fa1&#34;&gt;4. Create your requirements.txt file&lt;/h4&gt;
+
+&lt;p&gt;The requirements.txt file contains the python modules necessary to run your application. In this case when need to install Django and psycopg2 (postgres + python). The Dockerfile we created in the previous setup will install these required modules.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;touch requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And open this file to edit. Add the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;django
+psycopg2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;5-create-your-docker-compose-yml-file:872107b178d0c51c73a0d80068754fa1&#34;&gt;5. Create your docker-compose.yml file&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;touch docker-compose.yml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And open this file to edit. Add the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db:
+  image: postgres
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+    - &amp;quot;8000:8000&amp;quot;
+  links:
+    - db
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;6-create-your-django-project:872107b178d0c51c73a0d80068754fa1&#34;&gt;6. Create your Django project&lt;/h4&gt;
+
+&lt;p&gt;You&amp;rsquo;ll need to use the docker-compose run command to start your django project. Of course, if you&amp;rsquo;ve already got a project started this setup can be skipped. You might still find this helpful to read through.&lt;/p&gt;
+
+&lt;p&gt;In your docker-compose.yml file, we have specified the command we want to run as python manage.py runserver 0.0.0.0:8000. This is the command that will be run when we bring up our web container using docker-compose up. But before we can get to that point, we actually need a django project. To do this we will need to run a command against our web service using docker-compose run&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-compose run web django-admin.py startproject exampleproject .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You may already be familiar with djangos startproject command, but when using Docker we will have to run this command inside the of our container. Once you run this command you can run ls -l and take a look at the file that were created in your current directory. You will see that your project was created and manage.py was added, but both are owned by root. This is because the container runs as root. You&amp;rsquo;ll want to change the ownership by running sudo chown -R $USER:$USER .&lt;/p&gt;
+
+&lt;h4 id=&#34;7-configure-django-to-connect-to-the-database:872107b178d0c51c73a0d80068754fa1&#34;&gt;7. Configure Django to connect to the Database&lt;/h4&gt;
+
+&lt;p&gt;Django&amp;rsquo;s database settings are in the settings.py file located in your primary app directory &lt;code&gt;examplepoject/settings.py&lt;/code&gt; Go ahead and open this file to edit.&lt;/p&gt;
+
+&lt;p&gt;Search for DATABASES and ensure the configuration looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DATABASE = {
+  &#39;default&#39;: {
+    &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
+    &#39;NAME&#39;: &#39;postgres&#39;,
+    &#39;USER&#39;: &#39;postgres&#39;,
+    &#39;HOST&#39;: &#39;db&#39;,
+    &#39;PORT&#39;: 5342
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the hostname. If you look back at your docker-compose file, this is the name of the database service we&amp;rsquo;are creating. When we link the database container to the web container, we are able to access the container using the name of the service as the hostname.&lt;/p&gt;
+
+&lt;h4 id=&#34;8-run-docker-compose-up:872107b178d0c51c73a0d80068754fa1&#34;&gt;8. Run docker-compose up&lt;/h4&gt;
+
+&lt;p&gt;At this point we&amp;rsquo;re ready to take a look at our empty application. Run docker-compose up to start the django server.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-compose up
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you&amp;rsquo;re on a Mac you&amp;rsquo;ll need to grab the ip of your Docker virtual machine by running:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-machine ip default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;otherwise you can use localhost. In my case the ip is 192.168.99.100. So open a browser and visit &lt;a href=&#34;http://192.168.99.100:8000&#34;&gt;http://192.168.99.100:8000&lt;/a&gt;. Again if you look at the docker-compose file under the ports directive we are forwarding port 8000 from our container to port 8000 on our machine running docker.&lt;/p&gt;
+
+&lt;h4 id=&#34;9-add-data-persistence:872107b178d0c51c73a0d80068754fa1&#34;&gt;9. Add data persistence&lt;/h4&gt;
+
+&lt;p&gt;For development, you may want to add a presistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn&amp;rsquo;t start with any data. You&amp;rsquo;ll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it&amp;rsquo;s essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.&lt;/p&gt;
+
+&lt;p&gt;To do this, lets first create an image called pg_data. To do this we will need to create another Dockerfile. I normally create a directory called docker to manage my docker-related files. So this is what I&amp;rsquo;l do, but you can put the file wherever you&amp;rsquo;d like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir -p docker/dockerfiles/pg_data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then edit the file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd docker/dockerfiles/pg_data
+vim Dockerfile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add the following to the Dockerfile&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;FROM busybox
+VOLUME /var/lib/postgresql
+CMD [&amp;quot;true&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now save the file and go ahead and create the image:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker build -t pg_data .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Finally, navigate back to the root directory of this app, and edit the docker-compose.yml file. Add the following to mount our data only container.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+    - &amp;quot;8000:8000&amp;quot;
+  links:
+    - db
+db:
+  image: postgres
+  volumes_from:
+    - pg_data
+pg_data:
+  image: pg_data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;rsquo;ll see we added a pg_data service and we&amp;rsquo;re mounting a data volume from pg_Data onto our db container. So now, as you develop and create data, as long as you mount this data only container to your future postgres containers you will have persistent data.&lt;/p&gt;
+
+&lt;h4 id=&#34;10-running-tests:872107b178d0c51c73a0d80068754fa1&#34;&gt;10. Running tests&lt;/h4&gt;
+
+&lt;p&gt;Running test is fairly straight forward. You can run a basic test using the docker-compose run command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-compose run web python manage.py test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But what if you want to automate the test? I was recently inspired to automate a test in my deployment script. So when running my deployment script, I would first spin up a docker container, run tests, and if the tests pass I can continue with the deployment. Otherwise, we stop and fix the issues.&lt;/p&gt;
+
+&lt;p&gt;I create a test script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+python manage.py test --noinput 2&amp;gt; /var/log/test.log 1&amp;gt; /dev/null
+
+if [ $? -ne 0];then
+  cat /var/log/test.log
+  exit 1
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then in my deployment script I added the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;docker-compose run --rm web ./bin/test.sh
+
+if [ $? -ne 0 ];then
+  echo &amp;quot;Tests did not pass! Fix them!&amp;quot;
+  exit 1
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &amp;ndash;rm flag removes teh containers immediately after they stop.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Containers are not VMs</title>
