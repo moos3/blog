@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Deployment on Moos3</title>
-    <link>http://blog.guthnur.net/tags/deployment/</link>
+    <link>https://blog.guthnur.net/tags/deployment/</link>
     <description>Recent content in Deployment on Moos3</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
     <lastBuildDate>Mon, 13 Jul 2015 17:06:44 -0400</lastBuildDate>
-    <atom:link href="http://blog.guthnur.net/tags/deployment/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.guthnur.net/tags/deployment/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Auto Deployment using PHP and rabbitmq</title>
-      <link>http://blog.guthnur.net/autodeployment-using-rabbitmq/</link>
+      <link>https://blog.guthnur.net/autodeployment-using-rabbitmq/</link>
       <pubDate>Mon, 13 Jul 2015 17:06:44 -0400</pubDate>
       
-      <guid>http://blog.guthnur.net/autodeployment-using-rabbitmq/</guid>
+      <guid>https://blog.guthnur.net/autodeployment-using-rabbitmq/</guid>
       <description>&lt;p&gt;So for work for the past 3 weeks we took part of the 18F BPA contest for the US Government. I was tasked with building a docker setup that when &lt;a href=&#34;http://codeship.com&#34;&gt;codeship&lt;/a&gt; completed testing and building that it would automatically updated containers local code.
 So I did this with a rabbitmq server using exchange queues. So the way this worked is this codeship would build the code, run all the test, push the update to a production branch. The way codeships webhook system works is this, it hits the end point every step. So this means we have
 to listen for a status of success in order to make our nodes update. The webhook end in codeship points to a url for the site. Which checks the API key for the arbeider end point, codeship project id and for the message. This was a quick and dirty way to do it with out getting super complex.
@@ -32,7 +32,7 @@ I know your saying well your sending that in plain text. Yes I&amp;rsquo;m aware
 one week to do this in.&lt;/p&gt;
 
 &lt;p&gt;The flow of the application is this:
-&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;
+&lt;img src=&#34;https://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;
 &lt;/p&gt;
 
 &lt;p&gt;As you can see its extremely simple. It can be extended to do a lot more, such as sending singals to services to all nodes, or individal nodes. I&amp;rsquo;m hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment.&lt;/p&gt;
