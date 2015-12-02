@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" letsencrypt yay &middot;  Moos3" />
+  	<meta property="og:site_name" content="Moos3" />
+  	<meta property="og:url" content="https://blog.guthnur.net/letsencrypt-yay/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-11-15T13:10:41-08:00" />
+
+    
+    <meta property="og:article:tag" content="technology" />
+    
+    <meta property="og:article:tag" content="encryption" />
+    
+    
+
+  <title>
+     letsencrypt yay &middot;  Moos3
+  </title>
+
+    <meta name="description" content="Knowledge is power but Openly Shared knowledge is real power!" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="https://blog.guthnur.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="https://blog.guthnur.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="https://blog.guthnur.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="https://blog.guthnur.net/index.xml" rel="alternate" type="application/rss+xml" title="Moos3" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.14" />
+
+    <link rel="canonical" href="https://blog.guthnur.net/letsencrypt-yay/" />
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://blog.guthnur.net/about/">About Me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://blog.guthnur.net/">Blog</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://blog.guthnur.net/about">About Me &amp; Contact Info</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/moos3">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/moos3">Twitter timeline</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="https://blog.guthnur.net/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="https://blog.guthnur.net/"><img src="https://blog.guthnur.net/images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">letsencrypt yay</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-11-15T13:10:41-08:00">
+            Nov 15, 2015
+          </time>
+        
+         
+          <span class="post-tag small"><a href="https://blog.guthnur.net/tags/technology/">#technology</a></span>
+         
+          <span class="post-tag small"><a href="https://blog.guthnur.net/tags/encryption/">#encryption</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      
+
+<h3 id="letsencrypt:ae187b386f0c86f5be8053e8af7b56b5">letsencrypt</h3>
+
+<p>This is a amazing product that is opensource. I recently decided that this was going to be the way I get my ssl certificates for everything I do. I was
+lucky to get into the beta invitation only. It works great. Every 90 days you have regen your certificates but thats not a big deal because they give you
+tools to do it.</p>
+
+<h4 id="setup:ae187b386f0c86f5be8053e8af7b56b5">Setup</h4>
+
+<p>So you get this going to your going to need to check out their repo.</p>
+
+<pre><code>git clone https://github.com/letsencrypt/letsencrypt
+  cd letsencrypt
+  ./letsencrypt-auto --server \
+      https://acme-v01.api.letsencrypt.org/directory --help
+</code></pre>
+
+<p>Next after you get your domains submitted for the beta and registered you will want to do the following commands. Heres how for apache:</p>
+
+<pre><code>./letsencrypt-auto --apache --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+</code></pre>
+
+<p>For standalone Apache you would do the following:</p>
+
+<pre><code>./letsencrypt-auto certonly -a standalone \
+  -d example.com -d www.example.com \
+  --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+</code></pre>
+
+<p>If your like me and use nginx for your server you will need to do the following to get it working:</p>
+
+<pre><code>./letsencrypt-auto certonly -a manual -d www.stbtx.com -d example.com -d blog.example.com --webroot-path /var/www/html --server https://acme-v01.api.letsencrypt.org/directory --agree-dev-preview
+</code></pre>
+
+<p>Then you will need to do the following openssl command:</p>
+
+<pre><code>openssl dhparam -out dhparam.pem 4096
+</code></pre>
+
+<p>Then in the Nginx server block add the following SSL configuration:</p>
+
+<pre><code># SSL configuration
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+	ssl_certificate /etc/letsencrypt/live/{domain}/fullchain.pem;
+    	ssl_certificate_key /etc/letsencrypt/live/{domain}/privkey.pem;
+    	ssl_session_timeout 1d;
+    	ssl_session_cache shared:SSL:10m;
+    	ssl_session_tickets off;
+	    # openssl dhparam -out dhparam.pem 2048
+    	ssl_dhparam /etc/nginx/dhparam.pem;
+
+    	ssl_protocols TLSv1.1 TLSv1.2;
+    	ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK';
+    	ssl_prefer_server_ciphers on;
+
+    	add_header Strict-Transport-Security max-age=15768000;
+
+    	ssl_stapling on;
+    	ssl_stapling_verify on;
+
+    	## verify chain of trust of OCSP response using Root CA and Intermediate certs
+    	#ssl_trusted_certificate /path/to/root_CA_cert_plus_intermediates; ## Addition CA certs
+    	ssl_trusted_certificate /etc/letsencrypt/live/{domain}/chain.pem;
+    	resolver 8.8.8.8 8.8.4.4 valid=86400;
+	resolver_timeout 10;
+</code></pre>
+
+<p>Restart your nginx server and you will be golden. This will support HSTS, SPDY and SSL.</p>
+
+<p>There you have deployed letencrypt certificates to your server woot! :) Great job!</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="https://blog.guthnur.net/" style="background-image: url(https://blog.guthnur.net/images/logo.png)"><span class="hidden">Richard Genthner's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="https://blog.guthnur.net/">Richard Genthner</a></h4>
+  
+  <p>System Engineer, Open source enthusiast.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Maine, USA</span>
+    <span class="author-link icon-link"><a href="http://guthnur.net">http://guthnur.net</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=letsencrypt%20yay&amp;url=https%3a%2f%2fblog.guthnur.net%2fletsencrypt-yay%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fblog.guthnur.net%2fletsencrypt-yay%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=https%3a%2f%2fblog.guthnur.net%2fletsencrypt-yay%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'moos3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Moos3</a> All rights reserved - 2015</section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="https://blog.guthnur.net/js/jquery.js"></script>
+    <script type="text/javascript" src="https://blog.guthnur.net/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="https://blog.guthnur.net/js/index.js"></script>
+
+</body>
+</html>
+
