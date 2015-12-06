@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Containers on Moos3</title>
-    <link>https://blog.guthnur.net/tags/containers/</link>
+    <link>http://blog.guthnur.net/tags/containers/</link>
     <description>Recent content in Containers on Moos3</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
     <lastBuildDate>Sun, 22 Nov 2015 19:03:28 -0800</lastBuildDate>
-    <atom:link href="https://blog.guthnur.net/tags/containers/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.guthnur.net/tags/containers/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>django and docker</title>
-      <link>https://blog.guthnur.net/django-and-docker/</link>
+      <link>http://blog.guthnur.net/django-and-docker/</link>
       <pubDate>Sun, 22 Nov 2015 19:03:28 -0800</pubDate>
       
-      <guid>https://blog.guthnur.net/django-and-docker/</guid>
+      <guid>http://blog.guthnur.net/django-and-docker/</guid>
       <description>
 
 &lt;p&gt;This guide shows you how to setup a Django Application and development environment using Docker and Postgres.&lt;/p&gt;
@@ -221,10 +221,10 @@ fi
     
     <item>
       <title>Containers are not VMs</title>
-      <link>https://blog.guthnur.net/containers-are-not-vms/</link>
+      <link>http://blog.guthnur.net/containers-are-not-vms/</link>
       <pubDate>Sat, 18 Jul 2015 23:53:49 -0400</pubDate>
       
-      <guid>https://blog.guthnur.net/containers-are-not-vms/</guid>
+      <guid>http://blog.guthnur.net/containers-are-not-vms/</guid>
       <description>
 
 &lt;p&gt;So lately I have been digging deeper and deeper into containers and there

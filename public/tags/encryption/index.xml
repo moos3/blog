@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Encryption on Moos3</title>
-    <link>https://blog.guthnur.net/tags/encryption/</link>
+    <link>http://blog.guthnur.net/tags/encryption/</link>
     <description>Recent content in Encryption on Moos3</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
     <lastBuildDate>Sun, 15 Nov 2015 13:10:41 -0800</lastBuildDate>
-    <atom:link href="https://blog.guthnur.net/tags/encryption/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://blog.guthnur.net/tags/encryption/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>letsencrypt yay</title>
-      <link>https://blog.guthnur.net/letsencrypt-yay/</link>
+      <link>http://blog.guthnur.net/letsencrypt-yay/</link>
       <pubDate>Sun, 15 Nov 2015 13:10:41 -0800</pubDate>
       
-      <guid>https://blog.guthnur.net/letsencrypt-yay/</guid>
+      <guid>http://blog.guthnur.net/letsencrypt-yay/</guid>
       <description>
 
 &lt;h3 id=&#34;letsencrypt:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;letsencrypt&lt;/h3&gt;

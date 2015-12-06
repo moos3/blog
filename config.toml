@@ -1,4 +1,4 @@
-baseurl = "https://blog.guthnur.net/"
+baseurl = "http://blog.guthnur.net/"
 languageCode = "en-us"
 title = "Moos3"
 paginate = 5
