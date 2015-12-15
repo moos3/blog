@@ -598,7 +598,8 @@ I know your saying well your sending that in plain text. Yes I&amp;rsquo;m aware
 one week to do this in.&lt;/p&gt;
 
 &lt;p&gt;The flow of the application is this:
-&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;http://blog.guthnur.net/images/workers-diagram.png&#34; alt=&#34;Image of the Workflow&#34; /&gt;
+&lt;/p&gt;
 
 &lt;p&gt;As you can see its extremely simple. It can be extended to do a lot more, such as sending signals to services to all nodes, or individual nodes. I&amp;rsquo;m hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment.&lt;/p&gt;
 </description>
