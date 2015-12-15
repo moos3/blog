@@ -28,4 +28,4 @@ one week to do this in.
 The flow of the application is this:
 ![Image of the Workflow](/images/workers-diagram.png)
 
-As you can see its extremely simple. It can be extended to do a lot more, such as sending singals to services to all nodes, or individal nodes. I'm hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment. 
+As you can see its extremely simple. It can be extended to do a lot more, such as sending signals to services to all nodes, or individual nodes. I'm hoping in my next revision that I will be able to get moving these to classes instead of random structured functions. Please contribute back to it and feel free to use it as a base for what you need in your environment. 

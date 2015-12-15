@@ -167,7 +167,7 @@
 
 <h4 id="3-get-familiar-with-docker:872107b178d0c51c73a0d80068754fa1">3. Get familiar with Docker</h4>
 
-<p>For our Django app we are goign to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.</p>
+<p>For our Django app we are going to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.</p>
 
 <p>For this demo, you will want to create a directory to store all your files. I&rsquo;ve created a directory called ~/build/django-docker. You can do this with:</p>
 
@@ -274,7 +274,7 @@ web:
 
 <h4 id="9-add-data-persistence:872107b178d0c51c73a0d80068754fa1">9. Add data persistence</h4>
 
-<p>For development, you may want to add a presistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn&rsquo;t start with any data. You&rsquo;ll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it&rsquo;s essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.</p>
+<p>For development, you may want to add a persistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn&rsquo;t start with any data. You&rsquo;ll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it&rsquo;s essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.</p>
 
 <p>To do this, lets first create an image called pg_data. To do this we will need to create another Dockerfile. I normally create a directory called docker to manage my docker-related files. So this is what I&rsquo;l do, but you can put the file wherever you&rsquo;d like:</p>
 
@@ -350,7 +350,7 @@ if [ $? -ne 0 ];then
 fi
 </code></pre>
 
-<p>The &ndash;rm flag removes teh containers immediately after they stop.</p>
+<p>The &ndash;rm flag removes the containers immediately after they stop.</p>
 
     </section>
 

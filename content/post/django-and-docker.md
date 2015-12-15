@@ -21,7 +21,7 @@ On this page, find your platform and run the installation. On a Mac, you'll be i
 If you're using a Mac, you will want to start working with Docker by opening the Docker Quickstart Terminal. This will ensure that your environment is setup properly. Since Docker is actually running in a VM.
 
 #### 3. Get familiar with Docker
-For our Django app we are goign to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.
+For our Django app we are going to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.
 
 For this demo, you will want to create a directory to store all your files. I've created a directory called ~/build/django-docker. You can do this with:
 ```
@@ -116,7 +116,7 @@ docker-machine ip default
 otherwise you can use localhost. In my case the ip is 192.168.99.100. So open a browser and visit http://192.168.99.100:8000. Again if you look at the docker-compose file under the ports directive we are forwarding port 8000 from our container to port 8000 on our machine running docker.
 
 #### 9. Add data persistence
-For development, you may want to add a presistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn't start with any data. You'll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it's essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.
+For development, you may want to add a persistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn't start with any data. You'll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it's essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.
 
 To do this, lets first create an image called pg_data. To do this we will need to create another Dockerfile. I normally create a directory called docker to manage my docker-related files. So this is what I'l do, but you can put the file wherever you'd like:
 ```
@@ -183,4 +183,4 @@ if [ $? -ne 0 ];then
   exit 1
 fi
 ```
-The --rm flag removes teh containers immediately after they stop.
+The --rm flag removes the containers immediately after they stop.
