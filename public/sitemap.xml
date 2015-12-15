@@ -2,53 +2,53 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.guthnur.net/</loc>
+    <loc>http://blog.guthnur.net/</loc>
     <lastmod>2015-11-22T19:03:28-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/django-and-docker/</loc>
+    <loc>http://blog.guthnur.net/django-and-docker/</loc>
     <lastmod>2015-11-22T19:03:28-08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/start-up-story/</loc>
+    <loc>http://blog.guthnur.net/start-up-story/</loc>
     <lastmod>2015-11-15T14:22:57-08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/letsencrypt-yay/</loc>
+    <loc>http://blog.guthnur.net/letsencrypt-yay/</loc>
     <lastmod>2015-11-15T13:10:41-08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/dstar-great-time/</loc>
+    <loc>http://blog.guthnur.net/dstar-great-time/</loc>
     <lastmod>2015-09-21T12:29:04-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/with-change-comes-adventure/</loc>
+    <loc>http://blog.guthnur.net/with-change-comes-adventure/</loc>
     <lastmod>2015-09-18T12:26:38-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/containers-are-not-vms/</loc>
+    <loc>http://blog.guthnur.net/containers-are-not-vms/</loc>
     <lastmod>2015-07-18T23:53:49-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/autodeployment-using-rabbitmq/</loc>
+    <loc>http://blog.guthnur.net/autodeployment-using-rabbitmq/</loc>
     <lastmod>2015-07-13T17:06:44-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/new-site/</loc>
+    <loc>http://blog.guthnur.net/new-site/</loc>
     <lastmod>2015-07-13T15:11:04-04:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.guthnur.net/about/</loc>
+    <loc>http://blog.guthnur.net/about/</loc>
     <lastmod>2014-01-01T20:41:11-06:00</lastmod>
   </url>
   
