@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" kubernetes installation on ubuntu &middot;  Moos3" />
+  	<meta property="og:site_name" content="Moos3" />
+  	<meta property="og:url" content="http://blog.guthnur.net/kubernetes-ubuntu-installation/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2015-12-22T11:32:51-08:00" />
+
+    
+    <meta property="og:article:tag" content="technology" />
+    
+    <meta property="og:article:tag" content="docker" />
+    
+    <meta property="og:article:tag" content="kubernetes" />
+    
+    <meta property="og:article:tag" content="cloud" />
+    
+    
+
+  <title>
+     kubernetes installation on ubuntu &middot;  Moos3
+  </title>
+
+    <meta name="description" content="Knowledge is power but Openly Shared knowledge is real power!" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://blog.guthnur.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://blog.guthnur.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="http://blog.guthnur.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://blog.guthnur.net/index.xml" rel="alternate" type="application/rss+xml" title="Moos3" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.14" />
+
+    <link rel="canonical" href="http://blog.guthnur.net/kubernetes-ubuntu-installation/" />
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about/">About Me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/">Blog</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about">About Me &amp; Contact Info</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/moos3">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/moos3">Twitter timeline</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://blog.guthnur.net/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="http://blog.guthnur.net/"><img src="http://blog.guthnur.net/images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">kubernetes installation on ubuntu</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2015-12-22T11:32:51-08:00">
+            Dec 22, 2015
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/technology/">#technology</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/docker/">#docker</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/kubernetes/">#kubernetes</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/cloud/">#cloud</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      
+
+<p>In this article I will show you how to setup kubernetes on ubuntu 14.04 or newer. I recently had to do this for a project.
+Below are the steps to complete this with a example pod.</p>
+
+<h3 id="steps:2b6cafb974c1a6e3cbf518b2dbee12bf">steps</h3>
+
+<ol>
+<li>Become Root</li>
+</ol>
+
+<pre><code>sudo su -
+</code></pre>
+
+<ol>
+<li>Lets get the pre-requisite software packages installed</li>
+</ol>
+
+<pre><code>apt-get update
+apt-get install ssh
+apt-get install docker.io
+apt-get install curl
+apt-get install git
+</code></pre>
+
+<ol>
+<li>Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)</li>
+</ol>
+
+<pre><code>$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+e1:c9:a5:dd:80:ee:cd:f0:c8:11:6c:a5:d4:ba:ff:cc root@vkohli-Latitude-E7440
+The key's randomart image is:
++--[ RSA 2048]----+
+|          ...    |
+|         + o.    |
+|        o B.     |
+|       + B..+    |
+|        S o..    |
+|       . *..     |
+|        . *.     |
+|         .  .o   |
+|             .E  |
++-----------------+
+</code></pre>
+
+<ol>
+<li>Copy the ssh id_rsa key locally</li>
+</ol>
+
+<pre><code>$ ssh-copy-id -i /root/.ssh/id_rsa.pub 127.0.0.1
+</code></pre>
+
+<p>In case this fails you can do it by hand. By doing:</p>
+
+<pre><code>$ cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys
+</code></pre>
+
+<ol>
+<li>Validate the password-less ssh-login</li>
+</ol>
+
+<pre><code>$ ssh root@127.0.0.1
+root@vkohli-virtual-machine:~$ exit
+logout
+Connection to 127.0.0.1 closed
+</code></pre>
+
+<ol>
+<li>Get the Kubernetes release bundle from the official github repository</li>
+</ol>
+
+<pre><code>$ wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v1.0.1/kubernetes.tar.gz
+</code></pre>
+
+<ol>
+<li>Untar the Kubernetes bundle in the same directory</li>
+</ol>
+
+<pre><code>$ tar -xvf kubernetes.tar.gz
+</code></pre>
+
+<ol>
+<li>We will build the binaries of Kubernetes code specifically for ubuntu cluster</li>
+</ol>
+
+<pre><code>$ cd kubernetes/cluster/ubuntu
+</code></pre>
+
+<p>Execute the following shell script</p>
+
+<pre><code>$ ./build.sh
+Download flannel release ...
+Flannel version is 0.4.0
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+100   411    0   411    0     0    252      0 --:--:--  0:00:01 --:--:--   252
+100 2393k  100 2393k    0     0   204k      0  0:00:11  0:00:11 --:--:--  388k
+Download etcd release ...
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   410    0   410    0     0    272      0 --:--:--  0:00:01 --:--:--   272
+100 3713k  100 3713k    0     0   286k      0  0:00:12  0:00:12 --:--:--  496k
+Download kubernetes release ...
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                Dload  Upload   Total   Spent    Left  Speed
+100   396    0   396    0     0    279      0 --:--:--  0:00:01 --:--:--   279
+100 97.8M  100 97.8M    0     0   715k      0  0:02:20  0:02:20 --:--:--  501k
+~/kubernetes/cluster/ubuntu/kubernetes/server ~/kubernetes/cluster/ubuntu
+~/kubernetes/cluster/ubuntu
+Done! All your commands locate in ./binaries dir
+</code></pre>
+
+<p>This shell script will download and build the latest version of K8s, etcd and flannel binaries which can be found at following location;</p>
+
+<pre><code>$ cd binaries
+$ ls
+kubectl  master  minion
+</code></pre>
+
+<p>kubectl binary controls the Kubernetes cluster manager and the folder master &amp; minion contains the binaries built for the purpose of configuring K8s master and node respectively.</p>
+
+<ol>
+<li>Configure the cluster information by editing only the following parameters of the file <code>cluster/ubuntu/config-default.sh</code> in the editor of your choice.</li>
+</ol>
+
+<pre><code>$ cd
+$ vi kubernetes/cluster/ubuntu/config-default.sh
+export nodes=&quot;root@127.0.0.1&quot;
+export roles=&quot;ai&quot;
+export NUM_MINIONS=${NUM_MINIONS:-1}
+</code></pre>
+
+<p>Only update the above mentioned information in the file, rest of the configuration will remain as it is. The first variable nodes defines all the cluster nodes, in our case same machine will be configured as master and node so it contains only one entry.The role below “ai” specifies that same machine will act as master, “a” stands for master and “i” stands for node.</p>
+
+<ol>
+<li>Now, we will be starting the cluster with the following command;</li>
+</ol>
+
+<pre><code>$ cd kubernetes/cluster
+$ KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
+Starting cluster using provider: ubuntu
+... calling verify-prereqs
+... calling kube-up
+FLANNEL_NET
+172.16.0.0/16
+Deploying master and minion on machine 127.0.0.1
+
+config-default.sh                                                                                100% 2904     2.8KB/s   00:00
+util.sh                                                                                          100%   13KB  13.4KB/s   00:00
+flanneld.conf                                                                                    100%  569     0.6KB/s   00:00
+kube-controller-manager.conf                                                                     100%  746     0.7KB/s   00:00
+kube-apiserver.conf                                                                              100%  676     0.7KB/s   00:00
+etcd.conf                                                                                        100%  576     0.6KB/s   00:00
+kube-scheduler.conf                                                                              100%  676     0.7KB/s   00:00
+kube-apiserver                                                                                   100% 2358     2.3KB/s   00:00
+kube-controller-manager                                                                          100% 2672     2.6KB/s   00:00
+etcd                                                                                             100% 2073     2.0KB/s   00:00
+flanneld                                                                                         100% 2159     2.1KB/s   00:00
+kube-scheduler                                                                                   100% 2360     2.3KB/s   00:00
+reconfDocker.sh                                                                                  100% 1493     1.5KB/s   00:00
+kube-proxy.conf                                                                                  100%  648     0.6KB/s   00:00
+flanneld.conf                                                                                    100%  569     0.6KB/s   00:00
+kubelet.conf                                                                                     100%  634     0.6KB/s   00:00
+etcd.conf                                                                                        100%  576     0.6KB/s   00:00
+kube-proxy                                                                                       100% 2230     2.2KB/s   00:00
+etcd                                                                                             100% 2073     2.0KB/s   00:00
+flanneld                                                                                         100% 2159     2.1KB/s   00:00
+kubelet                                                                                          100% 2162     2.1KB/s   00:00
+kube-apiserver                                                                                   100%   34MB  33.7MB/s   00:00
+kube-controller-manager                                                                          100%   26MB  26.2MB/s   00:00
+etcdctl                                                                                          100% 6041KB   5.9MB/s   00:00
+etcd                                                                                             100% 6494KB   6.3MB/s   00:00
+flanneld                                                                                         100% 8695KB   8.5MB/s   00:00
+kube-scheduler                                                                                   100%   17MB  17.0MB/s   00:00
+kube-proxy                                                                                       100%   17MB  16.8MB/s   00:00
+etcdctl                                                                                          100% 6041KB   5.9MB/s   00:00
+etcd                                                                                             100% 6494KB   6.3MB/s   00:00
+flanneld                                                                                         100% 8695KB   8.5MB/s   00:00
+kubelet                                                                                          100%   33MB  33.2MB/s   00:01
+[sudo] password to copy files and start node:
+etcd start/running, process 1125
+Connection to 127.0.0.1 closed.
+Validating master
+Validating root@127.0.0.1
+
+Kubernetes cluster is running.  The master is running at:
+
+  http://127.0.0.1
+
+FLANNEL_NET
+172.16.0.0/16
+Using master 127.0.0.1
+Wrote config for ubuntu to /home/root/.kube/config
+... calling validate-cluster
+
+Waiting for 1 ready nodes. 0 ready nodes, 0 registered. Retrying.
+Found 1 nodes.
+        NAME        LABELS                             STATUS
+1       127.0.0.1   kubernetes.io/hostname=127.0.0.1   Ready
+Validate output:
+NAME                 STATUS    MESSAGE   ERROR
+scheduler            Healthy   ok        nil
+etcd-0               Healthy   {&quot;action&quot;:&quot;get&quot;,&quot;node&quot;:{&quot;dir&quot;:true,&quot;nodes&quot;:[{&quot;key&quot;:&quot;/registry&quot;,&quot;dir&quot;:true,&quot;modifiedIndex&quot;:3,&quot;createdIndex&quot;:3},{&quot;key&quot;:&quot;/coreos.com&quot;,&quot;dir&quot;:true,&quot;modifiedIndex&quot;:16,&quot;createdIndex&quot;:16}]}}
+                     nil
+controller-manager   Healthy   ok        nil
+Cluster validation succeeded
+Done, listing cluster services:
+
+Kubernetes master is running at http://127.0.0.1:8080
+</code></pre>
+
+<p>See Part 2 for setting up the server for starting up on reboot.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://blog.guthnur.net/" style="background-image: url(http://blog.guthnur.net/images/logo.png)"><span class="hidden">Richard Genthner's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://blog.guthnur.net/">Richard Genthner</a></h4>
+  
+  <p>System Engineer, Open source enthusiast.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Maine, USA</span>
+    <span class="author-link icon-link"><a href="http://guthnur.net">http://guthnur.net</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=kubernetes%20installation%20on%20ubuntu&amp;url=http%3a%2f%2fblog.guthnur.net%2fkubernetes-ubuntu-installation%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fblog.guthnur.net%2fkubernetes-ubuntu-installation%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fblog.guthnur.net%2fkubernetes-ubuntu-installation%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'moos3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Moos3</a> All rights reserved - 2015</section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/index.js"></script>
+
+</body>
+</html>
+
