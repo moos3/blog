@@ -7,8 +7,33 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Tue, 22 Dec 2015 11:32:51 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Mar 2016 19:49:29 -0500</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>back to good engineering</title>
+      <link>http://blog.guthnur.net/good-engineer/</link>
+      <pubDate>Sat, 12 Mar 2016 19:49:29 -0500</pubDate>
+      
+      <guid>http://blog.guthnur.net/good-engineer/</guid>
+      <description>
+
+&lt;h3 id=&#34;new-employment:bbc45e9cff3753a827d260aaadb41218&#34;&gt;New Employment&lt;/h3&gt;
+
+&lt;p&gt;To begin lets talk about my new employment. I&amp;rsquo;m working for a startup in St Paul. We are doing some really cool stuff with chef and vagrant on my team to manage
+all of our infrastructure as we migrate from &lt;a href=&#34;https://www.linode.com&#34;&gt;linode&lt;/a&gt; to &lt;a href=&#34;https://aws.amazon.com&#34;&gt;Amazon AWS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;good-engineering:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Good Engineering&lt;/h3&gt;
+
+&lt;p&gt;So any company that is starting up these dates are all about the microservices. Piece of advice don&amp;rsquo;t do microservices from the get go. Focus on just getting the application near prefect first then you can do a refactor break it down. Design your front seperate from your backend. So your main application should just be a api and then give that information to the designers and js developers. This is extremely important if you plan on doing a mobile application at somepoint. This will keep the functionality the same between the web ui and the mobile ui.&lt;/p&gt;
+
+&lt;h3 id=&#34;automation:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Automation&lt;/h3&gt;
+
+&lt;p&gt;When it comes your infrastucture automate everything from the begining. This helps scale but make sure that you write in such away that you not locked into a vendor. You should make the vendor pieces just be part of the abstract layer. This will help you launch your infra in aws, digitalocean or any other place. This will also help you create mockup environments for your developers to have mini labs on their local machines.&lt;/p&gt;
+
+&lt;p&gt;Heres to a good future and automating the world!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>kubernetes installation on ubuntu</title>
@@ -24,26 +49,21 @@ Below are the steps to complete this with a example pod.&lt;/p&gt;
 &lt;h3 id=&#34;steps:2b6cafb974c1a6e3cbf518b2dbee12bf&#34;&gt;steps&lt;/h3&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Become Root&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Become Root&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;sudo su -
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Lets get the pre-requisite software packages installed&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Lets get the pre-requisite software packages installed&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;apt-get update
 apt-get install ssh
 apt-get install docker.io
 apt-get install curl
 apt-get install git
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa
 Generating public/private rsa key pair.
@@ -66,14 +86,13 @@ The key&#39;s randomart image is:
 |         .  .o   |
 |             .E  |
 +-----------------+
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Copy the ssh id_rsa key locally&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Copy the ssh id_rsa key locally&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ ssh-copy-id -i /root/.ssh/id_rsa.pub 127.0.0.1
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;In case this fails you can do it by hand. By doing:&lt;/p&gt;
 
@@ -81,37 +100,31 @@ The key&#39;s randomart image is:
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Validate the password-less ssh-login&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Validate the password-less ssh-login&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ ssh root@127.0.0.1
 root@vkohli-virtual-machine:~$ exit
 logout
 Connection to 127.0.0.1 closed
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Get the Kubernetes release bundle from the official github repository&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Get the Kubernetes release bundle from the official github repository&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v1.0.1/kubernetes.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;Untar the Kubernetes bundle in the same directory&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;Untar the Kubernetes bundle in the same directory&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ tar -xvf kubernetes.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;ol&gt;
-&lt;li&gt;We will build the binaries of Kubernetes code specifically for ubuntu cluster&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;&lt;p&gt;We will build the binaries of Kubernetes code specifically for ubuntu cluster&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ cd kubernetes/cluster/ubuntu
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Execute the following shell script&lt;/p&gt;
+&lt;p&gt;Execute the following shell script&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;pre&gt;&lt;code&gt;$ ./build.sh
 Download flannel release ...
@@ -145,32 +158,32 @@ kubectl  master  minion
 &lt;p&gt;kubectl binary controls the Kubernetes cluster manager and the folder master &amp;amp; minion contains the binaries built for the purpose of configuring K8s master and node respectively.&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Configure the cluster information by editing only the following parameters of the file &lt;code&gt;cluster/ubuntu/config-default.sh&lt;/code&gt; in the editor of your choice.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cd
+&lt;li&gt;Configure the cluster information by editing only the following parameters of the file &lt;code&gt;cluster/ubuntu/config-default.sh&lt;/code&gt; in the editor of your choice.
+&lt;code&gt;
+$ cd
 $ vi kubernetes/cluster/ubuntu/config-default.sh
 export nodes=&amp;quot;root@127.0.0.1&amp;quot;
 export roles=&amp;quot;ai&amp;quot;
 export NUM_MINIONS=${NUM_MINIONS:-1}
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Only update the above mentioned information in the file, rest of the configuration will remain as it is. The first variable nodes defines all the cluster nodes, in our case same machine will be configured as master and node so it contains only one entry.The role below “ai” specifies that same machine will act as master, “a” stands for master and “i” stands for node.&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Now, we will be starting the cluster with the following command;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cd kubernetes/cluster
+&lt;li&gt;Now, we will be starting the cluster with the following command;
+```
+$ cd kubernetes/cluster
 $ KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
 Starting cluster using provider: ubuntu
-... calling verify-prereqs
-... calling kube-up
+&amp;hellip; calling verify-prereqs
+&amp;hellip; calling kube-up
 FLANNEL_NET
 172.16.0.0/16
-Deploying master and minion on machine 127.0.0.1
+Deploying master and minion on machine 127.0.0.1&lt;/li&gt;
+&lt;/ol&gt;
 
-config-default.sh                                                                                100% 2904     2.8KB/s   00:00
+&lt;p&gt;config-default.sh                                                                                100% 2904     2.8KB/s   00:00
 util.sh                                                                                          100%   13KB  13.4KB/s   00:00
 flanneld.conf                                                                                    100%  569     0.6KB/s   00:00
 kube-controller-manager.conf                                                                     100%  746     0.7KB/s   00:00
@@ -206,33 +219,33 @@ kubelet                                                                         
 etcd start/running, process 1125
 Connection to 127.0.0.1 closed.
 Validating master
-Validating root@127.0.0.1
+Validating root@127.0.0.1&lt;/p&gt;
 
-Kubernetes cluster is running.  The master is running at:
+&lt;p&gt;Kubernetes cluster is running.  The master is running at:&lt;/p&gt;
 
-  http://127.0.0.1
+&lt;p&gt;&lt;a href=&#34;http://127.0.0.1&#34;&gt;http://127.0.0.1&lt;/a&gt;&lt;/p&gt;
 
-FLANNEL_NET
+&lt;p&gt;FLANNEL_NET
 172.16.0.0/16
 Using master 127.0.0.1
 Wrote config for ubuntu to /home/root/.kube/config
-... calling validate-cluster
+&amp;hellip; calling validate-cluster&lt;/p&gt;
 
-Waiting for 1 ready nodes. 0 ready nodes, 0 registered. Retrying.
+&lt;p&gt;Waiting for 1 ready nodes. 0 ready nodes, 0 registered. Retrying.
 Found 1 nodes.
         NAME        LABELS                             STATUS
 1       127.0.0.1   kubernetes.io/hostname=127.0.0.1   Ready
 Validate output:
 NAME                 STATUS    MESSAGE   ERROR
 scheduler            Healthy   ok        nil
-etcd-0               Healthy   {&amp;quot;action&amp;quot;:&amp;quot;get&amp;quot;,&amp;quot;node&amp;quot;:{&amp;quot;dir&amp;quot;:true,&amp;quot;nodes&amp;quot;:[{&amp;quot;key&amp;quot;:&amp;quot;/registry&amp;quot;,&amp;quot;dir&amp;quot;:true,&amp;quot;modifiedIndex&amp;quot;:3,&amp;quot;createdIndex&amp;quot;:3},{&amp;quot;key&amp;quot;:&amp;quot;/coreos.com&amp;quot;,&amp;quot;dir&amp;quot;:true,&amp;quot;modifiedIndex&amp;quot;:16,&amp;quot;createdIndex&amp;quot;:16}]}}
+etcd-0               Healthy   {&amp;ldquo;action&amp;rdquo;:&amp;ldquo;get&amp;rdquo;,&amp;ldquo;node&amp;rdquo;:{&amp;ldquo;dir&amp;rdquo;:true,&amp;ldquo;nodes&amp;rdquo;:[{&amp;ldquo;key&amp;rdquo;:&amp;ldquo;/registry&amp;rdquo;,&amp;ldquo;dir&amp;rdquo;:true,&amp;ldquo;modifiedIndex&amp;rdquo;:3,&amp;ldquo;createdIndex&amp;rdquo;:3},{&amp;ldquo;key&amp;rdquo;:&amp;ldquo;/coreos.com&amp;rdquo;,&amp;ldquo;dir&amp;rdquo;:true,&amp;ldquo;modifiedIndex&amp;rdquo;:16,&amp;ldquo;createdIndex&amp;rdquo;:16}]}}
                      nil
 controller-manager   Healthy   ok        nil
 Cluster validation succeeded
-Done, listing cluster services:
+Done, listing cluster services:&lt;/p&gt;
 
-Kubernetes master is running at http://127.0.0.1:8080
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Kubernetes master is running at &lt;a href=&#34;http://127.0.0.1:8080&#34;&gt;http://127.0.0.1:8080&lt;/a&gt;
+```&lt;/p&gt;
 
 &lt;p&gt;See Part 2 for setting up the server for starting up on reboot.&lt;/p&gt;
 </description>

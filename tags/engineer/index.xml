@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Engineer on Moos3</title>
+    <link>http://blog.guthnur.net/tags/engineer/</link>
+    <description>Recent content in Engineer on Moos3</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>All rights reserved - 2015</copyright>
+    <lastBuildDate>Sat, 12 Mar 2016 19:49:29 -0500</lastBuildDate>
+    <atom:link href="http://blog.guthnur.net/tags/engineer/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>back to good engineering</title>
+      <link>http://blog.guthnur.net/good-engineer/</link>
+      <pubDate>Sat, 12 Mar 2016 19:49:29 -0500</pubDate>
+      
+      <guid>http://blog.guthnur.net/good-engineer/</guid>
+      <description>
+
+&lt;h3 id=&#34;new-employment:bbc45e9cff3753a827d260aaadb41218&#34;&gt;New Employment&lt;/h3&gt;
+
+&lt;p&gt;To begin lets talk about my new employment. I&amp;rsquo;m working for a startup in St Paul. We are doing some really cool stuff with chef and vagrant on my team to manage
+all of our infrastructure as we migrate from &lt;a href=&#34;https://www.linode.com&#34;&gt;linode&lt;/a&gt; to &lt;a href=&#34;https://aws.amazon.com&#34;&gt;Amazon AWS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;good-engineering:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Good Engineering&lt;/h3&gt;
+
+&lt;p&gt;So any company that is starting up these dates are all about the microservices. Piece of advice don&amp;rsquo;t do microservices from the get go. Focus on just getting the application near prefect first then you can do a refactor break it down. Design your front seperate from your backend. So your main application should just be a api and then give that information to the designers and js developers. This is extremely important if you plan on doing a mobile application at somepoint. This will keep the functionality the same between the web ui and the mobile ui.&lt;/p&gt;
+
+&lt;h3 id=&#34;automation:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Automation&lt;/h3&gt;
+
+&lt;p&gt;When it comes your infrastucture automate everything from the begining. This helps scale but make sure that you write in such away that you not locked into a vendor. You should make the vendor pieces just be part of the abstract layer. This will help you launch your infra in aws, digitalocean or any other place. This will also help you create mockup environments for your developers to have mini labs on their local machines.&lt;/p&gt;
+
+&lt;p&gt;Heres to a good future and automating the world!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

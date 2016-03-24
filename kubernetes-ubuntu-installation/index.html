@@ -47,7 +47,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.14" />
+    <meta name="generator" content="Hugo 0.15" />
 
     <link rel="canonical" href="http://blog.guthnur.net/kubernetes-ubuntu-installation/" />
 
@@ -86,7 +86,7 @@
         
             
             <li class="nav-opened" role="presentation">
-            	<a href="http://blog.guthnur.net/about">About Me &amp; Contact Info</a>
+            	<a href="http://blog.guthnur.net/about/">About Me &amp; Contact Info</a>
             </li>
         
             <h3>Follow me</h3>
@@ -163,26 +163,21 @@ Below are the steps to complete this with a example pod.</p>
 <h3 id="steps:2b6cafb974c1a6e3cbf518b2dbee12bf">steps</h3>
 
 <ol>
-<li>Become Root</li>
-</ol>
+<li><p>Become Root</p>
 
 <pre><code>sudo su -
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>Lets get the pre-requisite software packages installed</li>
-</ol>
+<li><p>Lets get the pre-requisite software packages installed</p>
 
 <pre><code>apt-get update
 apt-get install ssh
 apt-get install docker.io
 apt-get install curl
 apt-get install git
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)</li>
-</ol>
+<li><p>Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)</p>
 
 <pre><code>$ ssh-keygen -t rsa
 Generating public/private rsa key pair.
@@ -205,14 +200,13 @@ The key's randomart image is:
 |         .  .o   |
 |             .E  |
 +-----------------+
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>Copy the ssh id_rsa key locally</li>
-</ol>
+<li><p>Copy the ssh id_rsa key locally</p>
 
 <pre><code>$ ssh-copy-id -i /root/.ssh/id_rsa.pub 127.0.0.1
-</code></pre>
+</code></pre></li>
+</ol>
 
 <p>In case this fails you can do it by hand. By doing:</p>
 
@@ -220,37 +214,31 @@ The key's randomart image is:
 </code></pre>
 
 <ol>
-<li>Validate the password-less ssh-login</li>
-</ol>
+<li><p>Validate the password-less ssh-login</p>
 
 <pre><code>$ ssh root@127.0.0.1
 root@vkohli-virtual-machine:~$ exit
 logout
 Connection to 127.0.0.1 closed
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>Get the Kubernetes release bundle from the official github repository</li>
-</ol>
+<li><p>Get the Kubernetes release bundle from the official github repository</p>
 
 <pre><code>$ wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v1.0.1/kubernetes.tar.gz
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>Untar the Kubernetes bundle in the same directory</li>
-</ol>
+<li><p>Untar the Kubernetes bundle in the same directory</p>
 
 <pre><code>$ tar -xvf kubernetes.tar.gz
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>We will build the binaries of Kubernetes code specifically for ubuntu cluster</li>
-</ol>
+<li><p>We will build the binaries of Kubernetes code specifically for ubuntu cluster</p>
 
 <pre><code>$ cd kubernetes/cluster/ubuntu
 </code></pre>
 
-<p>Execute the following shell script</p>
+<p>Execute the following shell script</p></li>
+</ol>
 
 <pre><code>$ ./build.sh
 Download flannel release ...
@@ -284,32 +272,32 @@ kubectl  master  minion
 <p>kubectl binary controls the Kubernetes cluster manager and the folder master &amp; minion contains the binaries built for the purpose of configuring K8s master and node respectively.</p>
 
 <ol>
-<li>Configure the cluster information by editing only the following parameters of the file <code>cluster/ubuntu/config-default.sh</code> in the editor of your choice.</li>
-</ol>
-
-<pre><code>$ cd
+<li>Configure the cluster information by editing only the following parameters of the file <code>cluster/ubuntu/config-default.sh</code> in the editor of your choice.
+<code>
+$ cd
 $ vi kubernetes/cluster/ubuntu/config-default.sh
 export nodes=&quot;root@127.0.0.1&quot;
 export roles=&quot;ai&quot;
 export NUM_MINIONS=${NUM_MINIONS:-1}
-</code></pre>
+</code></li>
+</ol>
 
 <p>Only update the above mentioned information in the file, rest of the configuration will remain as it is. The first variable nodes defines all the cluster nodes, in our case same machine will be configured as master and node so it contains only one entry.The role below “ai” specifies that same machine will act as master, “a” stands for master and “i” stands for node.</p>
 
 <ol>
-<li>Now, we will be starting the cluster with the following command;</li>
-</ol>
-
-<pre><code>$ cd kubernetes/cluster
+<li>Now, we will be starting the cluster with the following command;
+```
+$ cd kubernetes/cluster
 $ KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
 Starting cluster using provider: ubuntu
-... calling verify-prereqs
-... calling kube-up
+&hellip; calling verify-prereqs
+&hellip; calling kube-up
 FLANNEL_NET
 172.16.0.0/16
-Deploying master and minion on machine 127.0.0.1
+Deploying master and minion on machine 127.0.0.1</li>
+</ol>
 
-config-default.sh                                                                                100% 2904     2.8KB/s   00:00
+<p>config-default.sh                                                                                100% 2904     2.8KB/s   00:00
 util.sh                                                                                          100%   13KB  13.4KB/s   00:00
 flanneld.conf                                                                                    100%  569     0.6KB/s   00:00
 kube-controller-manager.conf                                                                     100%  746     0.7KB/s   00:00
@@ -345,33 +333,33 @@ kubelet                                                                         
 etcd start/running, process 1125
 Connection to 127.0.0.1 closed.
 Validating master
-Validating root@127.0.0.1
+Validating root@127.0.0.1</p>
 
-Kubernetes cluster is running.  The master is running at:
+<p>Kubernetes cluster is running.  The master is running at:</p>
 
-  http://127.0.0.1
+<p><a href="http://127.0.0.1">http://127.0.0.1</a></p>
 
-FLANNEL_NET
+<p>FLANNEL_NET
 172.16.0.0/16
 Using master 127.0.0.1
 Wrote config for ubuntu to /home/root/.kube/config
-... calling validate-cluster
+&hellip; calling validate-cluster</p>
 
-Waiting for 1 ready nodes. 0 ready nodes, 0 registered. Retrying.
+<p>Waiting for 1 ready nodes. 0 ready nodes, 0 registered. Retrying.
 Found 1 nodes.
         NAME        LABELS                             STATUS
 1       127.0.0.1   kubernetes.io/hostname=127.0.0.1   Ready
 Validate output:
 NAME                 STATUS    MESSAGE   ERROR
 scheduler            Healthy   ok        nil
-etcd-0               Healthy   {&quot;action&quot;:&quot;get&quot;,&quot;node&quot;:{&quot;dir&quot;:true,&quot;nodes&quot;:[{&quot;key&quot;:&quot;/registry&quot;,&quot;dir&quot;:true,&quot;modifiedIndex&quot;:3,&quot;createdIndex&quot;:3},{&quot;key&quot;:&quot;/coreos.com&quot;,&quot;dir&quot;:true,&quot;modifiedIndex&quot;:16,&quot;createdIndex&quot;:16}]}}
+etcd-0               Healthy   {&ldquo;action&rdquo;:&ldquo;get&rdquo;,&ldquo;node&rdquo;:{&ldquo;dir&rdquo;:true,&ldquo;nodes&rdquo;:[{&ldquo;key&rdquo;:&ldquo;/registry&rdquo;,&ldquo;dir&rdquo;:true,&ldquo;modifiedIndex&rdquo;:3,&ldquo;createdIndex&rdquo;:3},{&ldquo;key&rdquo;:&ldquo;/coreos.com&rdquo;,&ldquo;dir&rdquo;:true,&ldquo;modifiedIndex&rdquo;:16,&ldquo;createdIndex&rdquo;:16}]}}
                      nil
 controller-manager   Healthy   ok        nil
 Cluster validation succeeded
-Done, listing cluster services:
+Done, listing cluster services:</p>
 
-Kubernetes master is running at http://127.0.0.1:8080
-</code></pre>
+<p>Kubernetes master is running at <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>
+```</p>
 
 <p>See Part 2 for setting up the server for starting up on reboot.</p>
 
@@ -453,6 +441,15 @@ Kubernetes master is running at http://127.0.0.1:8080
     <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.js"></script>
     <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.fitvids.js"></script>
     <script type="text/javascript" src="http://blog.guthnur.net/js/index.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-3', 'auto');
+      ga('send', 'pageview');
+    </script>
 
 </body>
 </html>
