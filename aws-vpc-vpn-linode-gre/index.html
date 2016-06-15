@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" aws vpc vpn linode gre &middot;  Moos3" />
+  	<meta property="og:site_name" content="Moos3" />
+  	<meta property="og:url" content="http://blog.guthnur.net/aws-vpc-vpn-linode-gre/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2016-06-15T15:11:09-04:00" />
+
+    
+    <meta property="og:article:tag" content="aws" />
+    
+    <meta property="og:article:tag" content="vpn" />
+    
+    <meta property="og:article:tag" content="linode" />
+    
+    <meta property="og:article:tag" content="networking" />
+    
+    
+
+  <title>
+     aws vpc vpn linode gre &middot;  Moos3
+  </title>
+
+    <meta name="description" content="Knowledge is power but Openly Shared knowledge is real power!" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://blog.guthnur.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://blog.guthnur.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="http://blog.guthnur.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://blog.guthnur.net/index.xml" rel="alternate" type="application/rss+xml" title="Moos3" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.15" />
+
+    <link rel="canonical" href="http://blog.guthnur.net/aws-vpc-vpn-linode-gre/" />
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about/">About Me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/">Blog</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about/">About Me &amp; Contact Info</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/moos3">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/moos3">Twitter timeline</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://blog.guthnur.net/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="http://blog.guthnur.net/"><img src="http://blog.guthnur.net/images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">aws vpc vpn linode gre</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2016-06-15T15:11:09-04:00">
+            Jun 15, 2016
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/aws/">#aws</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/vpn/">#vpn</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/linode/">#linode</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/networking/">#networking</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      
+
+<p>So we have started to migrate from <a href="https://www.linode.com">Linode</a> to <a href="https://aws.amazon.com">Amazon Aws</a> at work. We are using a specialized AWS VPC design to make our infrastructure faster and strong then we could at linode. Also more secure. One of the major issues had to overcome is the lack of being able to directly connect aws to linode and linode to aws. So with some magic and special sauce we was able to come up with the following solution.</p>
+
+<p><strong>RACOON + QUAGGA + GRE TUNNELS == FTW</strong></p>
+
+<p>So first you if your on linode you will need to make sure you do the following steps that will not be covered by this tutorial. One is get on the generic kernel and not the custom linode kernels. Second you will need to make sure you setup your VPC VPN configuration. I suggest you follow the following tutorial by <a href="https://medium.com/@silasthomas/aws-vpc-ipsec-site-to-site-vpn-using-a-ubiquiti-edgemax-edgerouter-with-bgp-routing-37abafb950f3#.o1n31p7em">Medium AWS VPC VPN with BGP</a> It&rsquo;s important that you follow the steps and download the generic configuration. You will need this later on in the tutorial. I am also assuming that you have multiple machines in Linode and they are debian/ubuntu based. You will want to spin up a box that will be labeled as your AWS gateway.</p>
+
+<h4 id="racoon-setup:91561efb3dc3d9d07642504680d8b1be">Racoon Setup</h4>
+
+<p>You will need to install racoon first. Using <code>apt-get install ipsec-tools racoon</code> if your runing RHEL based or BSD based you will need to google how to install racoon and ipsec-tools.</p>
+
+<h4 id="quagga-setup:91561efb3dc3d9d07642504680d8b1be">Quagga Setup</h4>
+
+<p>You will need to install quagga first. Using <code>apt-get install quagga</code> if your running RHEL based or BSD based you will need to google how to install quagga.</p>
+
+<h3 id="configuration-of-racoon-and-quagga:91561efb3dc3d9d07642504680d8b1be">Configuration of Racoon and Quagga</h3>
+
+<p>Lucky enough I have written a script to make this a lot easy for you :) The following script will generate the racoon and quagga configuration for you.</p>
+
+<pre><code class="language-bash">#!/bin/bash
+#
+# Setup VPN between Debian Linux and VPC G/W.
+#   How to use : ./this_script.sh Generic.txt
+# Required packages: racoon ipsec-tools quagga
+
+PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+exitMessage() {
+    echo &quot;$@&quot; &gt;&amp;2
+    exit 1
+}
+
+[ `id -u` = 0 ] || exitMessage &quot;Set user to root.&quot;
+
+
+#
+# Opetion
+#
+
+CONF=$1
+[ -z &quot;$CONF&quot; -o ! -r &quot;$CONF&quot; ] &amp;&amp; exitMessage &quot;Input VPC+VPN Generic config.&quot;
+
+#########
+#
+# Config
+#
+
+INTERFACE=&quot;eth0&quot;
+BGP_ID='6500' # Set this to your unique ID
+VPC_SUBNET=&quot;172.16.0.0/16&quot; # Set this to your Subnet
+QUAGGA_PASSWORD=&quot;SetSecurePassword&quot;  # Set this a Password thats secure
+
+
+
+### DONT TOUCH ###
+CUSTOMER_SUBNET=`LANG=C ip addr show dev $INTERFACE \
+              | grep -m1 &quot;inet &quot; | sed -e 's/^.*inet \([\.0-9\/]\+\) .*/\1/g'`
+CUSTOMER_ADDR=`echo &quot;$CUSTOMER_SUBNET&quot; | cut -d/ -f1`
+HOSTNAME=`hostname`
+
+### Log locations
+RACOON_LOG=&quot;/var/log/racoon/racoon.log&quot;
+BGPD_LOG=&quot;/var/log/quagga/bgpd.log&quot;
+
+#########
+#
+# Generic Config Values
+#
+
+CONNECTION_ID=`cat $CONF | grep &quot;Your VPN Connection ID&quot; | awk '{print $6}'`
+
+T1_OUT_CUSTOMER_GW=`cat $CONF | grep -m1 &quot;\- Customer Gateway&quot;        | tail -1 | awk '{print $5}'`
+T1_OUT_VPC_GW=`     cat $CONF | grep -m1 &quot;\- Virtual Private Gateway&quot; | tail -1 | awk '{print $6}'`
+T1_IN_CUSTOMER_GW=` cat $CONF | grep -m2 &quot;\- Customer Gateway&quot;        | tail -1 | awk '{print $5}'`
+T1_IN_VPC_GW=`      cat $CONF | grep -m2 &quot;\- Virtual Private Gateway&quot; | tail -1 | awk '{print $6}'`
+T1_PSK=`            cat $CONF | grep -m1 &quot;\- Pre-Shared Key&quot;          | tail -1 | awk '{print $5}'`
+T1_ASN=`            cat $CONF | grep -m1 &quot;Private *Gateway ASN&quot;       | tail -1 | awk '{print $7}'`
+T1_NEIGHBOR_ADDR=`  cat $CONF | grep -m1 &quot;Neighbor IP Address&quot;        | tail -1 | awk '{print $6}'`
+
+T2_OUT_CUSTOMER_GW=`cat $CONF | grep -m4 &quot;\- Customer Gateway&quot;        | tail -1 | awk '{print $5}'`
+T2_OUT_VPC_GW=`     cat $CONF | grep -m3 &quot;\- Virtual Private Gateway&quot; | tail -1 | awk '{print $6}'`
+T2_IN_CUSTOMER_GW=` cat $CONF | grep -m5 &quot;\- Customer Gateway&quot;        | tail -1 | awk '{print $5}'`
+T2_IN_VPC_GW=`      cat $CONF | grep -m4 &quot;\- Virtual Private Gateway&quot; | tail -1 | awk '{print $6}'`
+T2_PSK=`            cat $CONF | grep -m2 &quot;\- Pre-Shared Key&quot;          | tail -1 | awk '{print $5}'`
+T2_ASN=`            cat $CONF | grep -m2 &quot;Private *Gateway ASN&quot;       | tail -1 | awk '{print $7}'`
+T2_NEIGHBOR_ADDR=`  cat $CONF | grep -m2 &quot;Neighbor IP Address&quot;        | tail -1 | awk '{print $6}'`
+
+VALUES=&quot;T1_OUT_CUSTOMER_GW T1_OUT_VPC_GW T1_IN_CUSTOMER_GW T1_IN_VPC_GW&quot;
+VALUES+=&quot; T1_PSK T1_ASN T1_NEIGHBOR_ADDR&quot;
+VALUES+=&quot; T2_OUT_CUSTOMER_GW T2_OUT_VPC_GW T2_IN_CUSTOMER_GW T2_IN_VPC_GW&quot;
+VALUES+=&quot; T2_PSK T2_ASN T2_NEIGHBOR_ADDR&quot;
+for v in $VALUES
+do
+	[ -z `eval 'echo $'$v` ] &amp;&amp; exitMessage &quot;Colud not found $v from $CONF.&quot;
+done
+
+#########
+#
+# Package
+#
+
+apt-get -y install racoon ipsec-tools quagga
+
+#########
+#
+# sysctl
+#
+
+cat &lt;&lt; EOT &gt; /etc/sysctl.d/vpn.conf
+net.ipv4.ip_forward = 1
+
+# prevent the panic of client, when switching vpn route.
+net.ipv4.conf.all.send_redirects	= 0
+net.ipv4.conf.default.send_redirects	= 0
+net.ipv4.conf.eth0.send_redirects	= 0
+net.ipv4.conf.lo.send_redirects		= 0
+
+net.ipv4.conf.all.accept_redirects	= 0
+net.ipv4.conf.default.accept_redirects	= 0
+net.ipv4.conf.eth0.accept_redirects	= 0
+net.ipv4.conf.lo.accept_redirects	= 0
+EOT
+
+service procps restart
+
+#
+# Create Config File
+#
+
+## Pre-Shared Key ##
+
+cat &lt;&lt; EOT &gt; /etc/racoon/aws-vpc-psk.txt
+$T1_OUT_VPC_GW $T1_PSK
+$T2_OUT_VPC_GW $T2_PSK
+EOT
+
+chmod 600 /etc/racoon/aws-vpc-psk.txt
+
+#
+# Racoon
+#
+
+mkdir /var/log/racoon
+
+cat &lt;&lt; EOT &gt; /etc/racoon/racoon.conf
+log notify;
+path pre_shared_key &quot;/etc/racoon/aws-vpc-psk.txt&quot;;
+
+remote $T1_OUT_VPC_GW {
+	exchange_mode main;
+	lifetime time 28800 seconds;
+    dpd_delay = 10;
+    dpd_retry = 3;
+	proposal {
+		encryption_algorithm aes128;
+		hash_algorithm sha1;
+		authentication_method pre_shared_key;
+		dh_group 2;
+	}
+	generate_policy off;
+}
+
+remote $T2_OUT_VPC_GW {
+	exchange_mode main;
+	lifetime time 28800 seconds;
+    dpd_delay = 10;
+    dpd_retry = 3;
+	proposal {
+		encryption_algorithm aes128;
+		hash_algorithm sha1;
+		authentication_method pre_shared_key;
+		dh_group 2;
+	}
+	generate_policy off;
+}
+
+sainfo address $T1_IN_CUSTOMER_GW any address $T1_IN_VPC_GW any {
+	pfs_group 2;
+	lifetime time 3600 seconds;
+	encryption_algorithm aes128;
+	authentication_algorithm hmac_sha1;
+	compression_algorithm deflate;
+}
+
+sainfo address $T2_IN_CUSTOMER_GW any address $T2_IN_VPC_GW any {
+	pfs_group 2;
+	lifetime time 3600 seconds;
+	encryption_algorithm aes128;
+	authentication_algorithm hmac_sha1;
+	compression_algorithm deflate;
+}
+EOT
+
+#
+# Setkey
+#
+
+cat &lt;&lt; EOT &gt; /etc/ipsec-tools.d/vpc.conf
+#!/usr/sbin/setkey -f
+
+flush;
+spdflush;
+
+# Tunnel1 Transfer Net
+spdadd $T1_IN_CUSTOMER_GW $T1_IN_VPC_GW any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T1_OUT_VPC_GW/require;
+spdadd $T1_IN_VPC_GW $T1_IN_CUSTOMER_GW any -P in  ipsec esp/tunnel/$T1_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel1 VPC right (debug only)
+#spdadd $T1_IN_CUSTOMER_GW $VPC_SUBNET   any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T1_OUT_VPC_GW/require;
+#spdadd $VPC_SUBNET $T1_IN_CUSTOMER_GW   any -P in  ipsec esp/tunnel/$T1_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel2 Transfer Net
+spdadd $T2_IN_CUSTOMER_GW $T2_IN_VPC_GW any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T2_OUT_VPC_GW/require;
+spdadd $T2_IN_VPC_GW $T2_IN_CUSTOMER_GW any -P in  ipsec esp/tunnel/$T2_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel2 VPC right (debug only)
+spdadd $T2_IN_CUSTOMER_GW $VPC_SUBNET   any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T2_OUT_VPC_GW/require;
+spdadd $VPC_SUBNET $T2_IN_CUSTOMER_GW   any -P in  ipsec esp/tunnel/$T2_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+EOT
+
+#
+# bgpd
+#
+
+cat &lt;&lt; EOT &gt; /etc/quagga/bgpd.conf
+hostname $HOSTNAME
+password $QUAGGA_PASSWORD
+enable password $QUAGGA_PASSWORD
+!
+log file $BGPD_LOG
+!debug bgp events
+!debug bgp zebra
+debug bgp updates
+!
+router bgp $BGP_ID
+bgp router-id $CUSTOMER_ADDR
+network $T1_IN_CUSTOMER_GW
+network $T2_IN_CUSTOMER_GW
+! Routing for VPC to CUSTOMER (see Route Tables on VPC Console)
+! if CustomerVPN forward using NAT, this is unnecessary.
+network $CUSTOMER_SUBNET
+!
+! aws tunnel #1 neighbor
+neighbor $T1_NEIGHBOR_ADDR remote-as $T1_ASN
+! aws tunnel #2 neighbor
+neighbor $T2_NEIGHBOR_ADDR remote-as $T2_ASN
+!
+line vty
+EOT
+
+#
+# zebra config
+#
+
+cat &lt;&lt; EOT &gt; /etc/quagga/zebra.conf
+hostname $HOSTNAME
+password $QUAGGA_PASSWORD
+enable password $QUAGGA_PASSWORD
+!
+! list interfaces
+interface $INTERFACE
+interface lo
+!
+line vty
+EOT
+
+#
+# Racoon log
+#
+
+sed -i &quot;s|RACOON_ARGS.*$|RACOON_ARGS='-l $RACOON_LOG'|g&quot; /etc/default/racoon
+
+cat &lt;&lt; EOT &gt; /etc/logrotate.d/racoon
+$RACOON_LOG {
+	rotate 10
+	daily
+	compress
+	missingok
+	notifempty
+	copytruncate
+}
+EOT
+
+
+#
+# Enable zebra and bgpd
+#
+
+sed -i 's/zebra=no/zebra=yes/' /etc/quagga/daemons
+sed -i 's/bgpd=no/bgpd=yes/'   /etc/quagga/daemons
+
+#
+# Create Static Tunnel Addr
+#
+
+ip addr add $T1_IN_CUSTOMER_GW dev $INTERFACE
+ip addr add $T2_IN_CUSTOMER_GW dev $INTERFACE
+
+#
+# Restart Services
+#
+
+service racoon restart
+service setkey restart
+service quagga restart
+</code></pre>
+
+<p>To run this script you are going to want to make sure you have copied your generic configuration text file to the machine your going to set up as your AWS VPC VPC gateway. Then edit this script and set the following Varaiables</p>
+
+<pre><code class="language-bash">INTERFACE=&quot;eth0&quot;
+BGP_ID='6500' # Set this to your unique ID
+VPC_SUBNET=&quot;172.16.0.0/16&quot; # Set this to your Subnet
+QUAGGA_PASSWORD=&quot;SetSecurePassword&quot;  # Set this a Password thats secure
+
+</code></pre>
+
+<p>Once you have those set run the script like such <code>./vpnsetup.sh aws-configuration.txt</code> Sit back and wait for it to parse and run. To check if it came up look at the following logs /var/log/quagga/bgp.log and if its successful you should see output like so:</p>
+
+<pre><code>2016/06/15 17:13:45 BGP: BGPd 0.99.22.4 starting: vty@2605, bgp@&lt;all&gt;:179
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE 169.254.44.40/30
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE *************/24
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE 169.254.44.232/30
+2016/06/15 17:13:54 BGP: 169.254.44.233 rcvd UPDATE w/ attr: nexthop 169.254.44.233, origin i, metric 200, path 7224
+2016/06/15 17:13:54 BGP: 169.254.44.233 rcvd 172.16.0.0/16
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 169.254.44.40/30
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE *************/24
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 169.254.44.232/30
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 172.16.0.0/16
+2016/06/15 17:13:56 BGP: 169.254.44.41 rcvd UPDATE w/ attr: nexthop 169.254.44.41, origin i, metric 200, path 7224
+2016/06/15 17:13:56 BGP: 169.254.44.41 rcvd 172.16.0.0/16
+2016/06/15 17:14:24 BGP: 169.254.44.233 rcvd UPDATE w/ attr: nexthop 169.254.44.233, origin i, metric 200, path 7224
+2016/06/15 17:14:24 BGP: 169.254.44.233 rcvd 172.16.0.0/16...duplicate ignored
+2016/06/15 17:14:26 BGP: 169.254.44.41 rcvd UPDATE w/ attr: nexthop 169.254.44.41, origin i, metric 100, path 7224
+2016/06/15 17:14:26 BGP: 169.254.44.41 rcvd 172.16.0.0/16
+2016/06/15 17:14:26 BGP: 169.254.44.41 send UPDATE 172.16.0.0/16 -- unreachable
+2016/06/15 17:14:54 BGP: 169.254.44.233 send UPDATE 172.16.0.0/16
+</code></pre>
+
+<p>If you have a node in your VPC you should be able to ping it from this box. Now you have successfully setup BGP and IPSEC on linux :) If you dont see this in your logs, then check the following things your BGP_ID vaule, or that your ipsec has come up. Use this command to check your racoon <code>racoonctl show-sa ipsec</code></p>
+
+<p>###GRE setup and configuration
+So the second part of this is to make other nodes talk to the AWS nodes from inside of linode. We will use GRE for this. First thing is to edit <code>/etc/modules</code> and insert ip_gre in the file so the kenerl will load it up. Next you are going to want to pick a subnet size that will fit what your trying to do. I would stick with something not bigger than a /26. For this example we are going to use 10.10.0.0/26 for our GRE network. So in this example we will use two boxes to get started. I recommend that you use the following for box A (aws vpn gateway box)</p>
+
+<p>Remote needs to be set to the ip address of the box on the other end. Local is the local ip of box your adding the tunnel to.</p>
+
+<p>AWS vpn gateway box:</p>
+
+<pre><code>ip tunnel add gre-client mode gre remote 192.168.1.34 local 192.168.0.24 ttl 255
+ip link set gre-client up
+ip link set gre-client multicast on
+ip addr add 10.10.0.1/26 broadcast 10.10.0.63 dev gre-client
+</code></pre>
+
+<p>Client box that needs to connect to aws:</p>
+
+<pre><code>ip tunnel add gre-vpn remote 192.168.0.24 local 192.168.1.34 ttl 255
+ip link set gre-vpn up
+ip link set gre-vpn multicast on
+ip addr add 10.10.0.2/27 broadcast 10.10.0.63 dev gre-vpn
+</code></pre>
+
+<p>Next you will need to add route on the client side that tells it how to route traffic for your aws network to the aws vpn gateway.</p>
+
+<pre><code>ip route add 172.16.0.0/16 via 10.10.0.1
+</code></pre>
+
+<p>Then on the AWS vpn gateway box we will need to update iptables with a SNAT rule. That will look like this</p>
+
+<pre><code>iptables -t nat -A POSTROUTING --src 10.10.0.0/26 --dst 172.16.0.0/16 -j SNAT --to-source 169.254.44.42
+</code></pre>
+
+<p>The important part here is that the dst is set to your aws vpc network and that to-source is the box which is running the bgp service. You can find this ip address in the logs for quagga looking for Zebra rcvd command.</p>
+
+<pre><code>2016/06/15 17:13:37 BGP: Zebra rcvd: interface eth0 address add 169.254.44.234/30
+2016/06/15 17:13:37 BGP: Zebra rcvd: interface eth0 address add 169.254.44.42/30
+</code></pre>
+
+<p>Now you should be able to ping or traceroute to your AWS nodes in the vpc. If you can do this then your golden. Some things you might try if this doesn&rsquo;t work. One add the following iptables rule in <code>iptables -A FORWARD -j LOG</code> and this will log all the forwarded traffic. Two make sure that forwarding is on in sysctl.conf on both the gateway and client.</p>
+
+<p>Happy BGP&rsquo;ing and GRE routing around a limitation on Linode. You could use this in many applications not just linode. Also a good read on GRE see <a href="http://bjornruud.net/2011/02/gre-tunnel-with-multicast-support.html">GRE Tutorial</a>.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://blog.guthnur.net/" style="background-image: url(http://blog.guthnur.net/images/logo.png)"><span class="hidden">Richard Genthner's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://blog.guthnur.net/">Richard Genthner</a></h4>
+  
+  <p>System Engineer, Open source enthusiast.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Maine, USA</span>
+    <span class="author-link icon-link"><a href="http://guthnur.net">http://guthnur.net</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=aws%20vpc%20vpn%20linode%20gre&amp;url=http%3a%2f%2fblog.guthnur.net%2faws-vpc-vpn-linode-gre%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fblog.guthnur.net%2faws-vpc-vpn-linode-gre%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fblog.guthnur.net%2faws-vpc-vpn-linode-gre%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'moos3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Moos3</a> All rights reserved - 2015</section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/index.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-3', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+</body>
+</html>
+

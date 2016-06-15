@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Aws on Moos3</title>
+    <link>http://blog.guthnur.net/tags/aws/</link>
+    <description>Recent content in Aws on Moos3</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>All rights reserved - 2015</copyright>
+    <lastBuildDate>Wed, 15 Jun 2016 15:11:09 -0400</lastBuildDate>
+    <atom:link href="http://blog.guthnur.net/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>aws vpc vpn linode gre</title>
+      <link>http://blog.guthnur.net/aws-vpc-vpn-linode-gre/</link>
+      <pubDate>Wed, 15 Jun 2016 15:11:09 -0400</pubDate>
+      
+      <guid>http://blog.guthnur.net/aws-vpc-vpn-linode-gre/</guid>
+      <description>
+
+&lt;p&gt;So we have started to migrate from &lt;a href=&#34;https://www.linode.com&#34;&gt;Linode&lt;/a&gt; to &lt;a href=&#34;https://aws.amazon.com&#34;&gt;Amazon Aws&lt;/a&gt; at work. We are using a specialized AWS VPC design to make our infrastructure faster and strong then we could at linode. Also more secure. One of the major issues had to overcome is the lack of being able to directly connect aws to linode and linode to aws. So with some magic and special sauce we was able to come up with the following solution.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;RACOON + QUAGGA + GRE TUNNELS == FTW&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So first you if your on linode you will need to make sure you do the following steps that will not be covered by this tutorial. One is get on the generic kernel and not the custom linode kernels. Second you will need to make sure you setup your VPC VPN configuration. I suggest you follow the following tutorial by &lt;a href=&#34;https://medium.com/@silasthomas/aws-vpc-ipsec-site-to-site-vpn-using-a-ubiquiti-edgemax-edgerouter-with-bgp-routing-37abafb950f3#.o1n31p7em&#34;&gt;Medium AWS VPC VPN with BGP&lt;/a&gt; It&amp;rsquo;s important that you follow the steps and download the generic configuration. You will need this later on in the tutorial. I am also assuming that you have multiple machines in Linode and they are debian/ubuntu based. You will want to spin up a box that will be labeled as your AWS gateway.&lt;/p&gt;
+
+&lt;h4 id=&#34;racoon-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Racoon Setup&lt;/h4&gt;
+
+&lt;p&gt;You will need to install racoon first. Using &lt;code&gt;apt-get install ipsec-tools racoon&lt;/code&gt; if your runing RHEL based or BSD based you will need to google how to install racoon and ipsec-tools.&lt;/p&gt;
+
+&lt;h4 id=&#34;quagga-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Quagga Setup&lt;/h4&gt;
+
+&lt;p&gt;You will need to install quagga first. Using &lt;code&gt;apt-get install quagga&lt;/code&gt; if your running RHEL based or BSD based you will need to google how to install quagga.&lt;/p&gt;
+
+&lt;h3 id=&#34;configuration-of-racoon-and-quagga:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Configuration of Racoon and Quagga&lt;/h3&gt;
+
+&lt;p&gt;Lucky enough I have written a script to make this a lot easy for you :) The following script will generate the racoon and quagga configuration for you.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/bash
+#
+# Setup VPN between Debian Linux and VPC G/W.
+#   How to use : ./this_script.sh Generic.txt
+# Required packages: racoon ipsec-tools quagga
+
+PATH=/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+exitMessage() {
+    echo &amp;quot;$@&amp;quot; &amp;gt;&amp;amp;2
+    exit 1
+}
+
+[ `id -u` = 0 ] || exitMessage &amp;quot;Set user to root.&amp;quot;
+
+
+#
+# Opetion
+#
+
+CONF=$1
+[ -z &amp;quot;$CONF&amp;quot; -o ! -r &amp;quot;$CONF&amp;quot; ] &amp;amp;&amp;amp; exitMessage &amp;quot;Input VPC+VPN Generic config.&amp;quot;
+
+#########
+#
+# Config
+#
+
+INTERFACE=&amp;quot;eth0&amp;quot;
+BGP_ID=&#39;6500&#39; # Set this to your unique ID
+VPC_SUBNET=&amp;quot;172.16.0.0/16&amp;quot; # Set this to your Subnet
+QUAGGA_PASSWORD=&amp;quot;SetSecurePassword&amp;quot;  # Set this a Password thats secure
+
+
+
+### DONT TOUCH ###
+CUSTOMER_SUBNET=`LANG=C ip addr show dev $INTERFACE \
+              | grep -m1 &amp;quot;inet &amp;quot; | sed -e &#39;s/^.*inet \([\.0-9\/]\+\) .*/\1/g&#39;`
+CUSTOMER_ADDR=`echo &amp;quot;$CUSTOMER_SUBNET&amp;quot; | cut -d/ -f1`
+HOSTNAME=`hostname`
+
+### Log locations
+RACOON_LOG=&amp;quot;/var/log/racoon/racoon.log&amp;quot;
+BGPD_LOG=&amp;quot;/var/log/quagga/bgpd.log&amp;quot;
+
+#########
+#
+# Generic Config Values
+#
+
+CONNECTION_ID=`cat $CONF | grep &amp;quot;Your VPN Connection ID&amp;quot; | awk &#39;{print $6}&#39;`
+
+T1_OUT_CUSTOMER_GW=`cat $CONF | grep -m1 &amp;quot;\- Customer Gateway&amp;quot;        | tail -1 | awk &#39;{print $5}&#39;`
+T1_OUT_VPC_GW=`     cat $CONF | grep -m1 &amp;quot;\- Virtual Private Gateway&amp;quot; | tail -1 | awk &#39;{print $6}&#39;`
+T1_IN_CUSTOMER_GW=` cat $CONF | grep -m2 &amp;quot;\- Customer Gateway&amp;quot;        | tail -1 | awk &#39;{print $5}&#39;`
+T1_IN_VPC_GW=`      cat $CONF | grep -m2 &amp;quot;\- Virtual Private Gateway&amp;quot; | tail -1 | awk &#39;{print $6}&#39;`
+T1_PSK=`            cat $CONF | grep -m1 &amp;quot;\- Pre-Shared Key&amp;quot;          | tail -1 | awk &#39;{print $5}&#39;`
+T1_ASN=`            cat $CONF | grep -m1 &amp;quot;Private *Gateway ASN&amp;quot;       | tail -1 | awk &#39;{print $7}&#39;`
+T1_NEIGHBOR_ADDR=`  cat $CONF | grep -m1 &amp;quot;Neighbor IP Address&amp;quot;        | tail -1 | awk &#39;{print $6}&#39;`
+
+T2_OUT_CUSTOMER_GW=`cat $CONF | grep -m4 &amp;quot;\- Customer Gateway&amp;quot;        | tail -1 | awk &#39;{print $5}&#39;`
+T2_OUT_VPC_GW=`     cat $CONF | grep -m3 &amp;quot;\- Virtual Private Gateway&amp;quot; | tail -1 | awk &#39;{print $6}&#39;`
+T2_IN_CUSTOMER_GW=` cat $CONF | grep -m5 &amp;quot;\- Customer Gateway&amp;quot;        | tail -1 | awk &#39;{print $5}&#39;`
+T2_IN_VPC_GW=`      cat $CONF | grep -m4 &amp;quot;\- Virtual Private Gateway&amp;quot; | tail -1 | awk &#39;{print $6}&#39;`
+T2_PSK=`            cat $CONF | grep -m2 &amp;quot;\- Pre-Shared Key&amp;quot;          | tail -1 | awk &#39;{print $5}&#39;`
+T2_ASN=`            cat $CONF | grep -m2 &amp;quot;Private *Gateway ASN&amp;quot;       | tail -1 | awk &#39;{print $7}&#39;`
+T2_NEIGHBOR_ADDR=`  cat $CONF | grep -m2 &amp;quot;Neighbor IP Address&amp;quot;        | tail -1 | awk &#39;{print $6}&#39;`
+
+VALUES=&amp;quot;T1_OUT_CUSTOMER_GW T1_OUT_VPC_GW T1_IN_CUSTOMER_GW T1_IN_VPC_GW&amp;quot;
+VALUES+=&amp;quot; T1_PSK T1_ASN T1_NEIGHBOR_ADDR&amp;quot;
+VALUES+=&amp;quot; T2_OUT_CUSTOMER_GW T2_OUT_VPC_GW T2_IN_CUSTOMER_GW T2_IN_VPC_GW&amp;quot;
+VALUES+=&amp;quot; T2_PSK T2_ASN T2_NEIGHBOR_ADDR&amp;quot;
+for v in $VALUES
+do
+	[ -z `eval &#39;echo $&#39;$v` ] &amp;amp;&amp;amp; exitMessage &amp;quot;Colud not found $v from $CONF.&amp;quot;
+done
+
+#########
+#
+# Package
+#
+
+apt-get -y install racoon ipsec-tools quagga
+
+#########
+#
+# sysctl
+#
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/sysctl.d/vpn.conf
+net.ipv4.ip_forward = 1
+
+# prevent the panic of client, when switching vpn route.
+net.ipv4.conf.all.send_redirects	= 0
+net.ipv4.conf.default.send_redirects	= 0
+net.ipv4.conf.eth0.send_redirects	= 0
+net.ipv4.conf.lo.send_redirects		= 0
+
+net.ipv4.conf.all.accept_redirects	= 0
+net.ipv4.conf.default.accept_redirects	= 0
+net.ipv4.conf.eth0.accept_redirects	= 0
+net.ipv4.conf.lo.accept_redirects	= 0
+EOT
+
+service procps restart
+
+#
+# Create Config File
+#
+
+## Pre-Shared Key ##
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/racoon/aws-vpc-psk.txt
+$T1_OUT_VPC_GW $T1_PSK
+$T2_OUT_VPC_GW $T2_PSK
+EOT
+
+chmod 600 /etc/racoon/aws-vpc-psk.txt
+
+#
+# Racoon
+#
+
+mkdir /var/log/racoon
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/racoon/racoon.conf
+log notify;
+path pre_shared_key &amp;quot;/etc/racoon/aws-vpc-psk.txt&amp;quot;;
+
+remote $T1_OUT_VPC_GW {
+	exchange_mode main;
+	lifetime time 28800 seconds;
+    dpd_delay = 10;
+    dpd_retry = 3;
+	proposal {
+		encryption_algorithm aes128;
+		hash_algorithm sha1;
+		authentication_method pre_shared_key;
+		dh_group 2;
+	}
+	generate_policy off;
+}
+
+remote $T2_OUT_VPC_GW {
+	exchange_mode main;
+	lifetime time 28800 seconds;
+    dpd_delay = 10;
+    dpd_retry = 3;
+	proposal {
+		encryption_algorithm aes128;
+		hash_algorithm sha1;
+		authentication_method pre_shared_key;
+		dh_group 2;
+	}
+	generate_policy off;
+}
+
+sainfo address $T1_IN_CUSTOMER_GW any address $T1_IN_VPC_GW any {
+	pfs_group 2;
+	lifetime time 3600 seconds;
+	encryption_algorithm aes128;
+	authentication_algorithm hmac_sha1;
+	compression_algorithm deflate;
+}
+
+sainfo address $T2_IN_CUSTOMER_GW any address $T2_IN_VPC_GW any {
+	pfs_group 2;
+	lifetime time 3600 seconds;
+	encryption_algorithm aes128;
+	authentication_algorithm hmac_sha1;
+	compression_algorithm deflate;
+}
+EOT
+
+#
+# Setkey
+#
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/ipsec-tools.d/vpc.conf
+#!/usr/sbin/setkey -f
+
+flush;
+spdflush;
+
+# Tunnel1 Transfer Net
+spdadd $T1_IN_CUSTOMER_GW $T1_IN_VPC_GW any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T1_OUT_VPC_GW/require;
+spdadd $T1_IN_VPC_GW $T1_IN_CUSTOMER_GW any -P in  ipsec esp/tunnel/$T1_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel1 VPC right (debug only)
+#spdadd $T1_IN_CUSTOMER_GW $VPC_SUBNET   any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T1_OUT_VPC_GW/require;
+#spdadd $VPC_SUBNET $T1_IN_CUSTOMER_GW   any -P in  ipsec esp/tunnel/$T1_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel2 Transfer Net
+spdadd $T2_IN_CUSTOMER_GW $T2_IN_VPC_GW any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T2_OUT_VPC_GW/require;
+spdadd $T2_IN_VPC_GW $T2_IN_CUSTOMER_GW any -P in  ipsec esp/tunnel/$T2_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+
+# Tunnel2 VPC right (debug only)
+spdadd $T2_IN_CUSTOMER_GW $VPC_SUBNET   any -P out ipsec esp/tunnel/$CUSTOMER_ADDR-$T2_OUT_VPC_GW/require;
+spdadd $VPC_SUBNET $T2_IN_CUSTOMER_GW   any -P in  ipsec esp/tunnel/$T2_OUT_VPC_GW-$CUSTOMER_ADDR/require;
+EOT
+
+#
+# bgpd
+#
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/quagga/bgpd.conf
+hostname $HOSTNAME
+password $QUAGGA_PASSWORD
+enable password $QUAGGA_PASSWORD
+!
+log file $BGPD_LOG
+!debug bgp events
+!debug bgp zebra
+debug bgp updates
+!
+router bgp $BGP_ID
+bgp router-id $CUSTOMER_ADDR
+network $T1_IN_CUSTOMER_GW
+network $T2_IN_CUSTOMER_GW
+! Routing for VPC to CUSTOMER (see Route Tables on VPC Console)
+! if CustomerVPN forward using NAT, this is unnecessary.
+network $CUSTOMER_SUBNET
+!
+! aws tunnel #1 neighbor
+neighbor $T1_NEIGHBOR_ADDR remote-as $T1_ASN
+! aws tunnel #2 neighbor
+neighbor $T2_NEIGHBOR_ADDR remote-as $T2_ASN
+!
+line vty
+EOT
+
+#
+# zebra config
+#
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/quagga/zebra.conf
+hostname $HOSTNAME
+password $QUAGGA_PASSWORD
+enable password $QUAGGA_PASSWORD
+!
+! list interfaces
+interface $INTERFACE
+interface lo
+!
+line vty
+EOT
+
+#
+# Racoon log
+#
+
+sed -i &amp;quot;s|RACOON_ARGS.*$|RACOON_ARGS=&#39;-l $RACOON_LOG&#39;|g&amp;quot; /etc/default/racoon
+
+cat &amp;lt;&amp;lt; EOT &amp;gt; /etc/logrotate.d/racoon
+$RACOON_LOG {
+	rotate 10
+	daily
+	compress
+	missingok
+	notifempty
+	copytruncate
+}
+EOT
+
+
+#
+# Enable zebra and bgpd
+#
+
+sed -i &#39;s/zebra=no/zebra=yes/&#39; /etc/quagga/daemons
+sed -i &#39;s/bgpd=no/bgpd=yes/&#39;   /etc/quagga/daemons
+
+#
+# Create Static Tunnel Addr
+#
+
+ip addr add $T1_IN_CUSTOMER_GW dev $INTERFACE
+ip addr add $T2_IN_CUSTOMER_GW dev $INTERFACE
+
+#
+# Restart Services
+#
+
+service racoon restart
+service setkey restart
+service quagga restart
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To run this script you are going to want to make sure you have copied your generic configuration text file to the machine your going to set up as your AWS VPC VPC gateway. Then edit this script and set the following Varaiables&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;INTERFACE=&amp;quot;eth0&amp;quot;
+BGP_ID=&#39;6500&#39; # Set this to your unique ID
+VPC_SUBNET=&amp;quot;172.16.0.0/16&amp;quot; # Set this to your Subnet
+QUAGGA_PASSWORD=&amp;quot;SetSecurePassword&amp;quot;  # Set this a Password thats secure
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once you have those set run the script like such &lt;code&gt;./vpnsetup.sh aws-configuration.txt&lt;/code&gt; Sit back and wait for it to parse and run. To check if it came up look at the following logs /var/log/quagga/bgp.log and if its successful you should see output like so:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;2016/06/15 17:13:45 BGP: BGPd 0.99.22.4 starting: vty@2605, bgp@&amp;lt;all&amp;gt;:179
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE 169.254.44.40/30
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE *************/24
+2016/06/15 17:13:54 BGP: 169.254.44.233 send UPDATE 169.254.44.232/30
+2016/06/15 17:13:54 BGP: 169.254.44.233 rcvd UPDATE w/ attr: nexthop 169.254.44.233, origin i, metric 200, path 7224
+2016/06/15 17:13:54 BGP: 169.254.44.233 rcvd 172.16.0.0/16
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 169.254.44.40/30
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE *************/24
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 169.254.44.232/30
+2016/06/15 17:13:56 BGP: 169.254.44.41 send UPDATE 172.16.0.0/16
+2016/06/15 17:13:56 BGP: 169.254.44.41 rcvd UPDATE w/ attr: nexthop 169.254.44.41, origin i, metric 200, path 7224
+2016/06/15 17:13:56 BGP: 169.254.44.41 rcvd 172.16.0.0/16
+2016/06/15 17:14:24 BGP: 169.254.44.233 rcvd UPDATE w/ attr: nexthop 169.254.44.233, origin i, metric 200, path 7224
+2016/06/15 17:14:24 BGP: 169.254.44.233 rcvd 172.16.0.0/16...duplicate ignored
+2016/06/15 17:14:26 BGP: 169.254.44.41 rcvd UPDATE w/ attr: nexthop 169.254.44.41, origin i, metric 100, path 7224
+2016/06/15 17:14:26 BGP: 169.254.44.41 rcvd 172.16.0.0/16
+2016/06/15 17:14:26 BGP: 169.254.44.41 send UPDATE 172.16.0.0/16 -- unreachable
+2016/06/15 17:14:54 BGP: 169.254.44.233 send UPDATE 172.16.0.0/16
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you have a node in your VPC you should be able to ping it from this box. Now you have successfully setup BGP and IPSEC on linux :) If you dont see this in your logs, then check the following things your BGP_ID vaule, or that your ipsec has come up. Use this command to check your racoon &lt;code&gt;racoonctl show-sa ipsec&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;###GRE setup and configuration
+So the second part of this is to make other nodes talk to the AWS nodes from inside of linode. We will use GRE for this. First thing is to edit &lt;code&gt;/etc/modules&lt;/code&gt; and insert ip_gre in the file so the kenerl will load it up. Next you are going to want to pick a subnet size that will fit what your trying to do. I would stick with something not bigger than a /26. For this example we are going to use 10.10.0.0/26 for our GRE network. So in this example we will use two boxes to get started. I recommend that you use the following for box A (aws vpn gateway box)&lt;/p&gt;
+
+&lt;p&gt;Remote needs to be set to the ip address of the box on the other end. Local is the local ip of box your adding the tunnel to.&lt;/p&gt;
+
+&lt;p&gt;AWS vpn gateway box:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-client mode gre remote 192.168.1.34 local 192.168.0.24 ttl 255
+ip link set gre-client up
+ip link set gre-client multicast on
+ip addr add 10.10.0.1/26 broadcast 10.10.0.63 dev gre-client
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Client box that needs to connect to aws:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-vpn remote 192.168.0.24 local 192.168.1.34 ttl 255
+ip link set gre-vpn up
+ip link set gre-vpn multicast on
+ip addr add 10.10.0.2/27 broadcast 10.10.0.63 dev gre-vpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next you will need to add route on the client side that tells it how to route traffic for your aws network to the aws vpn gateway.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip route add 172.16.0.0/16 via 10.10.0.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then on the AWS vpn gateway box we will need to update iptables with a SNAT rule. That will look like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;iptables -t nat -A POSTROUTING --src 10.10.0.0/26 --dst 172.16.0.0/16 -j SNAT --to-source 169.254.44.42
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The important part here is that the dst is set to your aws vpc network and that to-source is the box which is running the bgp service. You can find this ip address in the logs for quagga looking for Zebra rcvd command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;2016/06/15 17:13:37 BGP: Zebra rcvd: interface eth0 address add 169.254.44.234/30
+2016/06/15 17:13:37 BGP: Zebra rcvd: interface eth0 address add 169.254.44.42/30
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you should be able to ping or traceroute to your AWS nodes in the vpc. If you can do this then your golden. Some things you might try if this doesn&amp;rsquo;t work. One add the following iptables rule in &lt;code&gt;iptables -A FORWARD -j LOG&lt;/code&gt; and this will log all the forwarded traffic. Two make sure that forwarding is on in sysctl.conf on both the gateway and client.&lt;/p&gt;
+
+&lt;p&gt;Happy BGP&amp;rsquo;ing and GRE routing around a limitation on Linode. You could use this in many applications not just linode. Also a good read on GRE see &lt;a href=&#34;http://bjornruud.net/2011/02/gre-tunnel-with-multicast-support.html&#34;&gt;GRE Tutorial&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
