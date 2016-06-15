@@ -5,6 +5,7 @@ paginate = 5
 DisqusShortname = "moos3"
 Copyright = "All rights reserved - 2015"
 canonifyurls = true
+pygmentsStyle = "monokai"
 
 [params]
   description = "Knowledge is power but Openly Shared knowledge is real power!"
