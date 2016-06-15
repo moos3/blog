@@ -1,6 +1,6 @@
 +++
 date = "2016-06-15T15:11:09-04:00"
-draft = true
+draft = false
 title = "aws vpc vpn linode gre"
 author = "Richard Genthner"
 comments = true
