@@ -1,7 +1,7 @@
 +++
 date = "2016-06-15T15:11:09-04:00"
 draft = false
-title = "aws vpc vpn linode gre"
+title = "AWS VPC VPN connection to Linode with GRE Tunnels"
 author = "Richard Genthner"
 comments = true
 image = ""
