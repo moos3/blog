@@ -7,8 +7,84 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Wed, 15 Jun 2016 15:11:09 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jun 2016 15:01:46 -0400</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>GRE VPN with Multi-endpoints to single server</title>
+      <link>http://blog.guthnur.net/gre-vpn-multihost-central-server/</link>
+      <pubDate>Thu, 16 Jun 2016 15:01:46 -0400</pubDate>
+      
+      <guid>http://blog.guthnur.net/gre-vpn-multihost-central-server/</guid>
+      <description>&lt;p&gt;So this is a continuation of the article I wrote yesterday about AWS VPC VPN&amp;rsquo;s with GRE. So in that article we discussed how to connect to machines point to point. Well what happens when the boss says hey lets does this for 20 machines. Well that solution will not work correctly. So lets get right into it.&lt;/p&gt;
+
+&lt;p&gt;First you will need to use some minor changes in syntax for this to work. Lets look at our tunnel setup command. In the last article it looked like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-client local &amp;lt;ip&amp;gt; remote &amp;lt;ip&amp;gt; ttl 255
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Its going to change to the following version:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-client local &amp;lt;ip&amp;gt; key &amp;lt;string of numbers&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you will see that we are not specifiing a remote endpoint this time or a ttl. You will see we have replaced the ttl with key. key is very important, its basically a authentication method. Next we will use the &lt;code&gt;ip neigh&lt;/code&gt; command. This will allow us to tell the machine where to find the next machine in the subnet. It should look like this&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip neigh add 10.10.0.1 lladdr &amp;lt;remote_host_ip&amp;gt; dev gre-vpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So in the neighbor command you will replace the &lt;code&gt;&amp;lt;remote_host_ip&amp;gt;&lt;/code&gt; with the address from the frist version remote endpoint address.&lt;/p&gt;
+
+&lt;p&gt;So all together it will look like this with three hosts&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Host A&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-vpn local 192.168.10.232 key 123
+ip link set gre-vpn up
+ip addr add 10.10.0.1/26 broadcast 10.10.0.63 dev gre-vpn
+ip neigh add 10.10.0.2 lladdr 192.168.19.24 dev gre-vpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Host B&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-vpn local 192.168.19.24 key 123
+ip link set gre-vpn up
+ip addr add 10.10.0.2/26 broadcast 10.10.0.63 dev gre-vpn
+ip neigh add 10.10.0.1 lladdr 192.168.10.232 dev gre-vpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Host C&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip tunnel add gre-vpn local 192.168.29.23 key 123
+ip link set gre-vpn up
+ip addr add 10.10.0.3/26 broadcast 10.10.0.63 dev gre-vpn
+ip neigh add 10.10.0.1 lladdr 192.168.10.232 dev gre-vpn
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So now all three machine&amp;rsquo;s should be able to talk to each other over the vpn. If you try to ping and can&amp;rsquo;t ping a machine then you most likely have ufw on and just need to edit the &lt;code&gt;/etc/ufw/before.rules&lt;/code&gt; file and put this in.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Allow GRE protocol for VPN
+-A ufw-before-input -p 47 -j ACCEPT
+-A ufw-before-output -p 47 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This set of rules needs to happen before this set in the file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# drop INVALID packets (logs these in loglevel medium and higher)
+-A ufw-before-input -m conntrack --ctstate INVALID -j ufw-logging-deny
+-A ufw-before-input -m conntrack --ctstate INVALID -j DROP
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once you have made you changes then disable ufw and then re-enable it. Then your pinging should pick up and work.&lt;/p&gt;
+
+&lt;p&gt;If your like me and your Host A is also running the vpn to aws then you will want to add this line on all the hosts that you want to be able to ping in aws.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ip route add 172.16.0.0/16 via 10.10.0.1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thats all you should need to all a unlimited number of gre tunnels to your vpn gateway box. Happy Vpn&amp;rsquo;ing.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>AWS VPC VPN connection to Linode with GRE Tunnels</title>
