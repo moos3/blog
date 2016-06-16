@@ -17,11 +17,13 @@ Below are the steps to complete this with a example pod.
 
 ### steps
 1. Become Root
+
 ```
 sudo su -
 ```
 
 2. Lets get the pre-requisite software packages installed
+
 ```
 apt-get update
 apt-get install ssh
@@ -31,6 +33,7 @@ apt-get install git
 ```
 
 3. Password-less ssh login setup, accept all the default parameters in the prompt of the below command (required for Kubernetes installation)
+
 ```
 $ ssh-keygen -t rsa
 Generating public/private rsa key pair.
@@ -56,16 +59,19 @@ The key's randomart image is:
 ```
 
 4. Copy the ssh id_rsa key locally
+
 ```
 $ ssh-copy-id -i /root/.ssh/id_rsa.pub 127.0.0.1
 ```
 
 In case this fails you can do it by hand. By doing:
+
 ```
 $ cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 ```
 
 5. Validate the password-less ssh-login
+
 ```
 $ ssh root@127.0.0.1
 root@vkohli-virtual-machine:~$ exit
@@ -74,16 +80,19 @@ Connection to 127.0.0.1 closed
 ```
 
 6. Get the Kubernetes release bundle from the official github repository
+
 ```
 $ wget https://github.com/GoogleCloudPlatform/kubernetes/releases/download/v1.0.1/kubernetes.tar.gz
 ```
 
 7. Untar the Kubernetes bundle in the same directory
+
 ```
 $ tar -xvf kubernetes.tar.gz
 ```
 
 8. We will build the binaries of Kubernetes code specifically for ubuntu cluster
+
 ```
 $ cd kubernetes/cluster/ubuntu
 ```
@@ -122,6 +131,7 @@ kubectl  master  minion
 kubectl binary controls the Kubernetes cluster manager and the folder master & minion contains the binaries built for the purpose of configuring K8s master and node respectively.
 
 9. Configure the cluster information by editing only the following parameters of the file `cluster/ubuntu/config-default.sh` in the editor of your choice.
+
 ```
 $ cd
 $ vi kubernetes/cluster/ubuntu/config-default.sh
@@ -133,6 +143,7 @@ export NUM_MINIONS=${NUM_MINIONS:-1}
 Only update the above mentioned information in the file, rest of the configuration will remain as it is. The first variable nodes defines all the cluster nodes, in our case same machine will be configured as master and node so it contains only one entry.The role below “ai” specifies that same machine will act as master, “a” stands for master and “i” stands for node.
 
 10. Now, we will be starting the cluster with the following command;
+
 ```
 $ cd kubernetes/cluster
 $ KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
