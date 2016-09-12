@@ -47,7 +47,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.15" />
+    <meta name="generator" content="Hugo 0.16" />
 
     <link rel="canonical" href="http://blog.guthnur.net/aws-vpc-vpn-linode-gre/" />
 
@@ -76,7 +76,7 @@
         
             
             <li class="nav-opened" role="presentation">
-            	<a href="http://blog.guthnur.net/about/">About Me</a>
+            	<a href="http://blog.guthnur.net/about">About Me</a>
             </li>
         
             
@@ -163,15 +163,15 @@
 
 <p>So first you if your on linode you will need to make sure you do the following steps that will not be covered by this tutorial. One is get on the generic kernel and not the custom linode kernels. Second you will need to make sure you setup your VPC VPN configuration. I suggest you follow the following tutorial by <a href="https://medium.com/@silasthomas/aws-vpc-ipsec-site-to-site-vpn-using-a-ubiquiti-edgemax-edgerouter-with-bgp-routing-37abafb950f3#.o1n31p7em">Medium AWS VPC VPN with BGP</a> It&rsquo;s important that you follow the steps and download the generic configuration. You will need this later on in the tutorial. I am also assuming that you have multiple machines in Linode and they are debian/ubuntu based. You will want to spin up a box that will be labeled as your AWS gateway.</p>
 
-<h4 id="racoon-setup:91561efb3dc3d9d07642504680d8b1be">Racoon Setup</h4>
+<h4 id="racoon-setup">Racoon Setup</h4>
 
 <p>You will need to install racoon first. Using <code>apt-get install ipsec-tools racoon</code> if your runing RHEL based or BSD based you will need to google how to install racoon and ipsec-tools.</p>
 
-<h4 id="quagga-setup:91561efb3dc3d9d07642504680d8b1be">Quagga Setup</h4>
+<h4 id="quagga-setup">Quagga Setup</h4>
 
 <p>You will need to install quagga first. Using <code>apt-get install quagga</code> if your running RHEL based or BSD based you will need to google how to install quagga.</p>
 
-<h3 id="configuration-of-racoon-and-quagga:91561efb3dc3d9d07642504680d8b1be">Configuration of Racoon and Quagga</h3>
+<h3 id="configuration-of-racoon-and-quagga">Configuration of Racoon and Quagga</h3>
 
 <p>Lucky enough I have written a script to make this a lot easy for you :) The following script will generate the racoon and quagga configuration for you.</p>
 

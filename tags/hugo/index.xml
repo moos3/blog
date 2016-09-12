@@ -18,14 +18,14 @@
       <guid>http://blog.guthnur.net/new-site/</guid>
       <description>
 
-&lt;h3 id=&#34;finally-backup:874d006584b53f2a1070783574da19bd&#34;&gt;Finally Backup&lt;/h3&gt;
+&lt;h3 id=&#34;finally-backup&#34;&gt;Finally Backup&lt;/h3&gt;
 
 &lt;p&gt;So I have decided its time for a new site and blog. I have been playing with
 this idea for a while. I have been really busy at work and in my personal life.
 I originally started a blog back in 2004 and now here we are in 2015. With more
 blog options then ever before.&lt;/p&gt;
 
-&lt;h4 id=&#34;engine-choice:874d006584b53f2a1070783574da19bd&#34;&gt;Engine Choice&lt;/h4&gt;
+&lt;h4 id=&#34;engine-choice&#34;&gt;Engine Choice&lt;/h4&gt;
 
 &lt;p&gt;So when I picked my blog engine I knew I never wanted to have a database
 server. I wanted the ability to throw this up on any thing that can serve html

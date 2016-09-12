@@ -7,8 +7,56 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Thu, 16 Jun 2016 15:01:46 -0400</lastBuildDate>
+    <lastBuildDate>Mon, 12 Sep 2016 13:17:04 -0400</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ditched Verizon for Project-Fi</title>
+      <link>http://blog.guthnur.net/ditched-vz-for-fi/</link>
+      <pubDate>Mon, 12 Sep 2016 13:17:04 -0400</pubDate>
+      
+      <guid>http://blog.guthnur.net/ditched-vz-for-fi/</guid>
+      <description>
+
+&lt;p&gt;So I and my wife had it with paying $270/mo for Verizon Wireless every month. It makes it a pain because when we go near
+the Canadian border up by my wife&amp;rsquo;s hometown, we had to call and pay 35/mo for international coverage. So I was told
+about Project-Fi by an Android Developer at work. He said it was amazing, and I have to say he was 100% correct. We have coverage
+just about everywhere in the world. Not to mention when we visit people that had shotty VZ coverage and there&amp;rsquo;s no USCC coverage
+we just join their wifi network and BAM phone service!&lt;/p&gt;
+
+&lt;p&gt;We have had the phones for a week. We went with the Nexus 5X. At first, we thought the 250 bucks for the phone was a joke, then we
+realized that we are just used to paying 700 bucks for a phone or 31/mo for 24 months. It was just a shock even more of a shock than having
+to make the switch from iPhones to Android. My wife has only ever known an iPhone and myself haven&amp;rsquo;t touched android since Eclair. The learning
+curve was a little sharp but not that bad. There are some things we miss such as facetime&amp;rsquo;ing the family but its just a matter of them installing
+hangouts or Duo as a replacement.&lt;/p&gt;
+
+&lt;p&gt;As far as the phone the 5x&amp;rsquo;s screen is way better than the iPhone 6 or iPhone 6s&amp;rsquo;s screens could dream of. We also really love where the fingerprint
+reader is. At first, when the Nexus came out and I saw where that was I was like that really odd placement. But then we got them I was like WOW that really
+makes total sense. I have to say that the Nexus is probably one of the nicest phones I have used.&lt;/p&gt;
+
+&lt;h4 id=&#34;service&#34;&gt;Service&lt;/h4&gt;
+
+&lt;p&gt;Let&amp;rsquo;s talk about the service. So with FI we get coverage of US Cellular, T-Mobile, Sprint and WiFi calling. I have to say that having all these
+services and the automatic switching is pretty sweet! The coolest feature I have to say is the seamless handoff between WiFi and Cellular. I was on
+a call in my truck and then pulled in the driveway and all of sudden the call quality improved like crazy. It reminded me of the call quality between two iPhone 6&amp;rsquo;s.
+I was on the phone in the house on wifi and was having to run to town and the call switched and I could notice the call quality dropped a little bit but no dropped calls.&lt;/p&gt;
+
+&lt;p&gt;Another awesome feature about android is the Block/report spam feature. That is so awesome! Nothing makes me madder than someone calling me to offer
+me a deal on a radical. One I am only 33 years old and I don&amp;rsquo;t need help getting around. My number is on the Federal list but that doesn&amp;rsquo;t seem to help. So now
+I just hang up and then click on report spam / block caller. I never hear from them and they don&amp;rsquo;t waste my time.&lt;/p&gt;
+
+&lt;p&gt;Another pretty kick ass feature is when you call a number to a business that isn&amp;rsquo;t in your contacts, google looks it up and updates the call history with the business name. Where has
+this been for the past 5 years of my life? Google Now is really bad ass. I think it&amp;rsquo;s actually better than Siri. It&amp;rsquo;s way more useful than Siri.&lt;/p&gt;
+
+&lt;h4 id=&#34;final-thoughts&#34;&gt;Final Thoughts&lt;/h4&gt;
+
+&lt;p&gt;So in my final Thoughts, this is my initial review of the service. I have already recommended it to about 30 people and about 10 have made the switch. I just
+hope this isn&amp;rsquo;t one of the google projects that just goes away. I&amp;rsquo;m hoping google with keep this up and continue to add networks and services on this. A family
+plan is in the works. Maybe add a tablet would be great too. I&amp;rsquo;m not saying drink the kool-aid of google but at least look at it if your sick of paying a TON for data.
+We were paying 270/mo for 6Gb of data, we now spend 70 for two lines, 3GB of data. Our iPad for the little will now tether but will only cost us an additional 30 bucks for the data
+versus 200 bucks to have the iPhones and iPad all share the same data. I made the switch, will you?&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>GRE VPN with Multi-endpoints to single server</title>
@@ -100,15 +148,15 @@ ip neigh add 10.10.0.1 lladdr 192.168.10.232 dev gre-vpn
 
 &lt;p&gt;So first you if your on linode you will need to make sure you do the following steps that will not be covered by this tutorial. One is get on the generic kernel and not the custom linode kernels. Second you will need to make sure you setup your VPC VPN configuration. I suggest you follow the following tutorial by &lt;a href=&#34;https://medium.com/@silasthomas/aws-vpc-ipsec-site-to-site-vpn-using-a-ubiquiti-edgemax-edgerouter-with-bgp-routing-37abafb950f3#.o1n31p7em&#34;&gt;Medium AWS VPC VPN with BGP&lt;/a&gt; It&amp;rsquo;s important that you follow the steps and download the generic configuration. You will need this later on in the tutorial. I am also assuming that you have multiple machines in Linode and they are debian/ubuntu based. You will want to spin up a box that will be labeled as your AWS gateway.&lt;/p&gt;
 
-&lt;h4 id=&#34;racoon-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Racoon Setup&lt;/h4&gt;
+&lt;h4 id=&#34;racoon-setup&#34;&gt;Racoon Setup&lt;/h4&gt;
 
 &lt;p&gt;You will need to install racoon first. Using &lt;code&gt;apt-get install ipsec-tools racoon&lt;/code&gt; if your runing RHEL based or BSD based you will need to google how to install racoon and ipsec-tools.&lt;/p&gt;
 
-&lt;h4 id=&#34;quagga-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Quagga Setup&lt;/h4&gt;
+&lt;h4 id=&#34;quagga-setup&#34;&gt;Quagga Setup&lt;/h4&gt;
 
 &lt;p&gt;You will need to install quagga first. Using &lt;code&gt;apt-get install quagga&lt;/code&gt; if your running RHEL based or BSD based you will need to google how to install quagga.&lt;/p&gt;
 
-&lt;h3 id=&#34;configuration-of-racoon-and-quagga:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Configuration of Racoon and Quagga&lt;/h3&gt;
+&lt;h3 id=&#34;configuration-of-racoon-and-quagga&#34;&gt;Configuration of Racoon and Quagga&lt;/h3&gt;
 
 &lt;p&gt;Lucky enough I have written a script to make this a lot easy for you :) The following script will generate the racoon and quagga configuration for you.&lt;/p&gt;
 
@@ -175,16 +223,16 @@ ip addr add 10.10.0.2/27 broadcast 10.10.0.63 dev gre-vpn
       <guid>http://blog.guthnur.net/good-engineer/</guid>
       <description>
 
-&lt;h3 id=&#34;new-employment:bbc45e9cff3753a827d260aaadb41218&#34;&gt;New Employment&lt;/h3&gt;
+&lt;h3 id=&#34;new-employment&#34;&gt;New Employment&lt;/h3&gt;
 
 &lt;p&gt;To begin lets talk about my new employment. I&amp;rsquo;m working for a startup in St Paul. We are doing some really cool stuff with chef and vagrant on my team to manage
 all of our infrastructure as we migrate from &lt;a href=&#34;https://www.linode.com&#34;&gt;linode&lt;/a&gt; to &lt;a href=&#34;https://aws.amazon.com&#34;&gt;Amazon AWS&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;good-engineering:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Good Engineering&lt;/h3&gt;
+&lt;h3 id=&#34;good-engineering&#34;&gt;Good Engineering&lt;/h3&gt;
 
 &lt;p&gt;So any company that is starting up these dates are all about the microservices. Piece of advice don&amp;rsquo;t do microservices from the get go. Focus on just getting the application near prefect first then you can do a refactor break it down. Design your front seperate from your backend. So your main application should just be a api and then give that information to the designers and js developers. This is extremely important if you plan on doing a mobile application at somepoint. This will keep the functionality the same between the web ui and the mobile ui.&lt;/p&gt;
 
-&lt;h3 id=&#34;automation:bbc45e9cff3753a827d260aaadb41218&#34;&gt;Automation&lt;/h3&gt;
+&lt;h3 id=&#34;automation&#34;&gt;Automation&lt;/h3&gt;
 
 &lt;p&gt;When it comes your infrastucture automate everything from the begining. This helps scale but make sure that you write in such away that you not locked into a vendor. You should make the vendor pieces just be part of the abstract layer. This will help you launch your infra in aws, digitalocean or any other place. This will also help you create mockup environments for your developers to have mini labs on their local machines.&lt;/p&gt;
 
@@ -203,7 +251,7 @@ all of our infrastructure as we migrate from &lt;a href=&#34;https://www.linode.
 &lt;p&gt;In this article I will show you how to setup kubernetes on ubuntu 14.04 or newer. I recently had to do this for a project.
 Below are the steps to complete this with a example pod.&lt;/p&gt;
 
-&lt;h3 id=&#34;steps:2b6cafb974c1a6e3cbf518b2dbee12bf&#34;&gt;steps&lt;/h3&gt;
+&lt;h3 id=&#34;steps&#34;&gt;steps&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Become Root&lt;/li&gt;
@@ -430,17 +478,17 @@ Kubernetes master is running at http://127.0.0.1:8080
 
 &lt;p&gt;This guide shows you how to setup a Django Application and development environment using Docker and Postgres.&lt;/p&gt;
 
-&lt;h4 id=&#34;1-install-the-docker-toolbox:872107b178d0c51c73a0d80068754fa1&#34;&gt;1. Install the Docker Toolbox&lt;/h4&gt;
+&lt;h4 id=&#34;1-install-the-docker-toolbox&#34;&gt;1. Install the Docker Toolbox&lt;/h4&gt;
 
 &lt;p&gt;The first step is to install the &lt;a href=&#34;https://docs.docker.com/installation/&#34;&gt;docker toolbox&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;On this page, find your platform and run the installation. On a Mac, you&amp;rsquo;ll be installing Docker, Docker Compose, and Docker Machine. Docker Machine will use a Linux Virtual Machine to actually run Docker.&lt;/p&gt;
 
-&lt;h4 id=&#34;2-docker-quickstart-terminal-mac:872107b178d0c51c73a0d80068754fa1&#34;&gt;2. Docker Quickstart Terminal (Mac)&lt;/h4&gt;
+&lt;h4 id=&#34;2-docker-quickstart-terminal-mac&#34;&gt;2. Docker Quickstart Terminal (Mac)&lt;/h4&gt;
 
 &lt;p&gt;If you&amp;rsquo;re using a Mac, you will want to start working with Docker by opening the Docker Quickstart Terminal. This will ensure that your environment is setup properly. Since Docker is actually running in a VM.&lt;/p&gt;
 
-&lt;h4 id=&#34;3-get-familiar-with-docker:872107b178d0c51c73a0d80068754fa1&#34;&gt;3. Get familiar with Docker&lt;/h4&gt;
+&lt;h4 id=&#34;3-get-familiar-with-docker&#34;&gt;3. Get familiar with Docker&lt;/h4&gt;
 
 &lt;p&gt;For our Django app we are going to build a custom Django image. There is a lot to learn about Docker images in the future, so you should definitely read up on them when your ready.&lt;/p&gt;
 
@@ -470,7 +518,7 @@ RUN pip install -r requirements.txt
 ADD . /code/
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;4-create-your-requirements-txt-file:872107b178d0c51c73a0d80068754fa1&#34;&gt;4. Create your requirements.txt file&lt;/h4&gt;
+&lt;h4 id=&#34;4-create-your-requirements-txt-file&#34;&gt;4. Create your requirements.txt file&lt;/h4&gt;
 
 &lt;p&gt;The requirements.txt file contains the python modules necessary to run your application. In this case when need to install Django and psycopg2 (postgres + python). The Dockerfile we created in the previous setup will install these required modules.&lt;/p&gt;
 
@@ -483,7 +531,7 @@ ADD . /code/
 psycopg2
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;5-create-your-docker-compose-yml-file:872107b178d0c51c73a0d80068754fa1&#34;&gt;5. Create your docker-compose.yml file&lt;/h4&gt;
+&lt;h4 id=&#34;5-create-your-docker-compose-yml-file&#34;&gt;5. Create your docker-compose.yml file&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;touch docker-compose.yml
 &lt;/code&gt;&lt;/pre&gt;
@@ -503,7 +551,7 @@ web:
     - db
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;6-create-your-django-project:872107b178d0c51c73a0d80068754fa1&#34;&gt;6. Create your Django project&lt;/h4&gt;
+&lt;h4 id=&#34;6-create-your-django-project&#34;&gt;6. Create your Django project&lt;/h4&gt;
 
 &lt;p&gt;You&amp;rsquo;ll need to use the docker-compose run command to start your django project. Of course, if you&amp;rsquo;ve already got a project started this setup can be skipped. You might still find this helpful to read through.&lt;/p&gt;
 
@@ -514,7 +562,7 @@ web:
 
 &lt;p&gt;You may already be familiar with djangos startproject command, but when using Docker we will have to run this command inside the of our container. Once you run this command you can run ls -l and take a look at the file that were created in your current directory. You will see that your project was created and manage.py was added, but both are owned by root. This is because the container runs as root. You&amp;rsquo;ll want to change the ownership by running sudo chown -R $USER:$USER .&lt;/p&gt;
 
-&lt;h4 id=&#34;7-configure-django-to-connect-to-the-database:872107b178d0c51c73a0d80068754fa1&#34;&gt;7. Configure Django to connect to the Database&lt;/h4&gt;
+&lt;h4 id=&#34;7-configure-django-to-connect-to-the-database&#34;&gt;7. Configure Django to connect to the Database&lt;/h4&gt;
 
 &lt;p&gt;Django&amp;rsquo;s database settings are in the settings.py file located in your primary app directory &lt;code&gt;examplepoject/settings.py&lt;/code&gt; Go ahead and open this file to edit.&lt;/p&gt;
 
@@ -533,7 +581,7 @@ web:
 
 &lt;p&gt;Notice the hostname. If you look back at your docker-compose file, this is the name of the database service we&amp;rsquo;are creating. When we link the database container to the web container, we are able to access the container using the name of the service as the hostname.&lt;/p&gt;
 
-&lt;h4 id=&#34;8-run-docker-compose-up:872107b178d0c51c73a0d80068754fa1&#34;&gt;8. Run docker-compose up&lt;/h4&gt;
+&lt;h4 id=&#34;8-run-docker-compose-up&#34;&gt;8. Run docker-compose up&lt;/h4&gt;
 
 &lt;p&gt;At this point we&amp;rsquo;re ready to take a look at our empty application. Run docker-compose up to start the django server.&lt;/p&gt;
 
@@ -547,7 +595,7 @@ web:
 
 &lt;p&gt;otherwise you can use localhost. In my case the ip is 192.168.99.100. So open a browser and visit &lt;a href=&#34;http://192.168.99.100:8000&#34;&gt;http://192.168.99.100:8000&lt;/a&gt;. Again if you look at the docker-compose file under the ports directive we are forwarding port 8000 from our container to port 8000 on our machine running docker.&lt;/p&gt;
 
-&lt;h4 id=&#34;9-add-data-persistence:872107b178d0c51c73a0d80068754fa1&#34;&gt;9. Add data persistence&lt;/h4&gt;
+&lt;h4 id=&#34;9-add-data-persistence&#34;&gt;9. Add data persistence&lt;/h4&gt;
 
 &lt;p&gt;For development, you may want to add a persistent data container. Whenever you start a new container from an image, you are starting completely fresh. That means when you start a new postgres container, it doesn&amp;rsquo;t start with any data. You&amp;rsquo;ll have to run migrations again, and you will have lost any data you my have added to some other container. This may seem odd at first, but in the end it&amp;rsquo;s essential to the portability of containers. So in theory, we can create a data only container that will be mounted onto our postgres container.&lt;/p&gt;
 
@@ -595,7 +643,7 @@ pg_data:
 
 &lt;p&gt;You&amp;rsquo;ll see we added a pg_data service and we&amp;rsquo;re mounting a data volume from pg_Data onto our db container. So now, as you develop and create data, as long as you mount this data only container to your future postgres containers you will have persistent data.&lt;/p&gt;
 
-&lt;h4 id=&#34;10-running-tests:872107b178d0c51c73a0d80068754fa1&#34;&gt;10. Running tests&lt;/h4&gt;
+&lt;h4 id=&#34;10-running-tests&#34;&gt;10. Running tests&lt;/h4&gt;
 
 &lt;p&gt;Running test is fairly straight forward. You can run a basic test using the docker-compose run command.&lt;/p&gt;
 
@@ -637,13 +685,13 @@ fi
       <guid>http://blog.guthnur.net/start-up-story/</guid>
       <description>
 
-&lt;h3 id=&#34;creating-a-startup:c9c85e47c1600296732c38a16bbab580&#34;&gt;Creating a startup&lt;/h3&gt;
+&lt;h3 id=&#34;creating-a-startup&#34;&gt;Creating a startup&lt;/h3&gt;
 
 &lt;p&gt;So I have taken it upon myself to create a startup and see if I can&amp;rsquo;t get it actually used. So first thing you need is a great Idea that you believe in.
 Then you need a great pitch no more then 30 seconds to get people excited. You need people you can get excited and keep them excited. These people will
 become your Team and investors. Everyone you bring on or part of the startup needs to be as excited as you or more excited about the idea.&lt;/p&gt;
 
-&lt;h3 id=&#34;step-number-two:c9c85e47c1600296732c38a16bbab580&#34;&gt;Step Number Two&lt;/h3&gt;
+&lt;h3 id=&#34;step-number-two&#34;&gt;Step Number Two&lt;/h3&gt;
 
 &lt;p&gt;The technology your going to use. This is the next important bit. You should really evaluate your past experiences. For example I use to work for a company
 thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more machines with out justification. At this step METRICS are going to be your life. You will
@@ -656,7 +704,7 @@ thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more mach
  dollar amount. Everything costs you money and If its going to take you 30 minutes to recover or spin up enough servers to handle the load from reddit or
  tech crunch and that is costing you $30.00/second then that 30 minutes really costs you $54,000 not to mention a bad user experience.&lt;/p&gt;
 
-&lt;h3 id=&#34;user-experience:c9c85e47c1600296732c38a16bbab580&#34;&gt;User experience&lt;/h3&gt;
+&lt;h3 id=&#34;user-experience&#34;&gt;User experience&lt;/h3&gt;
 
 &lt;p&gt;This is the most important thing period. You could have the greatest full stack and deployment powers. If you don&amp;rsquo;t have the best user experience you will
  not have customers of user your product. If you don&amp;rsquo;t have customers or people wanting to use your product guess what you don&amp;rsquo;t have any money. You can also
@@ -676,13 +724,13 @@ thats Ideas of scaling wasn&amp;rsquo;t true scaling, but just turn up more mach
       <guid>http://blog.guthnur.net/letsencrypt-yay/</guid>
       <description>
 
-&lt;h3 id=&#34;letsencrypt:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;letsencrypt&lt;/h3&gt;
+&lt;h3 id=&#34;letsencrypt&#34;&gt;letsencrypt&lt;/h3&gt;
 
 &lt;p&gt;This is a amazing product that is opensource. I recently decided that this was going to be the way I get my ssl certificates for everything I do. I was
 lucky to get into the beta invitation only. It works great. Every 90 days you have regen your certificates but thats not a big deal because they give you
 tools to do it.&lt;/p&gt;
 
-&lt;h4 id=&#34;setup:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;Setup&lt;/h4&gt;
+&lt;h4 id=&#34;setup&#34;&gt;Setup&lt;/h4&gt;
 
 &lt;p&gt;So you get this going to your going to need to check out their repo.&lt;/p&gt;
 
@@ -761,11 +809,11 @@ tools to do it.&lt;/p&gt;
 have interested me for a while. Since I live more than 30 miles from the nearest d*Star repeater, I picked up a DVAP 2meter Dongle. So my d*Star setup is a raspberry
 pi b+ v2 + DVAP 2m and my Icom ID-51A Plus radio. So I&amp;rsquo;ll explain how to get this setup. It took a lot of digging around the internet to get a complete set together.&lt;/p&gt;
 
-&lt;h3 id=&#34;configure-icom-id-51a-plus-to-use-dstar:7ab37d811a3fb6122eb1daaec1b9fa57&#34;&gt;Configure Icom ID-51A Plus to use Dstar&lt;/h3&gt;
+&lt;h3 id=&#34;configure-icom-id-51a-plus-to-use-dstar&#34;&gt;Configure Icom ID-51A Plus to use Dstar&lt;/h3&gt;
 
 &lt;p&gt;So turn on your Icom ID-51A Plus. Press the menu button and nagivate to My Station and press the &amp;ldquo;blue&amp;rdquo; ok button in the middle of the dpad. Then Ok on My Call Sign. Then the first one should be selected by default. Press the Quick button and this will pop up with a menu of Edit and Clear. Click ok on edit. Now turn the little nob to navigate thought the alpha numeric options. Once your have your call sign in there click ok twice. This should take you back to My station list. Now aarow down to TXT Message. Select option 1. Press the quick button again. Put in your Name. Then ok twice again. Now we need put in a repeater for our dvap. Press and hold the DR button (Aka the Down Button.) Then highlight the From then press the ok button. Then ok on Repeater List. Scroll down to 20: Simplex. Next Press the Quick button and scroll down to Add and press the ok button. Set the Type: DV Repeater, scroll to Name, Use the small nob like you did to set your call sign, to give it the name of DVAP. Then scroll down to Use(From): Test this to yes. Next go to frequency and set it to a frequency that is available in your area. Remeber this as you will need this when we setup the PI + Dvap. Scroll down to Add to write and click ok. Now your DVAP should be in the From field. Next scroll to TO and Tell it ok and choose reflector. Then Ok on link to reflector. Then ok on Direct Input. Turn the small nob to a reflector number of your choosing. REF001C is busy reflector and REF050C is a busy one in the northeast of the US. Then click ok. Now our radio is ready. Next is the PI+DVAP setup.&lt;/p&gt;
 
-&lt;h3 id=&#34;setup-raspberry-pi-and-dvap:7ab37d811a3fb6122eb1daaec1b9fa57&#34;&gt;Setup Raspberry Pi and DVAP&lt;/h3&gt;
+&lt;h3 id=&#34;setup-raspberry-pi-and-dvap&#34;&gt;Setup Raspberry Pi and DVAP&lt;/h3&gt;
 
 &lt;p&gt;So you will want to ssh to your raspberry pi as the pi user. I would recommend that you use the standard raspbian jessie image. You can get this at
 &lt;a href=&#34;https://www.raspberrypi.org/downloads/raspbian/&#34;&gt;Downloads @ Raspberrypi.org&lt;/a&gt;. You can follow their documentation on getting this on the SD card. Next you will
@@ -837,7 +885,7 @@ hdmi_mode=58
 
 &lt;p&gt;Next we are going to reboot the pi. &lt;code&gt;sudo reboot&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h4 id=&#34;configure-applications:7ab37d811a3fb6122eb1daaec1b9fa57&#34;&gt;Configure applications&lt;/h4&gt;
+&lt;h4 id=&#34;configure-applications&#34;&gt;Configure applications&lt;/h4&gt;
 
 &lt;p&gt;First we are going to configure the gateway. So VNC to the the pi using a vnc client like chicken of vnc(on mac os x). We are going to double click on gateway_config. Its going to take a bit to getting up on the screen. Once up on the screen we are going to make some changes, to what we see on the screen. We are going to set the drop down box to &lt;code&gt;hotspot&lt;/code&gt;. Next we are going to set the callsign to our callsign. Next boxes we are going to touch are the QTH to your location. Next we are going to the Reapter 1 tab. We are going to set the Band to C for 2m or B for 70cm. The type needs to be set to Homebrew. If you want to automatically link to a reflector, then set the Reflector to the reflector you want and the band. You want to set Startup to yes in this case. On the next Repeater make sure that Freq, offset, Range, AGL, Lat and Long are all set to 0. Next we are going to click the right arrow until we are get to ircDDB tab. Set ircDDB to Enabled and hostname to freestar-irc-cluster.v3lsr.ca, put your callsign in for the username. Since this server doesn&amp;rsquo;t need you to register your callsign. Next click the right aarow again to D-PRS and set it to enable. If the hostname is blank put in rotate.aprs2.net and port 14580. Next click the right arrow again for DExtra, set it to Enabled if you wish to use DExtra. Click the right aarow to go to D-Plus and set this to enable and set Login to your callsign. Click the Right Arrow again to bring you to the DCS and CCS tab. Set DCS and CCS to Enabled. Next click the right arrow until you get to the end of the tabs. Set info command, echo command, gui log, D-Rats, DTMF Control all to Enabled. Next go to File -&amp;gt; Save. Now close this window.&lt;/p&gt;
 
@@ -890,11 +938,11 @@ what not to do. I&amp;rsquo;m looking forward to moving into more of a System En
 with clients and infrastructures. I will get the ability to get behind a application platform that scales to 57 datacenter and 10,000 of thousands of clients.
 I will be able to move into DevOps or Automation in the future.&lt;/p&gt;
 
-&lt;h3 id=&#34;reasons:1bcd761b05b9be29a4bbab0d39dbbfe0&#34;&gt;Reasons&lt;/h3&gt;
+&lt;h3 id=&#34;reasons&#34;&gt;Reasons&lt;/h3&gt;
 
 &lt;p&gt;I could list a million reasons why I have left Symplicity. It all comes down to the events for the past couple of years. Starting with the CEO and CTO getting charged with computer crimes. Human Resources promising career paths over and over and never delivering. No support for Professional development. Massive Turn over rates across the board. Lack of quality hires and hoping that craigslist is going to give rockstar devops and system engineers. Fear of growth and change. People being leaders that try their best only to fall short of being great leaders. Lack of a CTO and CIO to drive developers and sysadmins to greatness is really hurting the company.&lt;/p&gt;
 
-&lt;h3 id=&#34;why-centurylink:1bcd761b05b9be29a4bbab0d39dbbfe0&#34;&gt;Why CenturyLink&lt;/h3&gt;
+&lt;h3 id=&#34;why-centurylink&#34;&gt;Why CenturyLink&lt;/h3&gt;
 
 &lt;p&gt;Well they sought me out and their processes I have been greatly impressed with. They have a definitive goal and markets they want to get to. Their perks are great.
 Professional Development, Health Insurance and Pay is amazing. There interview process is designed to filtered out a lot of crap applicants. It starts off by two phone technical interviews and then Team Manager phones you. Then you get flown to Seattle for a interview Loop that is 5 people, one person from the team, 2 other employees that you might interact with. Then the VP of the division talks with you and then Team Manager talks with you again. You only move on in the loop if the last person to interview likes you and feels that you fit in. There Customers are number 1 in thier book and there employees are number 1 also. They are building a culture that they are very very picky about who can join it and help build it.&lt;/p&gt;
@@ -916,14 +964,14 @@ usefulness. It seems that a lot of people blur the line between VM&amp;rsquo;s a
 Containers. I think its important that we define the two here before we get to
 invested in this article.&lt;/p&gt;
 
-&lt;h5 id=&#34;vm-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;VM Concepts&lt;/h5&gt;
+&lt;h5 id=&#34;vm-concepts&#34;&gt;VM Concepts&lt;/h5&gt;
 
 &lt;p&gt;A VM per its name is a Virtual Machine, so this by default is Read/Write
 enabled. Where your changes aren&amp;rsquo;t lost in reboots or host shutdowns. This is
 great for things where your not using source control. And your machine isn&amp;rsquo;t
 defined as Code!.&lt;/p&gt;
 
-&lt;h5 id=&#34;lxc-containers:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;LXC Containers&lt;/h5&gt;
+&lt;h5 id=&#34;lxc-containers&#34;&gt;LXC Containers&lt;/h5&gt;
 
 &lt;p&gt;Now lxc containers are read/write or even read only containers. This have the
 same issue as VM&amp;rsquo;s and that is they arent defined by code. They have act like
@@ -931,7 +979,7 @@ VM&amp;rsquo;s or act in the ideaism&amp;rsquo;s of Docker containers if you wis
 a hypervisor, cgroups can be a nightmare to get working depending on our OS
 they my or not work.&lt;/p&gt;
 
-&lt;h5 id=&#34;docker-containers:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;Docker Containers&lt;/h5&gt;
+&lt;h5 id=&#34;docker-containers&#34;&gt;Docker Containers&lt;/h5&gt;
 
 &lt;p&gt;Now Docker containers are defined as Code, but they are read only. So you can&amp;rsquo;t
 use them as a vm and except your changes to stick unless you define it in the
@@ -939,7 +987,7 @@ code that makes the container. These typically only host one service, or one
 task. Such as a Web Server or a Database server. Their cgroups work out of the
 box.&lt;/p&gt;
 
-&lt;h5 id=&#34;container-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8&#34;&gt;Container Concepts&lt;/h5&gt;
+&lt;h5 id=&#34;container-concepts&#34;&gt;Container Concepts&lt;/h5&gt;
 
 &lt;p&gt;So the ideaism behind containers is this you have a service say nginx and your
 going to host your website. 99% of the time your not going to need to increase
@@ -1022,14 +1070,14 @@ one week to do this in.&lt;/p&gt;
       <guid>http://blog.guthnur.net/new-site/</guid>
       <description>
 
-&lt;h3 id=&#34;finally-backup:874d006584b53f2a1070783574da19bd&#34;&gt;Finally Backup&lt;/h3&gt;
+&lt;h3 id=&#34;finally-backup&#34;&gt;Finally Backup&lt;/h3&gt;
 
 &lt;p&gt;So I have decided its time for a new site and blog. I have been playing with
 this idea for a while. I have been really busy at work and in my personal life.
 I originally started a blog back in 2004 and now here we are in 2015. With more
 blog options then ever before.&lt;/p&gt;
 
-&lt;h4 id=&#34;engine-choice:874d006584b53f2a1070783574da19bd&#34;&gt;Engine Choice&lt;/h4&gt;
+&lt;h4 id=&#34;engine-choice&#34;&gt;Engine Choice&lt;/h4&gt;
 
 &lt;p&gt;So when I picked my blog engine I knew I never wanted to have a database
 server. I wanted the ability to throw this up on any thing that can serve html

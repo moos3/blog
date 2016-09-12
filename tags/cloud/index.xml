@@ -21,7 +21,7 @@
 &lt;p&gt;In this article I will show you how to setup kubernetes on ubuntu 14.04 or newer. I recently had to do this for a project.
 Below are the steps to complete this with a example pod.&lt;/p&gt;
 
-&lt;h3 id=&#34;steps:2b6cafb974c1a6e3cbf518b2dbee12bf&#34;&gt;steps&lt;/h3&gt;
+&lt;h3 id=&#34;steps&#34;&gt;steps&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Become Root&lt;/li&gt;

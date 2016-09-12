@@ -18,13 +18,13 @@
       <guid>http://blog.guthnur.net/letsencrypt-yay/</guid>
       <description>
 
-&lt;h3 id=&#34;letsencrypt:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;letsencrypt&lt;/h3&gt;
+&lt;h3 id=&#34;letsencrypt&#34;&gt;letsencrypt&lt;/h3&gt;
 
 &lt;p&gt;This is a amazing product that is opensource. I recently decided that this was going to be the way I get my ssl certificates for everything I do. I was
 lucky to get into the beta invitation only. It works great. Every 90 days you have regen your certificates but thats not a big deal because they give you
 tools to do it.&lt;/p&gt;
 
-&lt;h4 id=&#34;setup:ae187b386f0c86f5be8053e8af7b56b5&#34;&gt;Setup&lt;/h4&gt;
+&lt;h4 id=&#34;setup&#34;&gt;Setup&lt;/h4&gt;
 
 &lt;p&gt;So you get this going to your going to need to check out their repo.&lt;/p&gt;
 

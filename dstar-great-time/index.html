@@ -43,7 +43,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.15" />
+    <meta name="generator" content="Hugo 0.16" />
 
     <link rel="canonical" href="http://blog.guthnur.net/dstar-great-time/" />
 
@@ -72,7 +72,7 @@
         
             
             <li class="nav-opened" role="presentation">
-            	<a href="http://blog.guthnur.net/about/">About Me</a>
+            	<a href="http://blog.guthnur.net/about">About Me</a>
             </li>
         
             
@@ -153,11 +153,11 @@
 have interested me for a while. Since I live more than 30 miles from the nearest d*Star repeater, I picked up a DVAP 2meter Dongle. So my d*Star setup is a raspberry
 pi b+ v2 + DVAP 2m and my Icom ID-51A Plus radio. So I&rsquo;ll explain how to get this setup. It took a lot of digging around the internet to get a complete set together.</p>
 
-<h3 id="configure-icom-id-51a-plus-to-use-dstar:7ab37d811a3fb6122eb1daaec1b9fa57">Configure Icom ID-51A Plus to use Dstar</h3>
+<h3 id="configure-icom-id-51a-plus-to-use-dstar">Configure Icom ID-51A Plus to use Dstar</h3>
 
 <p>So turn on your Icom ID-51A Plus. Press the menu button and nagivate to My Station and press the &ldquo;blue&rdquo; ok button in the middle of the dpad. Then Ok on My Call Sign. Then the first one should be selected by default. Press the Quick button and this will pop up with a menu of Edit and Clear. Click ok on edit. Now turn the little nob to navigate thought the alpha numeric options. Once your have your call sign in there click ok twice. This should take you back to My station list. Now aarow down to TXT Message. Select option 1. Press the quick button again. Put in your Name. Then ok twice again. Now we need put in a repeater for our dvap. Press and hold the DR button (Aka the Down Button.) Then highlight the From then press the ok button. Then ok on Repeater List. Scroll down to 20: Simplex. Next Press the Quick button and scroll down to Add and press the ok button. Set the Type: DV Repeater, scroll to Name, Use the small nob like you did to set your call sign, to give it the name of DVAP. Then scroll down to Use(From): Test this to yes. Next go to frequency and set it to a frequency that is available in your area. Remeber this as you will need this when we setup the PI + Dvap. Scroll down to Add to write and click ok. Now your DVAP should be in the From field. Next scroll to TO and Tell it ok and choose reflector. Then Ok on link to reflector. Then ok on Direct Input. Turn the small nob to a reflector number of your choosing. REF001C is busy reflector and REF050C is a busy one in the northeast of the US. Then click ok. Now our radio is ready. Next is the PI+DVAP setup.</p>
 
-<h3 id="setup-raspberry-pi-and-dvap:7ab37d811a3fb6122eb1daaec1b9fa57">Setup Raspberry Pi and DVAP</h3>
+<h3 id="setup-raspberry-pi-and-dvap">Setup Raspberry Pi and DVAP</h3>
 
 <p>So you will want to ssh to your raspberry pi as the pi user. I would recommend that you use the standard raspbian jessie image. You can get this at
 <a href="https://www.raspberrypi.org/downloads/raspbian/">Downloads @ Raspberrypi.org</a>. You can follow their documentation on getting this on the SD card. Next you will
@@ -229,7 +229,7 @@ hdmi_mode=58
 
 <p>Next we are going to reboot the pi. <code>sudo reboot</code>.</p>
 
-<h4 id="configure-applications:7ab37d811a3fb6122eb1daaec1b9fa57">Configure applications</h4>
+<h4 id="configure-applications">Configure applications</h4>
 
 <p>First we are going to configure the gateway. So VNC to the the pi using a vnc client like chicken of vnc(on mac os x). We are going to double click on gateway_config. Its going to take a bit to getting up on the screen. Once up on the screen we are going to make some changes, to what we see on the screen. We are going to set the drop down box to <code>hotspot</code>. Next we are going to set the callsign to our callsign. Next boxes we are going to touch are the QTH to your location. Next we are going to the Reapter 1 tab. We are going to set the Band to C for 2m or B for 70cm. The type needs to be set to Homebrew. If you want to automatically link to a reflector, then set the Reflector to the reflector you want and the band. You want to set Startup to yes in this case. On the next Repeater make sure that Freq, offset, Range, AGL, Lat and Long are all set to 0. Next we are going to click the right arrow until we are get to ircDDB tab. Set ircDDB to Enabled and hostname to freestar-irc-cluster.v3lsr.ca, put your callsign in for the username. Since this server doesn&rsquo;t need you to register your callsign. Next click the right aarow again to D-PRS and set it to enable. If the hostname is blank put in rotate.aprs2.net and port 14580. Next click the right arrow again for DExtra, set it to Enabled if you wish to use DExtra. Click the right aarow to go to D-Plus and set this to enable and set Login to your callsign. Click the Right Arrow again to bring you to the DCS and CCS tab. Set DCS and CCS to Enabled. Next click the right arrow until you get to the end of the tabs. Set info command, echo command, gui log, D-Rats, DTMF Control all to Enabled. Next go to File -&gt; Save. Now close this window.</p>
 

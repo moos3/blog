@@ -45,7 +45,7 @@
       
       
     
-    <meta name="generator" content="Hugo 0.15" />
+    <meta name="generator" content="Hugo 0.16" />
 
     <link rel="canonical" href="http://blog.guthnur.net/containers-are-not-vms/" />
 
@@ -74,7 +74,7 @@
         
             
             <li class="nav-opened" role="presentation">
-            	<a href="http://blog.guthnur.net/about/">About Me</a>
+            	<a href="http://blog.guthnur.net/about">About Me</a>
             </li>
         
             
@@ -158,14 +158,14 @@ usefulness. It seems that a lot of people blur the line between VM&rsquo;s and
 Containers. I think its important that we define the two here before we get to
 invested in this article.</p>
 
-<h5 id="vm-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8">VM Concepts</h5>
+<h5 id="vm-concepts">VM Concepts</h5>
 
 <p>A VM per its name is a Virtual Machine, so this by default is Read/Write
 enabled. Where your changes aren&rsquo;t lost in reboots or host shutdowns. This is
 great for things where your not using source control. And your machine isn&rsquo;t
 defined as Code!.</p>
 
-<h5 id="lxc-containers:f21460bb8361ebe9d0dfc1e78d4a74b8">LXC Containers</h5>
+<h5 id="lxc-containers">LXC Containers</h5>
 
 <p>Now lxc containers are read/write or even read only containers. This have the
 same issue as VM&rsquo;s and that is they arent defined by code. They have act like
@@ -173,7 +173,7 @@ VM&rsquo;s or act in the ideaism&rsquo;s of Docker containers if you wish. This 
 a hypervisor, cgroups can be a nightmare to get working depending on our OS
 they my or not work.</p>
 
-<h5 id="docker-containers:f21460bb8361ebe9d0dfc1e78d4a74b8">Docker Containers</h5>
+<h5 id="docker-containers">Docker Containers</h5>
 
 <p>Now Docker containers are defined as Code, but they are read only. So you can&rsquo;t
 use them as a vm and except your changes to stick unless you define it in the
@@ -181,7 +181,7 @@ code that makes the container. These typically only host one service, or one
 task. Such as a Web Server or a Database server. Their cgroups work out of the
 box.</p>
 
-<h5 id="container-concepts:f21460bb8361ebe9d0dfc1e78d4a74b8">Container Concepts</h5>
+<h5 id="container-concepts">Container Concepts</h5>
 
 <p>So the ideaism behind containers is this you have a service say nginx and your
 going to host your website. 99% of the time your not going to need to increase

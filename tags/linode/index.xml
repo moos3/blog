@@ -100,15 +100,15 @@ ip neigh add 10.10.0.1 lladdr 192.168.10.232 dev gre-vpn
 
 &lt;p&gt;So first you if your on linode you will need to make sure you do the following steps that will not be covered by this tutorial. One is get on the generic kernel and not the custom linode kernels. Second you will need to make sure you setup your VPC VPN configuration. I suggest you follow the following tutorial by &lt;a href=&#34;https://medium.com/@silasthomas/aws-vpc-ipsec-site-to-site-vpn-using-a-ubiquiti-edgemax-edgerouter-with-bgp-routing-37abafb950f3#.o1n31p7em&#34;&gt;Medium AWS VPC VPN with BGP&lt;/a&gt; It&amp;rsquo;s important that you follow the steps and download the generic configuration. You will need this later on in the tutorial. I am also assuming that you have multiple machines in Linode and they are debian/ubuntu based. You will want to spin up a box that will be labeled as your AWS gateway.&lt;/p&gt;
 
-&lt;h4 id=&#34;racoon-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Racoon Setup&lt;/h4&gt;
+&lt;h4 id=&#34;racoon-setup&#34;&gt;Racoon Setup&lt;/h4&gt;
 
 &lt;p&gt;You will need to install racoon first. Using &lt;code&gt;apt-get install ipsec-tools racoon&lt;/code&gt; if your runing RHEL based or BSD based you will need to google how to install racoon and ipsec-tools.&lt;/p&gt;
 
-&lt;h4 id=&#34;quagga-setup:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Quagga Setup&lt;/h4&gt;
+&lt;h4 id=&#34;quagga-setup&#34;&gt;Quagga Setup&lt;/h4&gt;
 
 &lt;p&gt;You will need to install quagga first. Using &lt;code&gt;apt-get install quagga&lt;/code&gt; if your running RHEL based or BSD based you will need to google how to install quagga.&lt;/p&gt;
 
-&lt;h3 id=&#34;configuration-of-racoon-and-quagga:91561efb3dc3d9d07642504680d8b1be&#34;&gt;Configuration of Racoon and Quagga&lt;/h3&gt;
+&lt;h3 id=&#34;configuration-of-racoon-and-quagga&#34;&gt;Configuration of Racoon and Quagga&lt;/h3&gt;
 
 &lt;p&gt;Lucky enough I have written a script to make this a lot easy for you :) The following script will generate the racoon and quagga configuration for you.&lt;/p&gt;
 
