@@ -1,7 +1,6 @@
 +++
 
 date = "2016-09-12T13:17:04-04:00"
-draft = true
 title = "Ditched Verizon for Project-Fi"
 author = "Richard Genthner"
 comments = true
@@ -47,4 +46,4 @@ So in my final Thoughts, this is my initial review of the service. I have alread
 hope this isn't one of the google projects that just goes away. I'm hoping google with keep this up and continue to add networks and services on this. A family
 plan is in the works. Maybe add a tablet would be great too. I'm not saying drink the kool-aid of google but at least look at it if your sick of paying a TON for data.
 We were paying 270/mo for 6Gb of data, we now spend 70 for two lines, 3GB of data. Our iPad for the little will now tether but will only cost us an additional 30 bucks for the data
-versus 200 bucks to have the iPhones and iPad all share the same data. I made the switch, will you? 
+versus 200 bucks to have the iPhones and iPad all share the same data. I made the switch, will you?
