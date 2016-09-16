@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  	<meta property="og:title" content=" aws google sso &middot;  Moos3" />
+  	<meta property="og:site_name" content="Moos3" />
+  	<meta property="og:url" content="http://blog.guthnur.net/aws-google-sso/" />
+    
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2016-09-16T16:19:59-04:00" />
+
+    
+    <meta property="og:article:tag" content="sso" />
+    
+    <meta property="og:article:tag" content="technology" />
+    
+    <meta property="og:article:tag" content="saml" />
+    
+    <meta property="og:article:tag" content="aws" />
+    
+    <meta property="og:article:tag" content="google" />
+    
+    
+
+  <title>
+     aws google sso &middot;  Moos3
+  </title>
+
+    <meta name="description" content="Knowledge is power but Openly Shared knowledge is real power!" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="http://blog.guthnur.net/images/favicon.ico">
+	  <link rel="apple-touch-icon" href="http://blog.guthnur.net/images/apple-touch-icon.png" />
+    
+    <link rel="stylesheet" type="text/css" href="http://blog.guthnur.net/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="http://blog.guthnur.net/index.xml" rel="alternate" type="application/rss+xml" title="Moos3" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.16" />
+
+    <link rel="canonical" href="http://blog.guthnur.net/aws-google-sso/" />
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-2', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about">About Me</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/">Blog</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="http://blog.guthnur.net/about/">About Me &amp; Contact Info</a>
+            </li>
+        
+            <h3>Follow me</h3>
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/moos3">Github repos</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/moos3">Twitter timeline</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="http://blog.guthnur.net/index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="http://blog.guthnur.net/"><img src="http://blog.guthnur.net/images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">aws google sso</h1>
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2016-09-16T16:19:59-04:00">
+            Sep 16, 2016
+          </time>
+        
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/sso/">#sso</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/technology/">#technology</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/saml/">#saml</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/aws/">#aws</a></span>
+         
+          <span class="post-tag small"><a href="http://blog.guthnur.net/tags/google/">#google</a></span>
+         
+        </section>
+    </header>
+  
+    <section class="post-content">
+      
+
+<p>This article contains the files needed to wire up our Google Apps SSO to aws. Enorder to setup the AWS sso in additional accounts you will need the following tools:</p>
+
+<ul>
+<li>Aws Account keys with Admin access</li>
+<li>Google Admin access</li>
+<li>aws cli tools</li>
+</ul>
+
+<h2 id="setup-google-apps">Setup Google Apps</h2>
+
+<p>First we will need to setup a Custom Schema element to hold role information for our users. By default, when you map attributes for SAML apps the pass Role to AWS you&rsquo;ll only be able to select from existing attribute on your users.
+Examples include Job Title, Cost Center and Department. I&rsquo;ve seen other articles that mention putting a signle role ARN in one of these but it&rsquo;s really not suitable for that information (especially if you use those fields already).</p>
+
+<h4 id="the-solution-is-to-setup-a-custom-attribute-https-support-google-com-a-answer-6327792-hl-en-for-your-users">The Solution is to setup a <a href="https://support.google.com/a/answer/6327792?hl=en">Custom Attribute</a> for your users.</h4>
+
+<ul>
+<li>Open the <a href="https://developers.google.com/admin-sdk/directory/v1/reference/schemas/insert#try-it">Schema Insert Page</a> in Google Admin Console</li>
+<li>Enter <code>my_customer</code> in <code>customerId</code></li>
+<li>To the right of the Request Body, select <code>FreeForm Editor</code> from the dropdown list and then pase the following (schemaName should be either SSO or AWS_SAML):</li>
+</ul>
+
+<pre><code>{
+  &quot;fields&quot;:
+  [
+    {
+      &quot;fieldName&quot;: &quot;role&quot;,
+      &quot;fieldType&quot;: &quot;STRING&quot;,
+      &quot;multiValued&quot;: true,
+      &quot;readAccessType&quot;: &quot;ADMINS_AND_SELF&quot;
+    }
+  ],
+  &quot;schemaName&quot;: &quot;SSO&quot;,
+}
+</code></pre>
+
+<ul>
+<li>Then Click <code>Authorize and Execute</code></li>
+</ul>
+
+<h4 id="setup-the-google-apps-saml-app-for-aws">Setup the Google Apps SAML App for AWS</h4>
+
+<p>You&rsquo;ll need to configure your Google Apps account as a identity provider (or IdP) for AWS to use.</p>
+
+<p>Google has written some pretty good instructions for this <a href="https://support.google.com/a/answer/6194963?hl=en">here</a>. Go check them out and run though them then come back here or follow my brief instructions below:</p>
+
+<ol>
+<li>Login into your Google Apps Admin Console</li>
+<li>Head to the <code>Apps</code> Section then <code>SAML Apps</code></li>
+<li>Click <code>Add a Service/App to your domain</code></li>
+<li>Select <code>Amazon Web Services</code></li>
+<li>Click the <code>Download</code> button next to the <code>IDP Metadata</code> and save it somewhere for later</li>
+<li>If you want to change the Application Name, Description and Logo, otherwise continue on</li>
+<li>Setup the Service Provider Details</li>
+<li>Make sure the <code>ACS URL</code> and <code>Entity ID</code> are set to <code>https://signin.aws.amazon.com/saml</code></li>
+<li>Also make sure the <code>Start URL</code> is blank and the <code>Signed Response</code> is unchecked.</li>
+<li>You&rsquo;ll want the <code>Name ID</code> to be mapped to <code>Basic information: Primary Email</code></li>
+<li>Set the Attribute mapping up with the following:</li>
+<li><code>https://aws.amazon.com/SAML/RoleSessionName: Basic Information: Primary Email</code></li>
+<li><code>https://aws.amazon.com/SAML/Role : SSO : Role</code></li>
+<li>Click Finish</li>
+<li>Turn the App on, by clicking on the settings button, then <code>Turn ON for everyone</code> Confirm the dialong when asked</li>
+</ol>
+
+<h2 id="setting-up-the-idp-in-aws">Setting up the IdP in AWS</h2>
+
+<p>You&rsquo;ll need to tell AWS that you want to use the GoogleApp you just set up as a IdP.
+You can do that with the command below:</p>
+
+<pre><code># aws iam create-saml-provider --saml-metadata-document file://GoogleIDPMetadata-yourdomain.xml --name GoogleAppsProvider
+{
+    &quot;SAMLProviderArn&quot;: &quot;arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider&quot;
+}
+</code></pre>
+
+<p>Make sure you substitute <code>GoogleIDPMetadata-yourdomain.xml</code> with the path to the IDP metadata file you downloaded earlier.</p>
+
+<p>This will spit out a response with the ARN of the identity provider you created, so make sure you note this down for later.</p>
+
+<p>####Create Some Roles
+1. You&rsquo;ll need to first craft a Trust Policy document to be used with the roles you&rsquo;ll create. Create a new file called <code>GoogleApps_TrustPolicy.json</code> with the following contents:</p>
+
+<pre><code>{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+  {
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Principal&quot;: {
+      &quot;Federated&quot;: &quot;&lt;Replace Me with your IdP ARN&gt;&quot;
+    },
+    &quot;Action&quot;: &quot;sts:AssumeRoleWithSAML&quot;,
+    &quot;Condition&quot;: {
+      &quot;StringEquals&quot;: {
+        &quot;SAML:aud&quot;: &quot;https://signin.aws.amazon.com/saml&quot;
+      }
+    }
+  }
+  ]
+}
+</code></pre>
+
+<p>Make sure you replace <code>&lt;Replace Me with your IdP ARN&gt;</code> with the ARN of the identity provider you created earlier.</p>
+
+<ol>
+<li>Run the following command to create the role. Note down the ARN that is returned as we&rsquo;ll need it later</li>
+</ol>
+
+<pre><code># aws iam create-role --role-name GoogleAppsAdminDemo --assume-role-policy-document file://GoogleApps_TrustPolicy.json
+{
+  &quot;Role&quot;: {
+  &quot;AssumeRolePolicyDocument&quot;: {
+      &quot;Version&quot;: &quot;2012-10-17&quot;,
+      &quot;Statement&quot;: [
+          {
+              &quot;Action&quot;: &quot;sts:AssumeRoleWithSAML&quot;,
+              &quot;Effect&quot;: &quot;Allow&quot;,
+              &quot;Condition&quot;: {
+                  &quot;StringEquals&quot;: {
+                      &quot;SAML:aud&quot;: &quot;https://signin.aws.amazon.com/saml&quot;
+                  }
+              },
+              &quot;Principal&quot;: {
+                  &quot;Federated&quot;: &quot;arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider&quot;
+              }
+          }
+      ]
+  },
+  &quot;RoleId&quot;: &quot;AROAIYGHGSVXXXXXXXXXX&quot;,
+  &quot;CreateDate&quot;: &quot;2016-03-10T12:19:31.177Z&quot;,
+  &quot;RoleName&quot;: &quot;GoogleAppsAdminDemo&quot;,
+  &quot;Path&quot;: &quot;/&quot;,
+  &quot;Arn&quot;: &quot;arn:aws:iam::123456789012:role/GoogleAppsAdminDemo&quot;
+  }
+
+</code></pre>
+
+<ol>
+<li>At this stage, I&rsquo;ve not attached any permissions to the role - you can read how to do that <a href="http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_modify.html#d0e18315">here</a></li>
+</ol>
+
+<h3 id="add-some-roles-to-your-google-apps-users">Add some roles to your Google Apps Users</h3>
+
+<ol>
+<li>Open the <a href="https://developers.google.com/admin-sdk/directory/v1/reference/users/patch#try-it">Patch Users Page</a> in the Google Admin Console</li>
+<li>In the <code>userKey</code> put the email address of the user you want to update</li>
+<li>To the right of the Request body, select <code>Freeform Editor</code> from the drop down list, and paste the following text, replace, and with the appropriate values you&rsquo;ve collected before</li>
+</ol>
+
+<pre><code>{
+  &quot;customSchemas&quot;:
+  {
+    &quot;SSO&quot;:
+    {
+      &quot;role&quot;: [
+      {
+       value: &quot;&lt;role ARN&gt;,&lt;provider ARN&gt;&quot;,
+       customType: &quot;SSO&quot;
+      }
+     ]
+    }
+  }
+}
+
+</code></pre>
+
+<p>Mine looked something like this (with two roles):</p>
+
+<pre><code>{
+  &quot;customSchemas&quot;:
+  {
+    &quot;SSO&quot;:
+    {
+      &quot;role&quot;: [
+      {
+       value: &quot;arn:aws:iam::123456789012:role/GoogleAppsAdminDemo,arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider,
+       customType: &quot;SSO&quot;
+      },
+      {
+       value: &quot;arn:aws:iam::123456789012:role/GoogleAppsUserDemo,arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider,
+       customType: &quot;SSO&quot;
+      }
+     ]
+    }
+  }
+}
+</code></pre>
+
+<ol>
+<li>Click <code>Authorize and Execute</code></li>
+</ol>
+
+<h3 id="test-it-out">Test it out</h3>
+
+<p>Open your Google Apps account and then select the <code>Amazon Web Services</code> app. It should redirect you on to a page that lets you select Role to login with (only if you multiple Roles) otherwise it will just bring you to the AWS Console Homepage.</p>
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="http://blog.guthnur.net/" style="background-image: url(http://blog.guthnur.net/images/logo.png)"><span class="hidden">Richard Genthner's Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="http://blog.guthnur.net/">Richard Genthner</a></h4>
+  
+  <p>System Engineer, Open source enthusiast.</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Maine, USA</span>
+    <span class="author-link icon-link"><a href="http://guthnur.net">http://guthnur.net</a></span>
+  </div>
+</section>
+
+
+
+    
+    <section class="share">
+      <h4>Share this post</h4>
+      <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=aws%20google%20sso&amp;url=http%3a%2f%2fblog.guthnur.net%2faws-google-sso%2f"
+          onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <span class="hidden">Twitter</span>
+      </a>
+      <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fblog.guthnur.net%2faws-google-sso%2f"
+          onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <span class="hidden">Facebook</span>
+      </a>
+      <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=http%3a%2f%2fblog.guthnur.net%2faws-google-sso%2f"
+         onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <span class="hidden">Google+</span>
+      </a>
+    </section>
+    
+
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname = 'moos3';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+    
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Moos3</a> All rights reserved - 2015</section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="http://blog.guthnur.net/js/index.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25578688-3', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+</body>
+</html>
+

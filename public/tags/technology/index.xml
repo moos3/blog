@@ -7,8 +7,212 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>All rights reserved - 2015</copyright>
-    <lastBuildDate>Mon, 12 Sep 2016 13:17:04 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 16 Sep 2016 16:19:59 -0400</lastBuildDate>
     <atom:link href="http://blog.guthnur.net/tags/technology/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>aws google sso</title>
+      <link>http://blog.guthnur.net/aws-google-sso/</link>
+      <pubDate>Fri, 16 Sep 2016 16:19:59 -0400</pubDate>
+      
+      <guid>http://blog.guthnur.net/aws-google-sso/</guid>
+      <description>
+
+&lt;p&gt;This article contains the files needed to wire up our Google Apps SSO to aws. Enorder to setup the AWS sso in additional accounts you will need the following tools:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Aws Account keys with Admin access&lt;/li&gt;
+&lt;li&gt;Google Admin access&lt;/li&gt;
+&lt;li&gt;aws cli tools&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup-google-apps&#34;&gt;Setup Google Apps&lt;/h2&gt;
+
+&lt;p&gt;First we will need to setup a Custom Schema element to hold role information for our users. By default, when you map attributes for SAML apps the pass Role to AWS you&amp;rsquo;ll only be able to select from existing attribute on your users.
+Examples include Job Title, Cost Center and Department. I&amp;rsquo;ve seen other articles that mention putting a signle role ARN in one of these but it&amp;rsquo;s really not suitable for that information (especially if you use those fields already).&lt;/p&gt;
+
+&lt;h4 id=&#34;the-solution-is-to-setup-a-custom-attribute-https-support-google-com-a-answer-6327792-hl-en-for-your-users&#34;&gt;The Solution is to setup a &lt;a href=&#34;https://support.google.com/a/answer/6327792?hl=en&#34;&gt;Custom Attribute&lt;/a&gt; for your users.&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Open the &lt;a href=&#34;https://developers.google.com/admin-sdk/directory/v1/reference/schemas/insert#try-it&#34;&gt;Schema Insert Page&lt;/a&gt; in Google Admin Console&lt;/li&gt;
+&lt;li&gt;Enter &lt;code&gt;my_customer&lt;/code&gt; in &lt;code&gt;customerId&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;To the right of the Request Body, select &lt;code&gt;FreeForm Editor&lt;/code&gt; from the dropdown list and then pase the following (schemaName should be either SSO or AWS_SAML):&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;fields&amp;quot;:
+  [
+    {
+      &amp;quot;fieldName&amp;quot;: &amp;quot;role&amp;quot;,
+      &amp;quot;fieldType&amp;quot;: &amp;quot;STRING&amp;quot;,
+      &amp;quot;multiValued&amp;quot;: true,
+      &amp;quot;readAccessType&amp;quot;: &amp;quot;ADMINS_AND_SELF&amp;quot;
+    }
+  ],
+  &amp;quot;schemaName&amp;quot;: &amp;quot;SSO&amp;quot;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Then Click &lt;code&gt;Authorize and Execute&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;setup-the-google-apps-saml-app-for-aws&#34;&gt;Setup the Google Apps SAML App for AWS&lt;/h4&gt;
+
+&lt;p&gt;You&amp;rsquo;ll need to configure your Google Apps account as a identity provider (or IdP) for AWS to use.&lt;/p&gt;
+
+&lt;p&gt;Google has written some pretty good instructions for this &lt;a href=&#34;https://support.google.com/a/answer/6194963?hl=en&#34;&gt;here&lt;/a&gt;. Go check them out and run though them then come back here or follow my brief instructions below:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Login into your Google Apps Admin Console&lt;/li&gt;
+&lt;li&gt;Head to the &lt;code&gt;Apps&lt;/code&gt; Section then &lt;code&gt;SAML Apps&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;Add a Service/App to your domain&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Amazon Web Services&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Click the &lt;code&gt;Download&lt;/code&gt; button next to the &lt;code&gt;IDP Metadata&lt;/code&gt; and save it somewhere for later&lt;/li&gt;
+&lt;li&gt;If you want to change the Application Name, Description and Logo, otherwise continue on&lt;/li&gt;
+&lt;li&gt;Setup the Service Provider Details&lt;/li&gt;
+&lt;li&gt;Make sure the &lt;code&gt;ACS URL&lt;/code&gt; and &lt;code&gt;Entity ID&lt;/code&gt; are set to &lt;code&gt;https://signin.aws.amazon.com/saml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Also make sure the &lt;code&gt;Start URL&lt;/code&gt; is blank and the &lt;code&gt;Signed Response&lt;/code&gt; is unchecked.&lt;/li&gt;
+&lt;li&gt;You&amp;rsquo;ll want the &lt;code&gt;Name ID&lt;/code&gt; to be mapped to &lt;code&gt;Basic information: Primary Email&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Set the Attribute mapping up with the following:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;https://aws.amazon.com/SAML/RoleSessionName: Basic Information: Primary Email&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;https://aws.amazon.com/SAML/Role : SSO : Role&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Click Finish&lt;/li&gt;
+&lt;li&gt;Turn the App on, by clicking on the settings button, then &lt;code&gt;Turn ON for everyone&lt;/code&gt; Confirm the dialong when asked&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;setting-up-the-idp-in-aws&#34;&gt;Setting up the IdP in AWS&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;ll need to tell AWS that you want to use the GoogleApp you just set up as a IdP.
+You can do that with the command below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# aws iam create-saml-provider --saml-metadata-document file://GoogleIDPMetadata-yourdomain.xml --name GoogleAppsProvider
+{
+    &amp;quot;SAMLProviderArn&amp;quot;: &amp;quot;arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure you substitute &lt;code&gt;GoogleIDPMetadata-yourdomain.xml&lt;/code&gt; with the path to the IDP metadata file you downloaded earlier.&lt;/p&gt;
+
+&lt;p&gt;This will spit out a response with the ARN of the identity provider you created, so make sure you note this down for later.&lt;/p&gt;
+
+&lt;p&gt;####Create Some Roles
+1. You&amp;rsquo;ll need to first craft a Trust Policy document to be used with the roles you&amp;rsquo;ll create. Create a new file called &lt;code&gt;GoogleApps_TrustPolicy.json&lt;/code&gt; with the following contents:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+  &amp;quot;Statement&amp;quot;: [
+  {
+    &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+    &amp;quot;Principal&amp;quot;: {
+      &amp;quot;Federated&amp;quot;: &amp;quot;&amp;lt;Replace Me with your IdP ARN&amp;gt;&amp;quot;
+    },
+    &amp;quot;Action&amp;quot;: &amp;quot;sts:AssumeRoleWithSAML&amp;quot;,
+    &amp;quot;Condition&amp;quot;: {
+      &amp;quot;StringEquals&amp;quot;: {
+        &amp;quot;SAML:aud&amp;quot;: &amp;quot;https://signin.aws.amazon.com/saml&amp;quot;
+      }
+    }
+  }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure you replace &lt;code&gt;&amp;lt;Replace Me with your IdP ARN&amp;gt;&lt;/code&gt; with the ARN of the identity provider you created earlier.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Run the following command to create the role. Note down the ARN that is returned as we&amp;rsquo;ll need it later&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;# aws iam create-role --role-name GoogleAppsAdminDemo --assume-role-policy-document file://GoogleApps_TrustPolicy.json
+{
+  &amp;quot;Role&amp;quot;: {
+  &amp;quot;AssumeRolePolicyDocument&amp;quot;: {
+      &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;,
+      &amp;quot;Statement&amp;quot;: [
+          {
+              &amp;quot;Action&amp;quot;: &amp;quot;sts:AssumeRoleWithSAML&amp;quot;,
+              &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot;,
+              &amp;quot;Condition&amp;quot;: {
+                  &amp;quot;StringEquals&amp;quot;: {
+                      &amp;quot;SAML:aud&amp;quot;: &amp;quot;https://signin.aws.amazon.com/saml&amp;quot;
+                  }
+              },
+              &amp;quot;Principal&amp;quot;: {
+                  &amp;quot;Federated&amp;quot;: &amp;quot;arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider&amp;quot;
+              }
+          }
+      ]
+  },
+  &amp;quot;RoleId&amp;quot;: &amp;quot;AROAIYGHGSVXXXXXXXXXX&amp;quot;,
+  &amp;quot;CreateDate&amp;quot;: &amp;quot;2016-03-10T12:19:31.177Z&amp;quot;,
+  &amp;quot;RoleName&amp;quot;: &amp;quot;GoogleAppsAdminDemo&amp;quot;,
+  &amp;quot;Path&amp;quot;: &amp;quot;/&amp;quot;,
+  &amp;quot;Arn&amp;quot;: &amp;quot;arn:aws:iam::123456789012:role/GoogleAppsAdminDemo&amp;quot;
+  }
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;At this stage, I&amp;rsquo;ve not attached any permissions to the role - you can read how to do that &lt;a href=&#34;http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_manage_modify.html#d0e18315&#34;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;add-some-roles-to-your-google-apps-users&#34;&gt;Add some roles to your Google Apps Users&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Open the &lt;a href=&#34;https://developers.google.com/admin-sdk/directory/v1/reference/users/patch#try-it&#34;&gt;Patch Users Page&lt;/a&gt; in the Google Admin Console&lt;/li&gt;
+&lt;li&gt;In the &lt;code&gt;userKey&lt;/code&gt; put the email address of the user you want to update&lt;/li&gt;
+&lt;li&gt;To the right of the Request body, select &lt;code&gt;Freeform Editor&lt;/code&gt; from the drop down list, and paste the following text, replace, and with the appropriate values you&amp;rsquo;ve collected before&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;customSchemas&amp;quot;:
+  {
+    &amp;quot;SSO&amp;quot;:
+    {
+      &amp;quot;role&amp;quot;: [
+      {
+       value: &amp;quot;&amp;lt;role ARN&amp;gt;,&amp;lt;provider ARN&amp;gt;&amp;quot;,
+       customType: &amp;quot;SSO&amp;quot;
+      }
+     ]
+    }
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Mine looked something like this (with two roles):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;customSchemas&amp;quot;:
+  {
+    &amp;quot;SSO&amp;quot;:
+    {
+      &amp;quot;role&amp;quot;: [
+      {
+       value: &amp;quot;arn:aws:iam::123456789012:role/GoogleAppsAdminDemo,arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider,
+       customType: &amp;quot;SSO&amp;quot;
+      },
+      {
+       value: &amp;quot;arn:aws:iam::123456789012:role/GoogleAppsUserDemo,arn:aws:iam::123456789012:saml-provider/GoogleAppsProvider,
+       customType: &amp;quot;SSO&amp;quot;
+      }
+     ]
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Click &lt;code&gt;Authorize and Execute&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;test-it-out&#34;&gt;Test it out&lt;/h3&gt;
+
+&lt;p&gt;Open your Google Apps account and then select the &lt;code&gt;Amazon Web Services&lt;/code&gt; app. It should redirect you on to a page that lets you select Role to login with (only if you multiple Roles) otherwise it will just bring you to the AWS Console Homepage.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Ditched Verizon for Project-Fi</title>
