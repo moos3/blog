@@ -1,6 +1,6 @@
 +++
 date = "2016-09-16T16:19:59-04:00"
-title = "aws google sso"
+title = "How to Setup Google SSO and AWS"
 author = "Richard Genthner"
 comments = true
 draft = false
